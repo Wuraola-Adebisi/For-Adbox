@@ -1,0 +1,2450 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Adbox Smart Carrier — 360° view</title>
+  
+  
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+     /* background : green;
+     /* background: radial-gradient(ellipse at 50% 58%, #12203a 0%, #070b14 62%, #04060b 100%);*/
+      color: #F1F5F9;
+      font-family: "Plus Jakarta Sans", Inter, "Segoe UI", Arial, sans-serif;
+      overflow: hidden
+    }
+
+    .stage {
+      position: absolute;
+      inset: 0;
+      perspective: 1500px;
+      perspective-origin: 50% 38%
+    }
+
+    .world {
+      position: absolute;
+      left: 50%;
+      top: 54%;
+      transform-style: preserve-3d;
+      transform: rotateX(-20deg)
+    }
+
+    .spin {
+      position: absolute;
+      transform-style: preserve-3d
+    }
+
+    .cub {
+      position: absolute;
+      transform-style: preserve-3d
+    }
+
+    .face {
+      position: absolute;
+      left: 0;
+      top: 0;
+      backface-visibility: hidden;
+      overflow: hidden
+    }
+
+    .shade {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      pointer-events: none;
+      animation-duration: var(--turn);
+      animation-timing-function: linear;
+      animation-iteration-count: infinite
+    }
+
+    .shell .face {
+      background: linear-gradient(180deg, #1a2436, #0c121d);
+      box-shadow: inset 0 0 0 2px #05070c, inset 0 2px 0 3px rgba(140, 165, 205, .10)
+    }
+
+    .shell-top {
+      background: #0c121d !important
+    }
+
+    .shell-bottom {
+      background: #05070c !important
+    }
+
+    .lid .face {
+      background: linear-gradient(180deg, #243049, #161f30);
+      box-shadow: inset 0 0 0 1.5px #05070c, inset 0 1px 0 1px rgba(160, 185, 225, .35)
+    }
+
+    .lid-top {
+      background: linear-gradient(135deg, #253149, #172033) !important
+    }
+
+    .rail .face {
+      background: #2d3748;
+      box-shadow: inset 0 0 0 1px #05070c
+    }
+
+    .rail-top {
+      background: #465468 !important
+    }
+
+    .bezel {
+      position: absolute;
+      background: #03050a;
+      border-radius: 10px;
+      box-shadow: inset 0 0 0 1px #2b3850
+    }
+
+    .screen {
+      position: absolute;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #000
+    }
+
+    .ad {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      animation: adcycle 16s infinite
+    }
+
+    .ad svg {
+      display: block
+    }
+
+    @keyframes adcycle {
+      0% {
+        opacity: 0;
+        transform: scale(1.04)
+      }
+
+      1.5% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      23.5% {
+        opacity: 1
+      }
+
+      25% {
+        opacity: 0
+      }
+
+      100% {
+        opacity: 0
+      }
+    }
+
+    .sweep {
+      position: absolute;
+      top: -20%;
+      bottom: -20%;
+      width: 70px;
+      left: -140px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .28), transparent);
+      transform: skewX(-20deg);
+      animation: sweep 4.0s infinite
+    }
+
+    @keyframes sweep {
+      0% {
+        left: -140px
+      }
+
+      12% {
+        left: 110%
+      }
+
+      100% {
+        left: 110%
+      }
+    }
+
+    .glass {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(125deg, rgba(255, 255, 255, .16) 0%, rgba(255, 255, 255, 0) 38%), repeating-linear-gradient(0deg, rgba(0, 0, 0, .12) 0 1px, transparent 1px 3px)
+    }
+
+    .prog {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 3px;
+      background: rgba(255, 255, 255, .85);
+      animation: prog 4.0s linear infinite
+    }
+
+    @keyframes prog {
+      from {
+        width: 0
+      }
+
+      to {
+        width: 100%
+      }
+    }
+
+    .ledstrip {
+      position: absolute;
+      height: 4px;
+      border-radius: 2px;
+      background: repeating-linear-gradient(90deg, #22D3EE 0 16px, transparent 16px 26px);
+      box-shadow: 0 0 10px #22D3EE;
+      background-size: 52px 4px;
+      animation: strip 1s linear infinite
+    }
+
+    @keyframes strip {
+      to {
+        background-position: 52px 0
+      }
+    }
+
+    .logo {
+      position: absolute;
+      left: 34px;
+      top: 36px;
+      transform: rotate(0deg)
+    }
+
+    .logo span {
+      display: block;
+      font-weight: 800;
+      font-size: 62px;
+      letter-spacing: -2px;
+      color: #2f3d57;
+      text-shadow: 0 2px 0 #0b111c;
+      line-height: 1
+    }
+
+    .logo small {
+      display: block;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 4px;
+      color: #2f3d57;
+      margin-top: 4px
+    }
+
+    .strap {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 42px;
+      height: 26px;
+      background: #0b111c;
+      border-radius: 4px
+    }
+
+    .handle {
+      position: absolute;
+      left: 50%;
+      margin-left: -50px;
+      width: 100px;
+      bottom: 44px;
+      height: 22px;
+      border-radius: 6px;
+      background: linear-gradient(#56657e, #34405a);
+      box-shadow: 0 3px 0 #0b111c
+    }
+
+    .riderside {
+      position: absolute;
+      inset: 0
+    }
+
+    .hinge {
+      position: absolute;
+      left: 26px;
+      width: 10px;
+      height: 38px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #3a4659, #1c2433)
+    }
+
+    .h1 {
+      top: 40px
+    }
+
+    .h2 {
+      bottom: 40px
+    }
+
+    .plate {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      padding: 14px 22px;
+      border-radius: 12px;
+      background: #0b111c;
+      box-shadow: inset 0 0 0 1px #243047
+    }
+
+    .plate b {
+      display: block;
+      font-size: 34px;
+      font-weight: 800;
+      color: #3a4a66;
+      letter-spacing: -1px
+    }
+
+    .plate span {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #4b5a73;
+      margin-top: 2px
+    }
+
+    .vent {
+      position: absolute;
+      left: 50%;
+      bottom: 34px;
+      width: 120px;
+      margin-left: -60px;
+      height: 18px;
+      background: repeating-linear-gradient(90deg, #05070c 0 6px, transparent 6px 12px);
+      opacity: .8
+    }
+
+    .dome {
+      position: absolute;
+      transform-style: preserve-3d
+    }
+
+    .dome-base {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      margin: -32px 0 0 -32px;
+      border-radius: 50%;
+      background: #05070c;
+      transform: rotateX(90deg)
+    }
+
+    .dome-bb {
+      position: absolute;
+      transform-style: preserve-3d;
+      animation: billboard var(--turn) linear infinite
+    }
+
+    .dome-body {
+      position: absolute;
+      width: 56px;
+      height: 30px;
+      margin: -30px 0 0 -28px;
+      border-radius: 28px 28px 6px 6px;
+      background: radial-gradient(circle at 35% 30%, #5b6b85, #111827 70%)
+    }
+
+    .dome-body i {
+      position: absolute;
+      left: 50%;
+      top: 6px;
+      width: 7px;
+      height: 7px;
+      margin-left: -3.5px;
+      border-radius: 50%;
+      background: #2EE6A6;
+      box-shadow: 0 0 10px 3px rgba(46, 230, 166, .7);
+      animation: blink 1.4s infinite
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: .2
+      }
+    }
+
+    .ping {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      margin: -40px 0 0 -12px;
+      border-radius: 50%;
+      border: 2px solid #2EE6A6;
+      animation: ping 1.8s ease-out infinite
+    }
+
+    .ping.p2 {
+      animation-delay: .9s
+    }
+
+    @keyframes ping {
+      from {
+        transform: translateY(0) scale(.6);
+        opacity: .9
+      }
+
+      to {
+        transform: translateY(-34px) scale(4);
+        opacity: 0
+      }
+    }
+
+    .floor {
+      position: absolute;
+      width: 1400px;
+      height: 1400px;
+      margin: -700px 0 0 -700px;
+      transform: rotateX(90deg) translateZ(calc(-1 * var(--floor)));
+      -webkit-mask-image: radial-gradient(circle, #000 0, transparent 45%);
+      mask-image: radial-gradient(circle, #000 0, transparent 45%);
+      background: repeating-linear-gradient(0deg, rgba(80, 110, 160, .14) 0 1px, transparent 1px 70px), repeating-linear-gradient(90deg, rgba(80, 110, 160, .14) 0 1px, transparent 1px 70px)
+    }
+
+    .shadow {
+      position: absolute;
+      width: 560px;
+      height: 560px;
+      margin: -280px 0 0 -280px;
+      border-radius: 50%;
+      transform: rotateX(90deg) translateZ(calc(-1 * var(--floor) - 1px));
+      background: radial-gradient(circle, rgba(0, 0, 0, .85) 0, rgba(0, 0, 0, .55) 32%, rgba(0, 0, 0, 0) 62%)
+    }
+
+    .glowpool {
+      position: absolute;
+      width: 900px;
+      height: 900px;
+      margin: -450px 0 0 -450px;
+      border-radius: 50%;
+      transform: rotateX(90deg) translateZ(calc(-1 * var(--floor) - 2px));
+      background: radial-gradient(circle, var(--c) 0, transparent 55%);
+      opacity: .35;
+      animation: pool 16s infinite
+    }
+
+    @keyframes pool {
+
+      0%,
+      24.9% {
+        --c: #FF5A36
+      }
+
+      25%,
+      49.9% {
+        --c: #EF4444
+      }
+
+      50%,
+      74.9% {
+        --c: #2EE6A6
+      }
+
+      75%,
+      100% {
+        --c: #A78BFA
+      }
+    }
+
+    @property --c {
+      syntax: "<color>";
+      inherits: false;
+      initial-value: #FF5A36
+    }
+
+    .hud {
+      position: absolute;
+      font-family: inherit
+    }
+
+    .title {
+      left: 48px;
+      top: 40px
+    }
+
+    .title h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -.5px
+    }
+
+    .title p {
+      color: #8392A8;
+      font-size: 15px;
+      margin-top: 6px
+    }
+
+    .card {
+      background: rgba(11, 17, 28, .9);
+      border: 1px solid #243047;
+      border-radius: 16px;
+      padding: 16px 20px;
+      backdrop-filter: blur(6px)
+    }
+
+    .live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 59, 92, .15);
+      color: #FF6B84;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 10px 3px 8px;
+      border-radius: 99px
+    }
+
+    .live i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #FF3B5C;
+      box-shadow: 0 0 0 0 rgba(255, 59, 92, .6);
+      animation: livep 1.6s infinite
+    }
+
+    @keyframes livep {
+      70% {
+        box-shadow: 0 0 0 7px rgba(255, 59, 92, 0)
+      }
+    }
+
+    .lbl {
+      color: #8392A8;
+      font-size: 12px
+    }
+
+    .stack {
+      position: relative;
+      display: block
+    }
+
+    .stack span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      white-space: nowrap
+    }
+
+    .stack span:first-child {
+      position: relative
+    }
+
+    button.pp {
+      position: absolute;
+      right: 40px;
+      bottom: 40px;
+      background: #0b111c;
+      color: #cbd5e1;
+      border: 1px solid #243047;
+      border-radius: 99px;
+      padding: 10px 18px;
+      font: 600 13px inherit;
+      font-family: inherit;
+      cursor: pointer
+    }
+
+    button.pp:hover {
+      border-color: #3b4b66;
+      color: #fff
+    }
+
+    body.paused * {
+      animation-play-state: paused !important
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      * {
+        animation-duration: 0s !important;
+        animation-iteration-count: 1 !important
+      }
+    }
+
+    @keyframes Lfz {
+      0.00% {
+        opacity: 0.130
+      }
+
+      2.78% {
+        opacity: 0.095
+      }
+
+      5.56% {
+        opacity: 0.075
+      }
+
+      8.33% {
+        opacity: 0.072
+      }
+
+      11.11% {
+        opacity: 0.086
+      }
+
+      13.89% {
+        opacity: 0.116
+      }
+
+      16.67% {
+        opacity: 0.161
+      }
+
+      19.44% {
+        opacity: 0.220
+      }
+
+      22.22% {
+        opacity: 0.291
+      }
+
+      25.00% {
+        opacity: 0.372
+      }
+
+      27.78% {
+        opacity: 0.461
+      }
+
+      30.56% {
+        opacity: 0.555
+      }
+
+      33.33% {
+        opacity: 0.620
+      }
+
+      36.11% {
+        opacity: 0.620
+      }
+
+      38.89% {
+        opacity: 0.620
+      }
+
+      41.67% {
+        opacity: 0.620
+      }
+
+      44.44% {
+        opacity: 0.620
+      }
+
+      47.22% {
+        opacity: 0.620
+      }
+
+      50.00% {
+        opacity: 0.620
+      }
+
+      52.78% {
+        opacity: 0.620
+      }
+
+      55.56% {
+        opacity: 0.620
+      }
+
+      58.33% {
+        opacity: 0.620
+      }
+
+      61.11% {
+        opacity: 0.620
+      }
+
+      63.89% {
+        opacity: 0.620
+      }
+
+      66.67% {
+        opacity: 0.620
+      }
+
+      69.44% {
+        opacity: 0.620
+      }
+
+      72.22% {
+        opacity: 0.620
+      }
+
+      75.00% {
+        opacity: 0.620
+      }
+
+      77.78% {
+        opacity: 0.620
+      }
+
+      80.56% {
+        opacity: 0.620
+      }
+
+      83.33% {
+        opacity: 0.590
+      }
+
+      86.11% {
+        opacity: 0.495
+      }
+
+      88.89% {
+        opacity: 0.404
+      }
+
+      91.67% {
+        opacity: 0.320
+      }
+
+      94.44% {
+        opacity: 0.245
+      }
+
+      97.22% {
+        opacity: 0.181
+      }
+
+      100.00% {
+        opacity: 0.131
+      }
+    }
+
+    @keyframes Lbz {
+      0.00% {
+        opacity: 0.620
+      }
+
+      2.78% {
+        opacity: 0.620
+      }
+
+      5.56% {
+        opacity: 0.620
+      }
+
+      8.33% {
+        opacity: 0.620
+      }
+
+      11.11% {
+        opacity: 0.620
+      }
+
+      13.89% {
+        opacity: 0.620
+      }
+
+      16.67% {
+        opacity: 0.620
+      }
+
+      19.44% {
+        opacity: 0.620
+      }
+
+      22.22% {
+        opacity: 0.620
+      }
+
+      25.00% {
+        opacity: 0.620
+      }
+
+      27.78% {
+        opacity: 0.620
+      }
+
+      30.56% {
+        opacity: 0.620
+      }
+
+      33.33% {
+        opacity: 0.590
+      }
+
+      36.11% {
+        opacity: 0.495
+      }
+
+      38.89% {
+        opacity: 0.404
+      }
+
+      41.67% {
+        opacity: 0.320
+      }
+
+      44.44% {
+        opacity: 0.245
+      }
+
+      47.22% {
+        opacity: 0.181
+      }
+
+      50.00% {
+        opacity: 0.130
+      }
+
+      52.78% {
+        opacity: 0.095
+      }
+
+      55.56% {
+        opacity: 0.075
+      }
+
+      58.33% {
+        opacity: 0.072
+      }
+
+      61.11% {
+        opacity: 0.086
+      }
+
+      63.89% {
+        opacity: 0.116
+      }
+
+      66.67% {
+        opacity: 0.161
+      }
+
+      69.44% {
+        opacity: 0.220
+      }
+
+      72.22% {
+        opacity: 0.291
+      }
+
+      75.00% {
+        opacity: 0.372
+      }
+
+      77.78% {
+        opacity: 0.461
+      }
+
+      80.56% {
+        opacity: 0.555
+      }
+
+      83.33% {
+        opacity: 0.620
+      }
+
+      86.11% {
+        opacity: 0.620
+      }
+
+      88.89% {
+        opacity: 0.620
+      }
+
+      91.67% {
+        opacity: 0.620
+      }
+
+      94.44% {
+        opacity: 0.620
+      }
+
+      97.22% {
+        opacity: 0.620
+      }
+
+      100.00% {
+        opacity: 0.620
+      }
+    }
+
+    @keyframes Lrx {
+      0.00% {
+        opacity: 0.620
+      }
+
+      2.78% {
+        opacity: 0.620
+      }
+
+      5.56% {
+        opacity: 0.620
+      }
+
+      8.33% {
+        opacity: 0.590
+      }
+
+      11.11% {
+        opacity: 0.495
+      }
+
+      13.89% {
+        opacity: 0.404
+      }
+
+      16.67% {
+        opacity: 0.320
+      }
+
+      19.44% {
+        opacity: 0.245
+      }
+
+      22.22% {
+        opacity: 0.181
+      }
+
+      25.00% {
+        opacity: 0.130
+      }
+
+      27.78% {
+        opacity: 0.095
+      }
+
+      30.56% {
+        opacity: 0.075
+      }
+
+      33.33% {
+        opacity: 0.072
+      }
+
+      36.11% {
+        opacity: 0.086
+      }
+
+      38.89% {
+        opacity: 0.116
+      }
+
+      41.67% {
+        opacity: 0.161
+      }
+
+      44.44% {
+        opacity: 0.220
+      }
+
+      47.22% {
+        opacity: 0.291
+      }
+
+      50.00% {
+        opacity: 0.372
+      }
+
+      52.78% {
+        opacity: 0.461
+      }
+
+      55.56% {
+        opacity: 0.555
+      }
+
+      58.33% {
+        opacity: 0.620
+      }
+
+      61.11% {
+        opacity: 0.620
+      }
+
+      63.89% {
+        opacity: 0.620
+      }
+
+      66.67% {
+        opacity: 0.620
+      }
+
+      69.44% {
+        opacity: 0.620
+      }
+
+      72.22% {
+        opacity: 0.620
+      }
+
+      75.00% {
+        opacity: 0.620
+      }
+
+      77.78% {
+        opacity: 0.620
+      }
+
+      80.56% {
+        opacity: 0.620
+      }
+
+      83.33% {
+        opacity: 0.620
+      }
+
+      86.11% {
+        opacity: 0.620
+      }
+
+      88.89% {
+        opacity: 0.620
+      }
+
+      91.67% {
+        opacity: 0.620
+      }
+
+      94.44% {
+        opacity: 0.620
+      }
+
+      97.22% {
+        opacity: 0.620
+      }
+
+      100.00% {
+        opacity: 0.620
+      }
+    }
+
+    @keyframes Llx {
+      0.00% {
+        opacity: 0.372
+      }
+
+      2.78% {
+        opacity: 0.461
+      }
+
+      5.56% {
+        opacity: 0.555
+      }
+
+      8.33% {
+        opacity: 0.620
+      }
+
+      11.11% {
+        opacity: 0.620
+      }
+
+      13.89% {
+        opacity: 0.620
+      }
+
+      16.67% {
+        opacity: 0.620
+      }
+
+      19.44% {
+        opacity: 0.620
+      }
+
+      22.22% {
+        opacity: 0.620
+      }
+
+      25.00% {
+        opacity: 0.620
+      }
+
+      27.78% {
+        opacity: 0.620
+      }
+
+      30.56% {
+        opacity: 0.620
+      }
+
+      33.33% {
+        opacity: 0.620
+      }
+
+      36.11% {
+        opacity: 0.620
+      }
+
+      38.89% {
+        opacity: 0.620
+      }
+
+      41.67% {
+        opacity: 0.620
+      }
+
+      44.44% {
+        opacity: 0.620
+      }
+
+      47.22% {
+        opacity: 0.620
+      }
+
+      50.00% {
+        opacity: 0.620
+      }
+
+      52.78% {
+        opacity: 0.620
+      }
+
+      55.56% {
+        opacity: 0.620
+      }
+
+      58.33% {
+        opacity: 0.590
+      }
+
+      61.11% {
+        opacity: 0.495
+      }
+
+      63.89% {
+        opacity: 0.404
+      }
+
+      66.67% {
+        opacity: 0.320
+      }
+
+      69.44% {
+        opacity: 0.245
+      }
+
+      72.22% {
+        opacity: 0.181
+      }
+
+      75.00% {
+        opacity: 0.131
+      }
+
+      77.78% {
+        opacity: 0.095
+      }
+
+      80.56% {
+        opacity: 0.075
+      }
+
+      83.33% {
+        opacity: 0.072
+      }
+
+      86.11% {
+        opacity: 0.086
+      }
+
+      88.89% {
+        opacity: 0.116
+      }
+
+      91.67% {
+        opacity: 0.161
+      }
+
+      94.44% {
+        opacity: 0.220
+      }
+
+      97.22% {
+        opacity: 0.291
+      }
+
+      100.00% {
+        opacity: 0.372
+      }
+    }
+
+    :root {
+      --turn: 20s;
+      --floor: 164.0px
+    }
+
+    .spin {
+      animation: turn 20s linear infinite
+    }
+
+    @keyframes turn {
+      from {
+        transform: rotateY(0deg)
+      }
+
+      to {
+        transform: rotateY(-360deg)
+      }
+    }
+
+    @keyframes billboard {
+      from {
+        transform: rotateY(0deg)
+      }
+
+      to {
+        transform: rotateY(360deg)
+      }
+    }
+
+    .bob {
+      position: absolute;
+      transform-style: preserve-3d;
+      animation: bob 4s ease-in-out infinite
+    }
+
+    @keyframes bob {
+      50% {
+        transform: translateY(-10px)
+      }
+    }
+
+    .facing {
+      left: 50%;
+      top: 118px;
+      transform: translateX(-50%);
+      text-align: center
+    }
+
+    .facing .stack {
+      font-size: 18px;
+      font-weight: 700;
+      height: 24px;
+      min-width: 260px
+    }
+
+    .facing .stack span {
+      left: 50%;
+      transform: translateX(-50%)
+    }
+
+    .facing .stack span:first-child {
+      position: absolute
+    }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 10px
+    }
+
+    .dots b {
+      width: 26px;
+      height: 4px;
+      border-radius: 2px;
+      background: #243047;
+      position: relative;
+      overflow: hidden
+    }
+
+    .dots b::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #22D3EE;
+      opacity: 0;
+      animation: fdot 20s infinite
+    }
+
+    @keyframes fdot {
+
+      0%,
+      24.99% {
+        opacity: 1
+      }
+
+      25.00%,
+      100% {
+        opacity: 0
+      }
+    }
+
+    @keyframes q25 {
+
+      0%,
+      24.99% {
+        opacity: 1
+      }
+
+      25.00%,
+      100% {
+        opacity: 0
+      }
+    }
+
+    @keyframes q25b {
+
+      0%,
+      24.99% {
+        opacity: 1
+      }
+
+      25.00%,
+      100% {
+        opacity: 0
+      }
+    }
+
+    .nowplaying {
+      left: 48px;
+      bottom: 40px;
+      width: 560px;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 4px 34px;
+      align-items: end
+    }
+
+    .nowplaying .big {
+      font-size: 21px;
+      font-weight: 800;
+      height: 28px
+    }
+
+    .nowplaying .num {
+      font-size: 22px;
+      font-weight: 800;
+      color: #22D3EE;
+      height: 28px
+    }
+
+    .nowplaying .zone {
+      font-size: 17px;
+      font-weight: 700;
+      height: 28px
+    }
+
+    .legend {
+      right: 40px;
+      top: 44px;
+      width: 250px
+    }
+
+    .legend li {
+      list-style: none;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 13px;
+      color: #CBD5E1;
+      margin-top: 8px
+    }
+
+    .legend li i {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px
+    }
+
+    .d0::after {
+      animation-delay: -2.50s !important
+    }
+
+    .d1::after {
+      animation-delay: -17.50s !important
+    }
+
+    .d2::after {
+      animation-delay: -12.50s !important
+    }
+
+    .d3::after {
+      animation-delay: -7.50s !important
+    }
+  
+    /* Added for the AdBox site */
+    html, body { background: transparent }
+    .world { scale: var(--s, 1) var(--s, 1) var(--s, 1) }
+    @media (prefers-color-scheme: light) {
+      .shadow { background: radial-gradient(circle, rgba(15, 20, 29, .42) 0, rgba(15, 20, 29, .22) 32%, rgba(15, 20, 29, 0) 62%) }
+      .glowpool { opacity: .5 }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stage">
+    <div class="world">
+      <div class="floor"></div>
+      <div class="glowpool"></div>
+      <div class="shadow"></div>
+      <div class="bob">
+        <div class="spin">
+          <div class="cub shell" style="">
+            <div class="face shell-front"
+              style="width:360px;height:300px;margin-left:-180.0px;margin-top:-150.0px;transform:translateZ(140.0px);">
+              <div class="bezel" style="left:14px;top:28px;width:332px;height:252px"></div>
+              <div class="screen" style="left:20px;top:34px;width:320px;height:240px">
+                <div class="ad" style="animation-delay:0s"><svg width="320" height="240" viewBox="0 0 320 240"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="saleA0" x1="0" y1="0" x2="1" y2="1">
+                        <stop stop-color="#FF7A18" />
+                        <stop offset="1" stop-color="#FF2E63" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="320" height="240" fill="url(#saleA0)" />
+                    <circle cx="281.6" cy="43.199999999999996" r="100.8" fill="#fff" fill-opacity="0.10" />
+                    <circle cx="32.0" cy="252.0" r="84.0" fill="#000" fill-opacity="0.10" /><text x="22" y="61"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                      font-weight="700" fill="#FFE8D6" letter-spacing="1.5">KORA MART</text><text x="20" y="112"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="51"
+                      font-weight="800" fill="#fff" letter-spacing="-1">FLASH</text><text x="20" y="158"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="51"
+                      font-weight="800" fill="#fff" letter-spacing="-1">SALE</text>
+                    <g transform="translate(20 172)">
+                      <rect width="150" height="30" rx="15" fill="#fff" /><text x="14" y="20"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#FF2E63">Up to 50% off</text>
+                    </g>
+                    <g transform="translate(237 125)">
+                      <g>
+                        <animateTransform attributeName="transform" type="scale" values="1;1.06;1" dur="1.2s"
+                          repeatCount="indefinite" additive="sum" />
+                        <path d="M-40 -30 H40 L48 50 H-48Z" fill="#fff" />
+                        <path d="M-20 -30 v-10 a20 20 0 0 1 40 0 v10" stroke="#fff" stroke-width="6" fill="none" /><text
+                          x="0" y="22" text-anchor="middle"
+                          font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="26"
+                          font-weight="800" fill="#FF2E63">%</text>
+                      </g>
+                    </g><text x="304" y="39" text-anchor="end"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      font-weight="700" fill="#fff" opacity="1">Ends in 02:14:36
+                      <animate attributeName="opacity" values="1;0;0;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                        begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                    </text><text x="304" y="39" text-anchor="end"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      font-weight="700" fill="#fff" opacity="0">Ends in 02:14:35
+                      <animate attributeName="opacity" values="0;1;0;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                        begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                    </text><text x="304" y="39" text-anchor="end"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      font-weight="700" fill="#fff" opacity="0">Ends in 02:14:34
+                      <animate attributeName="opacity" values="0;0;1;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                        begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                    </text><text x="304" y="39" text-anchor="end"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      font-weight="700" fill="#fff" opacity="0">Ends in 02:14:33
+                      <animate attributeName="opacity" values="0;0;0;1" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                        begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                    </text>
+                    <rect x="14" y="14" width="30" height="18" rx="5" fill="#000" fill-opacity="0.35" /><text x="29"
+                      y="27" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                      font-size="10" font-weight="800" fill="#fff">AD</text>
+                    <g transform="translate(306 226)">
+                      <rect x="-111" y="-24" width="111" height="24" rx="12" fill="#000" fill-opacity="0.35" />
+                      <path d="M-97 -6 c-3 -4 -5 -6 -5 -9 a5 5 0 1 1 10 0 c0 3 -2 5 -5 9z" fill="#fff" /><text x="-10"
+                        y="-8" text-anchor="end" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                        font-size="11" font-weight="600" fill="#fff">Lekki Phase 1</text>
+                    </g>
+                  </svg></div>
+                <div class="ad" style="animation-delay:-12.0s"><svg width="320" height="240" viewBox="0 0 320 240"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <radialGradient id="foodA1" cx="0.7" cy="0.5" r="0.8">
+                        <stop stop-color="#B91C1C" />
+                        <stop offset="1" stop-color="#450A0A" />
+                      </radialGradient>
+                    </defs>
+                    <rect width="320" height="240" fill="url(#foodA1)" /><text x="22" y="62"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                      font-weight="700" fill="#FECACA" letter-spacing="1.5">MAMA PUT KITCHEN</text><text x="20" y="102"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="32"
+                      font-weight="800" fill="#fff">Smoky</text><text x="20" y="138"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="32"
+                      font-weight="800" fill="#FACC15">Jollof</text><text x="20" y="174"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="22"
+                      font-weight="800" fill="#fff">₦2,500</text><text x="20" y="196"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      fill="#FECACA">Delivered in 20 min</text>
+                    <g transform="translate(234 139)">
+                      <ellipse cx="0" cy="34" rx="64" ry="10" fill="#000" fill-opacity="0.3" />
+                      <path d="M-58 -6 H58 A58 44 0 0 1 -58 -6Z" fill="#F8FAFC" />
+                      <path d="M-58 -6 H58 A58 44 0 0 1 -58 -6Z" fill="#1E3A8A" fill-opacity="0.12" />
+                      <ellipse cx="0" cy="-6" rx="58" ry="12" fill="#E2E8F0" />
+                      <ellipse cx="0" cy="-8" rx="50" ry="10" fill="#EA580C" />
+                      <circle cx="-16" cy="-12" r="3" fill="#FFB547" />
+                      <circle cx="13" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="3" cy="-10" r="3" fill="#FFB547" />
+                      <circle cx="-39" cy="-8" r="3" fill="#FFB547" />
+                      <circle cx="-41" cy="-9" r="3" fill="#FFB547" />
+                      <circle cx="-38" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="-7" cy="-4" r="3" fill="#FFB547" />
+                      <circle cx="-33" cy="-11" r="3" fill="#FFB547" />
+                      <circle cx="11" cy="-3" r="3" fill="#FFB547" />
+                      <circle cx="7" cy="-9" r="3" fill="#FFB547" />
+                      <circle cx="42" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="32" cy="-11" r="3" fill="#FFB547" />
+                      <circle cx="-31" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="-17" cy="-4" r="3" fill="#FFB547" />
+                      <circle cx="-28" cy="-7" r="3" fill="#FFB547" />
+                      <circle cx="12" cy="-10" r="3" fill="#FFB547" />
+                      <circle cx="4" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="-39" cy="-12" r="3" fill="#FFB547" />
+                      <circle cx="16" cy="-9" r="3" fill="#FFB547" />
+                      <circle cx="-16" cy="-7" r="3" fill="#FFB547" />
+                      <circle cx="-4" cy="-10" r="3" fill="#FFB547" />
+                      <circle cx="26" cy="-6" r="3" fill="#FFB547" />
+                      <circle cx="-23" cy="-7" r="3" fill="#FFB547" />
+                      <circle cx="2" cy="-3" r="3" fill="#FFB547" />
+                      <circle cx="20" cy="-11" r="3" fill="#FFB547" />
+                      <circle cx="42" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="-7" cy="-5" r="3" fill="#FFB547" />
+                      <circle cx="-31" cy="-8" r="3" fill="#FFB547" />
+                      <circle cx="-41" cy="-6" r="3" fill="#FFB547" />
+                      <circle cx="23" cy="-7" r="3" fill="#FFB547" />
+                      <path d="M8 -18 q18 -16 30 -4 q6 8 -6 12 q-14 4 -24 -8z" fill="#92400E" />
+                      <rect x="34" y="-26" width="16" height="5" rx="2.5" fill="#FDE68A"
+                        transform="rotate(-35 34 -26)" />
+                      <g transform="translate(0 -30)">
+                        <path d="M-18 0 q-6 -10 0 -20 q6 -10 0 -20" stroke="#fff" stroke-opacity="0.6" stroke-width="3"
+                          fill="none" stroke-linecap="round">
+                          <animate attributeName="stroke-opacity" values="0;0.7;0" dur="2s" begin="0.0s"
+                            repeatCount="indefinite" />
+                          <animateTransform attributeName="transform" type="translate" values="0 6;0 -8" dur="2s"
+                            begin="0.0s" repeatCount="indefinite" />
+                        </path>
+                        <path d="M0 0 q-6 -10 0 -20 q6 -10 0 -20" stroke="#fff" stroke-opacity="0.6" stroke-width="3"
+                          fill="none" stroke-linecap="round">
+                          <animate attributeName="stroke-opacity" values="0;0.7;0" dur="2s" begin="0.5s"
+                            repeatCount="indefinite" />
+                          <animateTransform attributeName="transform" type="translate" values="0 6;0 -8" dur="2s"
+                            begin="0.5s" repeatCount="indefinite" />
+                        </path>
+                        <path d="M18 0 q-6 -10 0 -20 q6 -10 0 -20" stroke="#fff" stroke-opacity="0.6" stroke-width="3"
+                          fill="none" stroke-linecap="round">
+                          <animate attributeName="stroke-opacity" values="0;0.7;0" dur="2s" begin="1.0s"
+                            repeatCount="indefinite" />
+                          <animateTransform attributeName="transform" type="translate" values="0 6;0 -8" dur="2s"
+                            begin="1.0s" repeatCount="indefinite" />
+                        </path>
+                      </g>
+                    </g>
+                    <rect x="14" y="14" width="30" height="18" rx="5" fill="#000" fill-opacity="0.35" /><text x="29"
+                      y="27" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                      font-size="10" font-weight="800" fill="#fff">AD</text>
+                    <g transform="translate(306 226)">
+                      <rect x="-111" y="-24" width="111" height="24" rx="12" fill="#000" fill-opacity="0.35" />
+                      <path d="M-97 -6 c-3 -4 -5 -6 -5 -9 a5 5 0 1 1 10 0 c0 3 -2 5 -5 9z" fill="#fff" /><text x="-10"
+                        y="-8" text-anchor="end" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                        font-size="11" font-weight="600" fill="#fff">Admiralty Way</text>
+                    </g>
+                  </svg></div>
+                <div class="ad" style="animation-delay:-8.0s"><svg width="320" height="240" viewBox="0 0 320 240"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="payA2" x1="0" y1="0" x2="1" y2="1">
+                        <stop stop-color="#042F2E" />
+                        <stop offset="1" stop-color="#0E7490" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="320" height="240" fill="url(#payA2)" />
+                    <path d="M0 192.0 Q160.0 132.0 320 180.0 V240 H0Z" fill="#2EE6A6" fill-opacity="0.12" /><text x="22"
+                      y="62" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                      font-weight="700" fill="#99F6E4" letter-spacing="1.5">ZAPP PAY</text><text x="20" y="98"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="27"
+                      font-weight="800" fill="#fff">Send money</text><text x="20" y="132"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="27"
+                      font-weight="800" fill="#2EE6A6">in seconds.</text>
+                    <g transform="translate(20 150)">
+                      <rect width="118" height="28" rx="14" fill="#2EE6A6" /><text x="59" y="19" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                        font-weight="800" fill="#042F2E">0% fees today</text>
+                    </g>
+                    <g transform="translate(243 120)">
+                      <rect x="-38" y="-70" width="76" height="140" rx="14" fill="#0B1220" stroke="#99F6E4"
+                        stroke-width="3" />
+                      <rect x="-30" y="-58" width="60" height="116" rx="6" fill="#0F766E" />
+                      <circle cx="0" cy="-12" r="20" fill="none" stroke="#2EE6A6" stroke-width="3">
+                        <animate attributeName="r" values="20;46" dur="1.6s" repeatCount="indefinite" />
+                        <animate attributeName="stroke-opacity" values="0.8;0" dur="1.6s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="0" cy="-12" r="18" fill="#2EE6A6" />
+                      <path d="M-8 -12 l6 6 l11 -12" stroke="#042F2E" stroke-width="4" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round" /><text x="0" y="28" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#fff" opacity="1">₦15,000
+                        <animate attributeName="opacity" values="1;0;0;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                          begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                      </text><text x="0" y="28" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#fff" opacity="0">₦7,200
+                        <animate attributeName="opacity" values="0;1;0;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                          begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                      </text><text x="0" y="28" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#fff" opacity="0">₦42,500
+                        <animate attributeName="opacity" values="0;0;1;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                          begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                      </text><text x="0" y="28" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#fff" opacity="0">₦3,000
+                        <animate attributeName="opacity" values="0;0;0;1" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                          begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                      </text><text x="0" y="44" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="8"
+                        fill="#99F6E4">Sent ✓</text>
+                    </g>
+                    <rect x="14" y="14" width="30" height="18" rx="5" fill="#000" fill-opacity="0.35" /><text x="29"
+                      y="27" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                      font-size="10" font-weight="800" fill="#fff">AD</text>
+                    <g transform="translate(306 226)">
+                      <rect x="-123" y="-24" width="123" height="24" rx="12" fill="#000" fill-opacity="0.35" />
+                      <path d="M-109 -6 c-3 -4 -5 -6 -5 -9 a5 5 0 1 1 10 0 c0 3 -2 5 -5 9z" fill="#fff" /><text x="-10"
+                        y="-8" text-anchor="end" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                        font-size="11" font-weight="600" fill="#fff">Victoria Island</text>
+                    </g>
+                  </svg></div>
+                <div class="ad" style="animation-delay:-4.0s"><svg width="320" height="240" viewBox="0 0 320 240"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="festA3" x1="0" y1="0" x2="1" y2="1">
+                        <stop stop-color="#2E1065" />
+                        <stop offset="1" stop-color="#7C3AED" />
+                      </linearGradient>
+                      <linearGradient id="eqA3" x1="0" y1="0" x2="0" y2="1">
+                        <stop stop-color="#22D3EE" />
+                        <stop offset="1" stop-color="#F472B6" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="320" height="240" fill="url(#festA3)" />
+                    <circle cx="240.0" cy="72.0" r="120.0" fill="#F472B6" fill-opacity="0.15" /><text x="22" y="62"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                      font-weight="700" fill="#DDD6FE" letter-spacing="1.5">LIVE THIS WEEKEND</text><text x="20" y="100"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="29"
+                      font-weight="800" fill="#fff">Lagos</text><text x="20" y="136"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="29"
+                      font-weight="800" fill="#fff">Sound Fest</text><text x="20" y="160"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                      font-weight="600" fill="#F9A8D4">Sat · Eko Atlantic · 6PM</text>
+                    <g transform="translate(20 172)">
+                      <rect width="112" height="28" rx="14" fill="#F472B6" /><text x="56" y="19" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                        font-weight="800" fill="#2E1065">Get tickets</text>
+                    </g>
+                    <g transform="translate(0 187) scale(1 -1)">
+                      <rect x="166" y="0" width="5.8" height="43" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="43;24;66;43" dur="0.84s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="176" y="0" width="5.8" height="24" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="24;56;23;24" dur="1.06s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="186" y="0" width="5.8" height="50" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="50;84;29;50" dur="0.93s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="195" y="0" width="5.8" height="60" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="60;46;88;60" dur="0.83s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="205" y="0" width="5.8" height="30" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="30;21;42;30" dur="1.29s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="214" y="0" width="5.8" height="65" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="65;44;58;65" dur="0.84s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="224" y="0" width="5.8" height="68" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="68;48;42;68" dur="1.15s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="234" y="0" width="5.8" height="76" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="76;73;37;76" dur="1.14s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="243" y="0" width="5.8" height="71" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="71;36;89;71" dur="0.87s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="253" y="0" width="5.8" height="31" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="31;54;23;31" dur="1.20s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="262" y="0" width="5.8" height="81" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="81;38;69;81" dur="1.16s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="272" y="0" width="5.8" height="79" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="79;95;53;79" dur="1.20s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="282" y="0" width="5.8" height="65" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="65;99;78;65" dur="0.97s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="291" y="0" width="5.8" height="22" rx="2" fill="url(#eqA3)">
+                        <animate attributeName="height" values="22;52;32;22" dur="0.87s" repeatCount="indefinite" />
+                      </rect>
+                    </g>
+                    <rect x="14" y="14" width="30" height="18" rx="5" fill="#000" fill-opacity="0.35" /><text x="29"
+                      y="27" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                      font-size="10" font-weight="800" fill="#fff">AD</text>
+                    <g transform="translate(306 226)">
+                      <rect x="-104" y="-24" width="104" height="24" rx="12" fill="#000" fill-opacity="0.35" />
+                      <path d="M-90 -6 c-3 -4 -5 -6 -5 -9 a5 5 0 1 1 10 0 c0 3 -2 5 -5 9z" fill="#fff" /><text x="-10"
+                        y="-8" text-anchor="end" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                        font-size="11" font-weight="600" fill="#fff">Eko Atlantic</text>
+                    </g>
+                  </svg></div>
+                <div class="sweep"></div>
+                <div class="glass"></div>
+                <div class="prog"></div>
+              </div>
+              <div class="ledstrip" style="left:20px;width:320px;top:284px"></div>
+              <div class="shade" style="animation-name:Lfz"></div>
+            </div>
+            <div class="face shell-back"
+              style="width:360px;height:300px;margin-left:-180.0px;margin-top:-150.0px;transform:rotateY(180deg) translateZ(140.0px);">
+              <div class="bezel" style="left:14px;top:28px;width:332px;height:252px"></div>
+              <div class="screen" style="left:20px;top:34px;width:320px;height:240px">
+                <div class="ad" style="animation-delay:-8.0s"><svg width="320" height="240" viewBox="0 0 320 240"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="saleB0" x1="0" y1="0" x2="1" y2="1">
+                        <stop stop-color="#FF7A18" />
+                        <stop offset="1" stop-color="#FF2E63" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="320" height="240" fill="url(#saleB0)" />
+                    <circle cx="281.6" cy="43.199999999999996" r="100.8" fill="#fff" fill-opacity="0.10" />
+                    <circle cx="32.0" cy="252.0" r="84.0" fill="#000" fill-opacity="0.10" /><text x="22" y="61"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                      font-weight="700" fill="#FFE8D6" letter-spacing="1.5">KORA MART</text><text x="20" y="112"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="51"
+                      font-weight="800" fill="#fff" letter-spacing="-1">FLASH</text><text x="20" y="158"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="51"
+                      font-weight="800" fill="#fff" letter-spacing="-1">SALE</text>
+                    <g transform="translate(20 172)">
+                      <rect width="150" height="30" rx="15" fill="#fff" /><text x="14" y="20"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#FF2E63">Up to 50% off</text>
+                    </g>
+                    <g transform="translate(237 125)">
+                      <g>
+                        <animateTransform attributeName="transform" type="scale" values="1;1.06;1" dur="1.2s"
+                          repeatCount="indefinite" additive="sum" />
+                        <path d="M-40 -30 H40 L48 50 H-48Z" fill="#fff" />
+                        <path d="M-20 -30 v-10 a20 20 0 0 1 40 0 v10" stroke="#fff" stroke-width="6" fill="none" /><text
+                          x="0" y="22" text-anchor="middle"
+                          font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="26"
+                          font-weight="800" fill="#FF2E63">%</text>
+                      </g>
+                    </g><text x="304" y="39" text-anchor="end"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      font-weight="700" fill="#fff" opacity="1">Ends in 02:14:36
+                      <animate attributeName="opacity" values="1;0;0;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                        begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                    </text><text x="304" y="39" text-anchor="end"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      font-weight="700" fill="#fff" opacity="0">Ends in 02:14:35
+                      <animate attributeName="opacity" values="0;1;0;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                        begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                    </text><text x="304" y="39" text-anchor="end"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      font-weight="700" fill="#fff" opacity="0">Ends in 02:14:34
+                      <animate attributeName="opacity" values="0;0;1;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                        begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                    </text><text x="304" y="39" text-anchor="end"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      font-weight="700" fill="#fff" opacity="0">Ends in 02:14:33
+                      <animate attributeName="opacity" values="0;0;0;1" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                        begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                    </text>
+                    <rect x="14" y="14" width="30" height="18" rx="5" fill="#000" fill-opacity="0.35" /><text x="29"
+                      y="27" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                      font-size="10" font-weight="800" fill="#fff">AD</text>
+                    <g transform="translate(306 226)">
+                      <rect x="-111" y="-24" width="111" height="24" rx="12" fill="#000" fill-opacity="0.35" />
+                      <path d="M-97 -6 c-3 -4 -5 -6 -5 -9 a5 5 0 1 1 10 0 c0 3 -2 5 -5 9z" fill="#fff" /><text x="-10"
+                        y="-8" text-anchor="end" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                        font-size="11" font-weight="600" fill="#fff">Lekki Phase 1</text>
+                    </g>
+                  </svg></div>
+                <div class="ad" style="animation-delay:-4.0s"><svg width="320" height="240" viewBox="0 0 320 240"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <radialGradient id="foodB1" cx="0.7" cy="0.5" r="0.8">
+                        <stop stop-color="#B91C1C" />
+                        <stop offset="1" stop-color="#450A0A" />
+                      </radialGradient>
+                    </defs>
+                    <rect width="320" height="240" fill="url(#foodB1)" /><text x="22" y="62"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                      font-weight="700" fill="#FECACA" letter-spacing="1.5">MAMA PUT KITCHEN</text><text x="20" y="102"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="32"
+                      font-weight="800" fill="#fff">Smoky</text><text x="20" y="138"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="32"
+                      font-weight="800" fill="#FACC15">Jollof</text><text x="20" y="174"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="22"
+                      font-weight="800" fill="#fff">₦2,500</text><text x="20" y="196"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      fill="#FECACA">Delivered in 20 min</text>
+                    <g transform="translate(234 139)">
+                      <ellipse cx="0" cy="34" rx="64" ry="10" fill="#000" fill-opacity="0.3" />
+                      <path d="M-58 -6 H58 A58 44 0 0 1 -58 -6Z" fill="#F8FAFC" />
+                      <path d="M-58 -6 H58 A58 44 0 0 1 -58 -6Z" fill="#1E3A8A" fill-opacity="0.12" />
+                      <ellipse cx="0" cy="-6" rx="58" ry="12" fill="#E2E8F0" />
+                      <ellipse cx="0" cy="-8" rx="50" ry="10" fill="#EA580C" />
+                      <circle cx="-16" cy="-12" r="3" fill="#FFB547" />
+                      <circle cx="13" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="3" cy="-10" r="3" fill="#FFB547" />
+                      <circle cx="-39" cy="-8" r="3" fill="#FFB547" />
+                      <circle cx="-41" cy="-9" r="3" fill="#FFB547" />
+                      <circle cx="-38" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="-7" cy="-4" r="3" fill="#FFB547" />
+                      <circle cx="-33" cy="-11" r="3" fill="#FFB547" />
+                      <circle cx="11" cy="-3" r="3" fill="#FFB547" />
+                      <circle cx="7" cy="-9" r="3" fill="#FFB547" />
+                      <circle cx="42" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="32" cy="-11" r="3" fill="#FFB547" />
+                      <circle cx="-31" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="-17" cy="-4" r="3" fill="#FFB547" />
+                      <circle cx="-28" cy="-7" r="3" fill="#FFB547" />
+                      <circle cx="12" cy="-10" r="3" fill="#FFB547" />
+                      <circle cx="4" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="-39" cy="-12" r="3" fill="#FFB547" />
+                      <circle cx="16" cy="-9" r="3" fill="#FFB547" />
+                      <circle cx="-16" cy="-7" r="3" fill="#FFB547" />
+                      <circle cx="-4" cy="-10" r="3" fill="#FFB547" />
+                      <circle cx="26" cy="-6" r="3" fill="#FFB547" />
+                      <circle cx="-23" cy="-7" r="3" fill="#FFB547" />
+                      <circle cx="2" cy="-3" r="3" fill="#FFB547" />
+                      <circle cx="20" cy="-11" r="3" fill="#FFB547" />
+                      <circle cx="42" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="-7" cy="-5" r="3" fill="#FFB547" />
+                      <circle cx="-31" cy="-8" r="3" fill="#FFB547" />
+                      <circle cx="-41" cy="-6" r="3" fill="#FFB547" />
+                      <circle cx="23" cy="-7" r="3" fill="#FFB547" />
+                      <path d="M8 -18 q18 -16 30 -4 q6 8 -6 12 q-14 4 -24 -8z" fill="#92400E" />
+                      <rect x="34" y="-26" width="16" height="5" rx="2.5" fill="#FDE68A"
+                        transform="rotate(-35 34 -26)" />
+                      <g transform="translate(0 -30)">
+                        <path d="M-18 0 q-6 -10 0 -20 q6 -10 0 -20" stroke="#fff" stroke-opacity="0.6" stroke-width="3"
+                          fill="none" stroke-linecap="round">
+                          <animate attributeName="stroke-opacity" values="0;0.7;0" dur="2s" begin="0.0s"
+                            repeatCount="indefinite" />
+                          <animateTransform attributeName="transform" type="translate" values="0 6;0 -8" dur="2s"
+                            begin="0.0s" repeatCount="indefinite" />
+                        </path>
+                        <path d="M0 0 q-6 -10 0 -20 q6 -10 0 -20" stroke="#fff" stroke-opacity="0.6" stroke-width="3"
+                          fill="none" stroke-linecap="round">
+                          <animate attributeName="stroke-opacity" values="0;0.7;0" dur="2s" begin="0.5s"
+                            repeatCount="indefinite" />
+                          <animateTransform attributeName="transform" type="translate" values="0 6;0 -8" dur="2s"
+                            begin="0.5s" repeatCount="indefinite" />
+                        </path>
+                        <path d="M18 0 q-6 -10 0 -20 q6 -10 0 -20" stroke="#fff" stroke-opacity="0.6" stroke-width="3"
+                          fill="none" stroke-linecap="round">
+                          <animate attributeName="stroke-opacity" values="0;0.7;0" dur="2s" begin="1.0s"
+                            repeatCount="indefinite" />
+                          <animateTransform attributeName="transform" type="translate" values="0 6;0 -8" dur="2s"
+                            begin="1.0s" repeatCount="indefinite" />
+                        </path>
+                      </g>
+                    </g>
+                    <rect x="14" y="14" width="30" height="18" rx="5" fill="#000" fill-opacity="0.35" /><text x="29"
+                      y="27" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                      font-size="10" font-weight="800" fill="#fff">AD</text>
+                    <g transform="translate(306 226)">
+                      <rect x="-111" y="-24" width="111" height="24" rx="12" fill="#000" fill-opacity="0.35" />
+                      <path d="M-97 -6 c-3 -4 -5 -6 -5 -9 a5 5 0 1 1 10 0 c0 3 -2 5 -5 9z" fill="#fff" /><text x="-10"
+                        y="-8" text-anchor="end" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                        font-size="11" font-weight="600" fill="#fff">Admiralty Way</text>
+                    </g>
+                  </svg></div>
+                <div class="ad" style="animation-delay:0s"><svg width="320" height="240" viewBox="0 0 320 240"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="payB2" x1="0" y1="0" x2="1" y2="1">
+                        <stop stop-color="#042F2E" />
+                        <stop offset="1" stop-color="#0E7490" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="320" height="240" fill="url(#payB2)" />
+                    <path d="M0 192.0 Q160.0 132.0 320 180.0 V240 H0Z" fill="#2EE6A6" fill-opacity="0.12" /><text x="22"
+                      y="62" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                      font-weight="700" fill="#99F6E4" letter-spacing="1.5">ZAPP PAY</text><text x="20" y="98"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="27"
+                      font-weight="800" fill="#fff">Send money</text><text x="20" y="132"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="27"
+                      font-weight="800" fill="#2EE6A6">in seconds.</text>
+                    <g transform="translate(20 150)">
+                      <rect width="118" height="28" rx="14" fill="#2EE6A6" /><text x="59" y="19" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                        font-weight="800" fill="#042F2E">0% fees today</text>
+                    </g>
+                    <g transform="translate(243 120)">
+                      <rect x="-38" y="-70" width="76" height="140" rx="14" fill="#0B1220" stroke="#99F6E4"
+                        stroke-width="3" />
+                      <rect x="-30" y="-58" width="60" height="116" rx="6" fill="#0F766E" />
+                      <circle cx="0" cy="-12" r="20" fill="none" stroke="#2EE6A6" stroke-width="3">
+                        <animate attributeName="r" values="20;46" dur="1.6s" repeatCount="indefinite" />
+                        <animate attributeName="stroke-opacity" values="0.8;0" dur="1.6s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="0" cy="-12" r="18" fill="#2EE6A6" />
+                      <path d="M-8 -12 l6 6 l11 -12" stroke="#042F2E" stroke-width="4" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round" /><text x="0" y="28" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#fff" opacity="1">₦15,000
+                        <animate attributeName="opacity" values="1;0;0;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                          begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                      </text><text x="0" y="28" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#fff" opacity="0">₦7,200
+                        <animate attributeName="opacity" values="0;1;0;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                          begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                      </text><text x="0" y="28" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#fff" opacity="0">₦42,500
+                        <animate attributeName="opacity" values="0;0;1;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                          begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                      </text><text x="0" y="28" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#fff" opacity="0">₦3,000
+                        <animate attributeName="opacity" values="0;0;0;1" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                          begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                      </text><text x="0" y="44" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="8"
+                        fill="#99F6E4">Sent ✓</text>
+                    </g>
+                    <rect x="14" y="14" width="30" height="18" rx="5" fill="#000" fill-opacity="0.35" /><text x="29"
+                      y="27" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                      font-size="10" font-weight="800" fill="#fff">AD</text>
+                    <g transform="translate(306 226)">
+                      <rect x="-123" y="-24" width="123" height="24" rx="12" fill="#000" fill-opacity="0.35" />
+                      <path d="M-109 -6 c-3 -4 -5 -6 -5 -9 a5 5 0 1 1 10 0 c0 3 -2 5 -5 9z" fill="#fff" /><text x="-10"
+                        y="-8" text-anchor="end" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                        font-size="11" font-weight="600" fill="#fff">Victoria Island</text>
+                    </g>
+                  </svg></div>
+                <div class="ad" style="animation-delay:-12.0s"><svg width="320" height="240" viewBox="0 0 320 240"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="festB3" x1="0" y1="0" x2="1" y2="1">
+                        <stop stop-color="#2E1065" />
+                        <stop offset="1" stop-color="#7C3AED" />
+                      </linearGradient>
+                      <linearGradient id="eqB3" x1="0" y1="0" x2="0" y2="1">
+                        <stop stop-color="#22D3EE" />
+                        <stop offset="1" stop-color="#F472B6" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="320" height="240" fill="url(#festB3)" />
+                    <circle cx="240.0" cy="72.0" r="120.0" fill="#F472B6" fill-opacity="0.15" /><text x="22" y="62"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                      font-weight="700" fill="#DDD6FE" letter-spacing="1.5">LIVE THIS WEEKEND</text><text x="20" y="100"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="29"
+                      font-weight="800" fill="#fff">Lagos</text><text x="20" y="136"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="29"
+                      font-weight="800" fill="#fff">Sound Fest</text><text x="20" y="160"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                      font-weight="600" fill="#F9A8D4">Sat · Eko Atlantic · 6PM</text>
+                    <g transform="translate(20 172)">
+                      <rect width="112" height="28" rx="14" fill="#F472B6" /><text x="56" y="19" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                        font-weight="800" fill="#2E1065">Get tickets</text>
+                    </g>
+                    <g transform="translate(0 187) scale(1 -1)">
+                      <rect x="166" y="0" width="5.8" height="43" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="43;24;66;43" dur="0.84s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="176" y="0" width="5.8" height="24" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="24;56;23;24" dur="1.06s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="186" y="0" width="5.8" height="50" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="50;84;29;50" dur="0.93s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="195" y="0" width="5.8" height="60" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="60;46;88;60" dur="0.83s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="205" y="0" width="5.8" height="30" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="30;21;42;30" dur="1.29s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="214" y="0" width="5.8" height="65" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="65;44;58;65" dur="0.84s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="224" y="0" width="5.8" height="68" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="68;48;42;68" dur="1.15s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="234" y="0" width="5.8" height="76" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="76;73;37;76" dur="1.14s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="243" y="0" width="5.8" height="71" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="71;36;89;71" dur="0.87s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="253" y="0" width="5.8" height="31" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="31;54;23;31" dur="1.20s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="262" y="0" width="5.8" height="81" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="81;38;69;81" dur="1.16s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="272" y="0" width="5.8" height="79" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="79;95;53;79" dur="1.20s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="282" y="0" width="5.8" height="65" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="65;99;78;65" dur="0.97s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="291" y="0" width="5.8" height="22" rx="2" fill="url(#eqB3)">
+                        <animate attributeName="height" values="22;52;32;22" dur="0.87s" repeatCount="indefinite" />
+                      </rect>
+                    </g>
+                    <rect x="14" y="14" width="30" height="18" rx="5" fill="#000" fill-opacity="0.35" /><text x="29"
+                      y="27" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                      font-size="10" font-weight="800" fill="#fff">AD</text>
+                    <g transform="translate(306 226)">
+                      <rect x="-104" y="-24" width="104" height="24" rx="12" fill="#000" fill-opacity="0.35" />
+                      <path d="M-90 -6 c-3 -4 -5 -6 -5 -9 a5 5 0 1 1 10 0 c0 3 -2 5 -5 9z" fill="#fff" /><text x="-10"
+                        y="-8" text-anchor="end" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                        font-size="11" font-weight="600" fill="#fff">Eko Atlantic</text>
+                    </g>
+                  </svg></div>
+                <div class="sweep"></div>
+                <div class="glass"></div>
+                <div class="prog"></div>
+              </div>
+              <div class="ledstrip" style="left:20px;width:320px;top:284px"></div>
+              <div class="shade" style="animation-name:Lbz"></div>
+            </div>
+            <div class="face shell-right"
+              style="width:280px;height:300px;margin-left:-140.0px;margin-top:-150.0px;transform:rotateY(90deg) translateZ(180.0px);">
+              <div class="bezel" style="left:14px;top:28px;width:252px;height:252px"></div>
+              <div class="screen" style="left:20px;top:34px;width:240px;height:240px">
+                <div class="ad" style="animation-delay:-4.0s"><svg width="240" height="240" viewBox="0 0 240 240"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="saleR0" x1="0" y1="0" x2="1" y2="1">
+                        <stop stop-color="#FF7A18" />
+                        <stop offset="1" stop-color="#FF2E63" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="240" height="240" fill="url(#saleR0)" />
+                    <circle cx="211.2" cy="43.199999999999996" r="100.8" fill="#fff" fill-opacity="0.10" />
+                    <circle cx="24.0" cy="252.0" r="84.0" fill="#000" fill-opacity="0.10" /><text x="22" y="61"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                      font-weight="700" fill="#FFE8D6" letter-spacing="1.5">KORA MART</text><text x="20" y="99"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="38"
+                      font-weight="800" fill="#fff" letter-spacing="-1">FLASH</text><text x="20" y="134"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="38"
+                      font-weight="800" fill="#fff" letter-spacing="-1">SALE</text>
+                    <g transform="translate(20 148)">
+                      <rect width="120" height="30" rx="15" fill="#fff" /><text x="14" y="20"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#FF2E63">Up to 50% off</text>
+                    </g>
+                    <g transform="translate(178 125)">
+                      <g>
+                        <animateTransform attributeName="transform" type="scale" values="1;1.06;1" dur="1.2s"
+                          repeatCount="indefinite" additive="sum" />
+                        <path d="M-40 -30 H40 L48 50 H-48Z" fill="#fff" />
+                        <path d="M-20 -30 v-10 a20 20 0 0 1 40 0 v10" stroke="#fff" stroke-width="6" fill="none" /><text
+                          x="0" y="22" text-anchor="middle"
+                          font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="26"
+                          font-weight="800" fill="#FF2E63">%</text>
+                      </g>
+                    </g><text x="224" y="39" text-anchor="end"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      font-weight="700" fill="#fff" opacity="1">Ends in 02:14:36
+                      <animate attributeName="opacity" values="1;0;0;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                        begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                    </text><text x="224" y="39" text-anchor="end"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      font-weight="700" fill="#fff" opacity="0">Ends in 02:14:35
+                      <animate attributeName="opacity" values="0;1;0;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                        begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                    </text><text x="224" y="39" text-anchor="end"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      font-weight="700" fill="#fff" opacity="0">Ends in 02:14:34
+                      <animate attributeName="opacity" values="0;0;1;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                        begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                    </text><text x="224" y="39" text-anchor="end"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      font-weight="700" fill="#fff" opacity="0">Ends in 02:14:33
+                      <animate attributeName="opacity" values="0;0;0;1" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                        begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                    </text>
+                    <rect x="14" y="14" width="30" height="18" rx="5" fill="#000" fill-opacity="0.35" /><text x="29"
+                      y="27" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                      font-size="10" font-weight="800" fill="#fff">AD</text>
+                    <g transform="translate(226 226)">
+                      <rect x="-111" y="-24" width="111" height="24" rx="12" fill="#000" fill-opacity="0.35" />
+                      <path d="M-97 -6 c-3 -4 -5 -6 -5 -9 a5 5 0 1 1 10 0 c0 3 -2 5 -5 9z" fill="#fff" /><text x="-10"
+                        y="-8" text-anchor="end" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                        font-size="11" font-weight="600" fill="#fff">Lekki Phase 1</text>
+                    </g>
+                  </svg></div>
+                <div class="ad" style="animation-delay:0s"><svg width="240" height="240" viewBox="0 0 240 240"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <radialGradient id="foodR1" cx="0.7" cy="0.5" r="0.8">
+                        <stop stop-color="#B91C1C" />
+                        <stop offset="1" stop-color="#450A0A" />
+                      </radialGradient>
+                    </defs>
+                    <rect width="240" height="240" fill="url(#foodR1)" /><text x="22" y="62"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                      font-weight="700" fill="#FECACA" letter-spacing="1.5">MAMA PUT KITCHEN</text><text x="20" y="102"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="24"
+                      font-weight="800" fill="#fff">Smoky</text><text x="20" y="138"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="24"
+                      font-weight="800" fill="#FACC15">Jollof</text><text x="20" y="174"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="22"
+                      font-weight="800" fill="#fff">₦2,500</text><text x="20" y="196"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="11"
+                      fill="#FECACA">Delivered in 20 min</text>
+                    <g transform="translate(175 139)">
+                      <ellipse cx="0" cy="34" rx="64" ry="10" fill="#000" fill-opacity="0.3" />
+                      <path d="M-58 -6 H58 A58 44 0 0 1 -58 -6Z" fill="#F8FAFC" />
+                      <path d="M-58 -6 H58 A58 44 0 0 1 -58 -6Z" fill="#1E3A8A" fill-opacity="0.12" />
+                      <ellipse cx="0" cy="-6" rx="58" ry="12" fill="#E2E8F0" />
+                      <ellipse cx="0" cy="-8" rx="50" ry="10" fill="#EA580C" />
+                      <circle cx="-16" cy="-12" r="3" fill="#FFB547" />
+                      <circle cx="13" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="3" cy="-10" r="3" fill="#FFB547" />
+                      <circle cx="-39" cy="-8" r="3" fill="#FFB547" />
+                      <circle cx="-41" cy="-9" r="3" fill="#FFB547" />
+                      <circle cx="-38" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="-7" cy="-4" r="3" fill="#FFB547" />
+                      <circle cx="-33" cy="-11" r="3" fill="#FFB547" />
+                      <circle cx="11" cy="-3" r="3" fill="#FFB547" />
+                      <circle cx="7" cy="-9" r="3" fill="#FFB547" />
+                      <circle cx="42" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="32" cy="-11" r="3" fill="#FFB547" />
+                      <circle cx="-31" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="-17" cy="-4" r="3" fill="#FFB547" />
+                      <circle cx="-28" cy="-7" r="3" fill="#FFB547" />
+                      <circle cx="12" cy="-10" r="3" fill="#FFB547" />
+                      <circle cx="4" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="-39" cy="-12" r="3" fill="#FFB547" />
+                      <circle cx="16" cy="-9" r="3" fill="#FFB547" />
+                      <circle cx="-16" cy="-7" r="3" fill="#FFB547" />
+                      <circle cx="-4" cy="-10" r="3" fill="#FFB547" />
+                      <circle cx="26" cy="-6" r="3" fill="#FFB547" />
+                      <circle cx="-23" cy="-7" r="3" fill="#FFB547" />
+                      <circle cx="2" cy="-3" r="3" fill="#FFB547" />
+                      <circle cx="20" cy="-11" r="3" fill="#FFB547" />
+                      <circle cx="42" cy="-13" r="3" fill="#FFB547" />
+                      <circle cx="-7" cy="-5" r="3" fill="#FFB547" />
+                      <circle cx="-31" cy="-8" r="3" fill="#FFB547" />
+                      <circle cx="-41" cy="-6" r="3" fill="#FFB547" />
+                      <circle cx="23" cy="-7" r="3" fill="#FFB547" />
+                      <path d="M8 -18 q18 -16 30 -4 q6 8 -6 12 q-14 4 -24 -8z" fill="#92400E" />
+                      <rect x="34" y="-26" width="16" height="5" rx="2.5" fill="#FDE68A"
+                        transform="rotate(-35 34 -26)" />
+                      <g transform="translate(0 -30)">
+                        <path d="M-18 0 q-6 -10 0 -20 q6 -10 0 -20" stroke="#fff" stroke-opacity="0.6" stroke-width="3"
+                          fill="none" stroke-linecap="round">
+                          <animate attributeName="stroke-opacity" values="0;0.7;0" dur="2s" begin="0.0s"
+                            repeatCount="indefinite" />
+                          <animateTransform attributeName="transform" type="translate" values="0 6;0 -8" dur="2s"
+                            begin="0.0s" repeatCount="indefinite" />
+                        </path>
+                        <path d="M0 0 q-6 -10 0 -20 q6 -10 0 -20" stroke="#fff" stroke-opacity="0.6" stroke-width="3"
+                          fill="none" stroke-linecap="round">
+                          <animate attributeName="stroke-opacity" values="0;0.7;0" dur="2s" begin="0.5s"
+                            repeatCount="indefinite" />
+                          <animateTransform attributeName="transform" type="translate" values="0 6;0 -8" dur="2s"
+                            begin="0.5s" repeatCount="indefinite" />
+                        </path>
+                        <path d="M18 0 q-6 -10 0 -20 q6 -10 0 -20" stroke="#fff" stroke-opacity="0.6" stroke-width="3"
+                          fill="none" stroke-linecap="round">
+                          <animate attributeName="stroke-opacity" values="0;0.7;0" dur="2s" begin="1.0s"
+                            repeatCount="indefinite" />
+                          <animateTransform attributeName="transform" type="translate" values="0 6;0 -8" dur="2s"
+                            begin="1.0s" repeatCount="indefinite" />
+                        </path>
+                      </g>
+                    </g>
+                    <rect x="14" y="14" width="30" height="18" rx="5" fill="#000" fill-opacity="0.35" /><text x="29"
+                      y="27" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                      font-size="10" font-weight="800" fill="#fff">AD</text>
+                    <g transform="translate(226 226)">
+                      <rect x="-111" y="-24" width="111" height="24" rx="12" fill="#000" fill-opacity="0.35" />
+                      <path d="M-97 -6 c-3 -4 -5 -6 -5 -9 a5 5 0 1 1 10 0 c0 3 -2 5 -5 9z" fill="#fff" /><text x="-10"
+                        y="-8" text-anchor="end" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                        font-size="11" font-weight="600" fill="#fff">Admiralty Way</text>
+                    </g>
+                  </svg></div>
+                <div class="ad" style="animation-delay:-12.0s"><svg width="240" height="240" viewBox="0 0 240 240"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="payR2" x1="0" y1="0" x2="1" y2="1">
+                        <stop stop-color="#042F2E" />
+                        <stop offset="1" stop-color="#0E7490" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="240" height="240" fill="url(#payR2)" />
+                    <path d="M0 192.0 Q120.0 132.0 240 180.0 V240 H0Z" fill="#2EE6A6" fill-opacity="0.12" /><text x="22"
+                      y="62" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                      font-weight="700" fill="#99F6E4" letter-spacing="1.5">ZAPP PAY</text><text x="20" y="98"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="20"
+                      font-weight="800" fill="#fff">Send money</text><text x="20" y="132"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="20"
+                      font-weight="800" fill="#2EE6A6">in seconds.</text>
+                    <g transform="translate(20 150)">
+                      <rect width="118" height="28" rx="14" fill="#2EE6A6" /><text x="59" y="19" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                        font-weight="800" fill="#042F2E">0% fees today</text>
+                    </g>
+                    <g transform="translate(182 120)">
+                      <rect x="-38" y="-70" width="76" height="140" rx="14" fill="#0B1220" stroke="#99F6E4"
+                        stroke-width="3" />
+                      <rect x="-30" y="-58" width="60" height="116" rx="6" fill="#0F766E" />
+                      <circle cx="0" cy="-12" r="20" fill="none" stroke="#2EE6A6" stroke-width="3">
+                        <animate attributeName="r" values="20;46" dur="1.6s" repeatCount="indefinite" />
+                        <animate attributeName="stroke-opacity" values="0.8;0" dur="1.6s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="0" cy="-12" r="18" fill="#2EE6A6" />
+                      <path d="M-8 -12 l6 6 l11 -12" stroke="#042F2E" stroke-width="4" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round" /><text x="0" y="28" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#fff" opacity="1">₦15,000
+                        <animate attributeName="opacity" values="1;0;0;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                          begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                      </text><text x="0" y="28" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#fff" opacity="0">₦7,200
+                        <animate attributeName="opacity" values="0;1;0;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                          begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                      </text><text x="0" y="28" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#fff" opacity="0">₦42,500
+                        <animate attributeName="opacity" values="0;0;1;0" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                          begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                      </text><text x="0" y="28" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="13"
+                        font-weight="800" fill="#fff" opacity="0">₦3,000
+                        <animate attributeName="opacity" values="0;0;0;1" keyTimes="0.000;0.250;0.500;0.750" dur="4s"
+                          begin="0s" repeatCount="indefinite" calcMode="discrete" />
+                      </text><text x="0" y="44" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="8"
+                        fill="#99F6E4">Sent ✓</text>
+                    </g>
+                    <rect x="14" y="14" width="30" height="18" rx="5" fill="#000" fill-opacity="0.35" /><text x="29"
+                      y="27" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                      font-size="10" font-weight="800" fill="#fff">AD</text>
+                    <g transform="translate(226 226)">
+                      <rect x="-123" y="-24" width="123" height="24" rx="12" fill="#000" fill-opacity="0.35" />
+                      <path d="M-109 -6 c-3 -4 -5 -6 -5 -9 a5 5 0 1 1 10 0 c0 3 -2 5 -5 9z" fill="#fff" /><text x="-10"
+                        y="-8" text-anchor="end" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                        font-size="11" font-weight="600" fill="#fff">Victoria Island</text>
+                    </g>
+                  </svg></div>
+                <div class="ad" style="animation-delay:-8.0s"><svg width="240" height="240" viewBox="0 0 240 240"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="festR3" x1="0" y1="0" x2="1" y2="1">
+                        <stop stop-color="#2E1065" />
+                        <stop offset="1" stop-color="#7C3AED" />
+                      </linearGradient>
+                      <linearGradient id="eqR3" x1="0" y1="0" x2="0" y2="1">
+                        <stop stop-color="#22D3EE" />
+                        <stop offset="1" stop-color="#F472B6" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="240" height="240" fill="url(#festR3)" />
+                    <circle cx="180.0" cy="72.0" r="120.0" fill="#F472B6" fill-opacity="0.15" /><text x="22" y="62"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                      font-weight="700" fill="#DDD6FE" letter-spacing="1.5">LIVE THIS WEEKEND</text><text x="20" y="100"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="22"
+                      font-weight="800" fill="#fff">Lagos</text><text x="20" y="136"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="22"
+                      font-weight="800" fill="#fff">Sound Fest</text><text x="20" y="160"
+                      font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                      font-weight="600" fill="#F9A8D4">Sat · Eko Atlantic · 6PM</text>
+                    <g transform="translate(20 172)">
+                      <rect width="112" height="28" rx="14" fill="#F472B6" /><text x="56" y="19" text-anchor="middle"
+                        font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif" font-size="12"
+                        font-weight="800" fill="#2E1065">Get tickets</text>
+                    </g>
+                    <g transform="translate(0 187) scale(1 -1)">
+                      <rect x="125" y="0" width="4.3" height="43" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="43;24;66;43" dur="0.84s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="132" y="0" width="4.3" height="24" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="24;56;23;24" dur="1.06s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="139" y="0" width="4.3" height="50" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="50;84;29;50" dur="0.93s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="146" y="0" width="4.3" height="60" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="60;46;88;60" dur="0.83s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="154" y="0" width="4.3" height="30" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="30;21;42;30" dur="1.29s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="161" y="0" width="4.3" height="65" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="65;44;58;65" dur="0.84s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="168" y="0" width="4.3" height="68" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="68;48;42;68" dur="1.15s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="175" y="0" width="4.3" height="76" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="76;73;37;76" dur="1.14s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="182" y="0" width="4.3" height="71" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="71;36;89;71" dur="0.87s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="190" y="0" width="4.3" height="31" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="31;54;23;31" dur="1.20s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="197" y="0" width="4.3" height="81" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="81;38;69;81" dur="1.16s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="204" y="0" width="4.3" height="79" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="79;95;53;79" dur="1.20s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="211" y="0" width="4.3" height="65" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="65;99;78;65" dur="0.97s" repeatCount="indefinite" />
+                      </rect>
+                      <rect x="218" y="0" width="4.3" height="22" rx="2" fill="url(#eqR3)">
+                        <animate attributeName="height" values="22;52;32;22" dur="0.87s" repeatCount="indefinite" />
+                      </rect>
+                    </g>
+                    <rect x="14" y="14" width="30" height="18" rx="5" fill="#000" fill-opacity="0.35" /><text x="29"
+                      y="27" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                      font-size="10" font-weight="800" fill="#fff">AD</text>
+                    <g transform="translate(226 226)">
+                      <rect x="-104" y="-24" width="104" height="24" rx="12" fill="#000" fill-opacity="0.35" />
+                      <path d="M-90 -6 c-3 -4 -5 -6 -5 -9 a5 5 0 1 1 10 0 c0 3 -2 5 -5 9z" fill="#fff" /><text x="-10"
+                        y="-8" text-anchor="end" font-family="Plus Jakarta Sans, Inter, Segoe UI, Arial, sans-serif"
+                        font-size="11" font-weight="600" fill="#fff">Eko Atlantic</text>
+                    </g>
+                  </svg></div>
+                <div class="sweep"></div>
+                <div class="glass"></div>
+                <div class="prog"></div>
+              </div>
+              <div class="ledstrip" style="left:20px;width:240px;top:284px"></div>
+              <div class="shade" style="animation-name:Lrx"></div>
+            </div>
+            <div class="face shell-left"
+              style="width:280px;height:300px;margin-left:-140.0px;margin-top:-150.0px;transform:rotateY(-90deg) translateZ(180.0px);">
+              <div class="riderside">
+                <div class="hinge h1"></div>
+                <div class="hinge h2"></div>
+                <div class="plate"><b>adbox</b><span>4G · GPS · IP65</span></div>
+                <div class="vent"></div>
+              </div>
+              <div class="shade" style="animation-name:Llx"></div>
+            </div>
+            <div class="face shell-top"
+              style="width:360px;height:280px;margin-left:-180.0px;margin-top:-140.0px;transform:rotateX(90deg) translateZ(150.0px);">
+            </div>
+            <div class="face shell-bottom"
+              style="width:360px;height:280px;margin-left:-180.0px;margin-top:-140.0px;transform:rotateX(-90deg) translateZ(150.0px);">
+            </div>
+          </div>
+          <div class="cub lid" style="transform:translateY(-159.0px)">
+            <div class="face lid-front"
+              style="width:370px;height:18px;margin-left:-185.0px;margin-top:-9.0px;transform:translateZ(145.0px);">
+              <div class="shade" style="animation-name:Lfz"></div>
+            </div>
+            <div class="face lid-back"
+              style="width:370px;height:18px;margin-left:-185.0px;margin-top:-9.0px;transform:rotateY(180deg) translateZ(145.0px);">
+              <div class="shade" style="animation-name:Lbz"></div>
+            </div>
+            <div class="face lid-right"
+              style="width:290px;height:18px;margin-left:-145.0px;margin-top:-9.0px;transform:rotateY(90deg) translateZ(185.0px);">
+              <div class="shade" style="animation-name:Lrx"></div>
+            </div>
+            <div class="face lid-left"
+              style="width:290px;height:18px;margin-left:-145.0px;margin-top:-9.0px;transform:rotateY(-90deg) translateZ(185.0px);">
+              <div class="shade" style="animation-name:Llx"></div>
+            </div>
+            <div class="face lid-top"
+              style="width:370px;height:290px;margin-left:-185.0px;margin-top:-145.0px;transform:rotateX(90deg) translateZ(9.0px);">
+              <div class="logo"><span>adbox</span><small>SMART CARRIER</small></div>
+              <div class="strap"></div>
+              <div class="handle"></div>
+            </div>
+            <div class="face lid-bottom"
+              style="width:370px;height:290px;margin-left:-185.0px;margin-top:-145.0px;transform:rotateX(-90deg) translateZ(9.0px);">
+            </div>
+          </div>
+          <div class="cub rail" style="transform:translate3d(0,156.0px,-70.0px)">
+            <div class="face rail-front"
+              style="width:430px;height:12px;margin-left:-215.0px;margin-top:-6.0px;transform:translateZ(10.0px);">
+            </div>
+            <div class="face rail-back"
+              style="width:430px;height:12px;margin-left:-215.0px;margin-top:-6.0px;transform:rotateY(180deg) translateZ(10.0px);">
+            </div>
+            <div class="face rail-right"
+              style="width:20px;height:12px;margin-left:-10.0px;margin-top:-6.0px;transform:rotateY(90deg) translateZ(215.0px);">
+            </div>
+            <div class="face rail-left"
+              style="width:20px;height:12px;margin-left:-10.0px;margin-top:-6.0px;transform:rotateY(-90deg) translateZ(215.0px);">
+            </div>
+            <div class="face rail-top"
+              style="width:430px;height:20px;margin-left:-215.0px;margin-top:-10.0px;transform:rotateX(90deg) translateZ(6.0px);">
+            </div>
+            <div class="face rail-bottom"
+              style="width:430px;height:20px;margin-left:-215.0px;margin-top:-10.0px;transform:rotateX(-90deg) translateZ(6.0px);">
+            </div>
+          </div>
+          <div class="cub rail" style="transform:translate3d(0,156.0px,70.0px)">
+            <div class="face rail-front"
+              style="width:430px;height:12px;margin-left:-215.0px;margin-top:-6.0px;transform:translateZ(10.0px);">
+            </div>
+            <div class="face rail-back"
+              style="width:430px;height:12px;margin-left:-215.0px;margin-top:-6.0px;transform:rotateY(180deg) translateZ(10.0px);">
+            </div>
+            <div class="face rail-right"
+              style="width:20px;height:12px;margin-left:-10.0px;margin-top:-6.0px;transform:rotateY(90deg) translateZ(215.0px);">
+            </div>
+            <div class="face rail-left"
+              style="width:20px;height:12px;margin-left:-10.0px;margin-top:-6.0px;transform:rotateY(-90deg) translateZ(215.0px);">
+            </div>
+            <div class="face rail-top"
+              style="width:430px;height:20px;margin-left:-215.0px;margin-top:-10.0px;transform:rotateX(90deg) translateZ(6.0px);">
+            </div>
+            <div class="face rail-bottom"
+              style="width:430px;height:20px;margin-left:-215.0px;margin-top:-10.0px;transform:rotateX(-90deg) translateZ(6.0px);">
+            </div>
+          </div>
+          <div class="dome" style="transform:translate3d(110.0px,-168.0px,-70.0px)">
+            <div class="dome ">
+              <div class="dome-base"></div>
+              <div class="dome-bb">
+                <div class="dome-body"><i></i></div>
+                <div class="ping"></div>
+                <div class="ping p2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Fit the fixed-size 3D scene to whatever size the page gives this frame.
+    function fit() {
+      document.documentElement.style.setProperty('--s', Math.min(innerWidth / 900, innerHeight / 700));
+    }
+    addEventListener('resize', fit);
+    fit();
+    // Pause every animation for visitors who ask for reduced motion.
+    (function () {
+      var mq = matchMedia('(prefers-reduced-motion: reduce)');
+      function apply() {
+        document.body.classList.toggle('paused', mq.matches);
+        document.querySelectorAll('svg').forEach(function (svg) {
+          if (mq.matches) svg.pauseAnimations(); else svg.unpauseAnimations();
+        });
+      }
+      mq.addEventListener('change', apply);
+      apply();
+    })();
+  </script>
+</body>
+
+</html>

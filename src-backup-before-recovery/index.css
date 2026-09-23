@@ -1,0 +1,240 @@
+@import "tailwindcss";
+
+/*
+  Theming: every colour below reads a CSS variable, so the whole page switches together.
+  Dark is the default. Light applies when the device asks for it (prefers-color-scheme),
+  unless <html data-theme="dark"> is set. <html data-theme="light"> forces light.
+*/
+@theme inline {
+  /* Fonts */
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-ui: "Open Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand and surfaces */
+  --color-brand: var(--brand);
+  --color-on-brand: var(--on-brand);
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-card: var(--card);
+  --color-navy: var(--navy);
+  --color-tint: var(--tint);
+  --color-step: var(--step);
+  --color-step-line: var(--step-line);
+  --color-item: var(--item);
+  --color-item-line: var(--item-line);
+  --color-tile: var(--tile);
+  --color-tile-line: var(--tile-line);
+  --color-hero-bg: var(--hero-bg);
+  --color-hero-fg: var(--hero-fg);
+  --color-pill: var(--pill);
+  --color-pill-line: var(--pill-line);
+  --color-pill-fg: var(--pill-fg);
+
+  /* Text and lines */
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-dim: var(--dim);
+  --color-inactive: var(--inactive);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-nav-link: var(--nav-link);
+  --color-soft: var(--soft);
+  --color-soft-2: var(--soft-2);
+
+  /* Card dots */
+  --color-dot-orange: #ff9500;
+  --color-dot-pink: #ff4d7a;
+  --color-dot-purple: #a78bfa;
+  --color-dot-green: #00d45a;
+}
+
+@theme {
+  /* Content widths at a 1440px viewport */
+  --container-page: 1060px;
+  --container-wide: 1104px;
+  --container-nav: 1012px;
+  --container-narrow: 870px;
+  --container-problem: 1040px;
+  --container-cta: 1200px;
+}
+
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --brand: #00bdd6;
+  --on-brand: #061820;
+  --ink: #0f141d;
+  --surface: #141c28;
+  --raised: #19202b;
+  --card: #0f141d;
+  --navy: #1f2c40;
+  --tint: rgb(0 189 214 / 0.12);
+  --step: #122f3d;
+  --step-line: #0d5a6b;
+  --item: #222933;
+  --item-line: #313841;
+  --tile: #0d1119;
+  --tile-line: #1e2229;
+  --hero-bg: #080c12;
+  --hero-fg: #ffffff;
+  --pill: #0f141d;
+  --pill-line: #20242d;
+  --pill-fg: #00bdd6;
+  --fg: #edf2fa;
+  --muted: #7a8fa8;
+  --dim: #3e5068;
+  --inactive: #edf2fa47;
+  --line: #20242d;
+  --line-strong: #29303a;
+  --nav-link: #777777;
+  --soft: #afbbcb;
+  --soft-2: #c1cbd7;
+  --grid-line: rgba(20, 28, 40, 0.32);
+  --grid-cross-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='213' height='142'%3E%3Cpath d='M65.5 71.5h12M71.5 65.5v12' stroke='rgba(122,143,168,0.18)' fill='none'/%3E%3C/svg%3E");
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --brand: #008d9f;
+    --on-brand: #121211;
+    --ink: #f7feff;
+    --surface: #ecf8fb;
+    --raised: #ffffff;
+    --card: #ffffff;
+    --tint: rgb(0 141 159 / 0.1);
+    --step: #d4f1f6;
+    --step-line: #6fcbd8;
+    --item: #f4fbfd;
+    --item-line: #d7e8ec;
+    --tile: #f4fbfd;
+    --tile-line: #d7e8ec;
+    --hero-bg: #f7feff;
+    --hero-fg: #121211;
+    --pill: #e6f6f8;
+    --pill-line: #b9ebf1;
+    --pill-fg: #004047;
+    --fg: #121211;
+    --muted: #4f6478;
+    --dim: #7f92a6;
+    --inactive: rgb(18 18 17 / 0.32);
+    --line: #d7e8ec;
+    --line-strong: #c5dde3;
+    --nav-link: #55606b;
+    --soft: #3f5165;
+    --soft-2: #2f4256;
+    --grid-line: #f1fbfd;
+    --grid-cross-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='213' height='142'%3E%3Cpath d='M65.5 71.5h12M71.5 65.5v12' stroke='%23ddf4f8' fill='none'/%3E%3C/svg%3E");
+  }
+}
+
+:root[data-theme="light"],
+[data-theme="light"] {
+  color-scheme: light;
+  --brand: #008d9f;
+  --on-brand: #121211;
+  --ink: #f7feff;
+  --surface: #ecf8fb;
+  --raised: #ffffff;
+  --card: #ffffff;
+  --tint: rgb(0 141 159 / 0.1);
+  --step: #d4f1f6;
+  --step-line: #6fcbd8;
+  --item: #f4fbfd;
+  --item-line: #d7e8ec;
+  --tile: #f4fbfd;
+  --tile-line: #d7e8ec;
+  --hero-bg: #f7feff;
+  --hero-fg: #121211;
+  --pill: #e6f6f8;
+  --pill-line: #b9ebf1;
+  --pill-fg: #004047;
+  --fg: #121211;
+  --muted: #4f6478;
+  --dim: #7f92a6;
+  --inactive: rgb(18 18 17 / 0.32);
+  --line: #d7e8ec;
+  --line-strong: #c5dde3;
+  --nav-link: #55606b;
+  --soft: #3f5165;
+  --soft-2: #2f4256;
+  --grid-line: #f1fbfd;
+  --grid-cross-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='213' height='142'%3E%3Cpath d='M65.5 71.5h12M71.5 65.5v12' stroke='%23ddf4f8' fill='none'/%3E%3C/svg%3E");
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--ink);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hero backdrop: plain in dark mode, a faint grid with crosses in light mode. */
+.hero-grid {
+  background-image:
+    var(--grid-cross-img),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size:
+    213px 142px,
+    71px 71px,
+    71px 71px;
+  background-position: 10px 19px;
+}
+
+@keyframes pill-ring {
+  0% {
+    transform: scaleX(1);
+    opacity: 0.45;
+  }
+  100% {
+    transform: scaleX(1.35);
+    opacity: 0;
+  }
+}
+
+@keyframes hero-pill-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .pill-ring {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  [class*="animate-[hero-pill-marquee"] {
+    animation: none !important;
+  }
+}
+
+/* Show an image only in one colour mode (follows the device setting unless data-theme is set). */
+.only-light {
+  display: none;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .only-light {
+    display: block;
+  }
+  :root:not([data-theme="dark"]) .only-dark {
+    display: none;
+  }
+}
+:root[data-theme="light"] .only-light {
+  display: block;
+}
+:root[data-theme="light"] .only-dark {
+  display: none;
+}
