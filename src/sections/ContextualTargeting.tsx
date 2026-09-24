@@ -11,7 +11,7 @@ const cases = [
 
 export function ContextualTargeting() {
   return (
-    <Section tone="ink" id="contextual-targeting" className="pb-[97px]">
+    <Section tone="ink" id="contextual-targeting" className="pb-[97px] bg-hero-bg">
       <Eyebrow>Contextual targeting</Eyebrow>
       <SectionHeading className="mt-[25.5px] max-w-[780px] text-fg">
         The right <Accent>message</Accent> depends on <Accent>where you are</Accent>.
