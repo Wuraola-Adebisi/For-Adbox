@@ -1,18 +1,27 @@
-import carrierScene from '../assets/carrier/adbox_delivery_box_animated.svg'
-import rider from '../assets/illustrations/rider-bike.svg'
-import { Eyebrow, Section, SectionHeading } from '../components/ui'
+import carrierScene from "../assets/carrier/adbox_delivery_box_animated.svg";
+import rider from "../assets/illustrations/rider-bike.svg";
+import { Eyebrow, Section, SectionHeading } from "../components/ui";
 
 export function Problem() {
   return (
-    <Section tone="ink" id="problem" containerSize="problem" className="pb-[180px]">
+    <Section
+      tone="ink"
+      id="problem"
+      containerSize="problem"
+      className="pb-[180px]"
+    >
       <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
         <SectionHeading className="text-fg">
           Your audience moves. <br className="hidden md:block" />
           Your advertising doesn't.
         </SectionHeading>
         <div className="md:mt-[34.4px] md:text-right">
-          <p className="text-base leading-6 text-soft">Traditional billboard ads are static and easy to ignore.</p>
-          <p className="mt-2 text-base leading-6 font-semibold text-brand">adbox puts your brand in motion.</p>
+          <p className="text-base leading-6 text-soft">
+            Traditional billboard ads are static and easy to ignore.
+          </p>
+          <p className="mt-2 text-base leading-6 font-semibold text-brand">
+            adbox puts your brand in motion.
+          </p>
         </div>
       </div>
 
@@ -25,9 +34,10 @@ export function Problem() {
           A smarter way to advertise on the move.
         </h2>
         <p className="mt-[18.5px] max-w-[860px] text-base leading-6 text-muted">
-          AdBox transforms dispatch riders into mobile digital billboards with purpose-built carrier boxes,
-          featuring three integrated LED screens and location-aware technology to deliver your message
-          where your audience is.
+          AdBox transforms dispatch riders into mobile digital billboards with
+          purpose-built carrier boxes, featuring three integrated LED screens
+          and location-aware technology to deliver your message where your
+          audience is.
         </p>
       </div>
 
@@ -50,5 +60,5 @@ export function Problem() {
         />
       </div>
     </Section>
-  )
+  );
 }

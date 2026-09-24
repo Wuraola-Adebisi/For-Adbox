@@ -1,18 +1,15 @@
-import scene from '../assets/illustrations/cta-rider-scene.svg'
-import { Accent, Button, Container } from '../components/ui'
+import scene from "../assets/illustrations/Adbox_bike_rider_day_animated .svg.svg";
+import { Accent, Button, Container } from "../components/ui";
 
 export function FinalCta() {
   return (
     <section id="start" className="bg-ink pb-24">
       <Container size="cta">
-        {/* The card stays dark in both modes, so it uses the dark tokens. */}
-        <div
-          data-theme="dark"
-          className="relative flex flex-col overflow-hidden rounded-[30px] bg-surface text-fg md:h-[464.5px] md:flex-row md:items-center"
-        >
+        <div className="relative flex flex-col overflow-hidden rounded-[30px] bg-cta-card text-fg md:h-[464.5px] md:flex-row md:items-center">
           <div className="px-8 py-12 md:max-w-[560px] md:px-0 md:pt-[3px] md:pb-0 md:pl-16">
             <h2 className="text-[length:clamp(2rem,3.33vw,3rem)] leading-none font-medium tracking-[-0.03em]">
-              Your <Accent>audience</Accent> is already on the <Accent>move</Accent>.
+              Your <Accent>audience</Accent> is already on the{" "}
+              <Accent>move</Accent>.
             </h2>
             <p className="mt-[25.7px] text-[22px] leading-7 font-semibold tracking-[-0.02em] text-brand">
               Now your advertising can be too.
@@ -27,7 +24,11 @@ export function FinalCta() {
               >
                 Start Advertising
               </Button>
-              <Button href="#contact" variant="outline" className="h-14 rounded-[14px] px-7 text-[17px]">
+              <Button
+                href="#contact"
+                variant="outline"
+                className="h-14 rounded-[14px] px-7 text-[17px]"
+              >
                 Talk to AdBox
               </Button>
             </div>
@@ -37,10 +38,13 @@ export function FinalCta() {
             alt=""
             aria-hidden="true"
             loading="lazy"
+            decoding="async"
+            width={732}
+            height={508}
             className="h-auto w-full object-cover md:absolute md:top-0 md:right-0 md:h-full md:w-auto"
           />
         </div>
       </Container>
     </section>
-  )
+  );
 }

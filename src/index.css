@@ -17,6 +17,7 @@
   --color-surface: var(--surface);
   --color-raised: var(--raised);
   --color-card: var(--card);
+  --color-cta-card: var(--cta-card);
   --color-navy: var(--navy);
   --color-tint: var(--tint);
   --color-step: var(--step);
@@ -68,6 +69,7 @@
   --surface: #141c28;
   --raised: #19202b;
   --card: #0f141d;
+  --cta-card: #141c28;
   --navy: #1f2c40;
   --tint: rgb(0 189 214 / 0.12);
   --step: #122f3d;
@@ -103,6 +105,7 @@
     --surface: #ecf8fb;
     --raised: #ffffff;
     --card: #ffffff;
+    --cta-card: #ebf5f6;
     --tint: rgb(0 141 159 / 0.1);
     --step: #d4f1f6;
     --step-line: #6fcbd8;
@@ -138,6 +141,7 @@
   --surface: #ecf8fb;
   --raised: #ffffff;
   --card: #ffffff;
+  --cta-card: #ebf5f6;
   --tint: rgb(0 141 159 / 0.1);
   --step: #d4f1f6;
   --step-line: #6fcbd8;

@@ -3,15 +3,15 @@ import { cn } from '../../lib/cn'
 import { Button, Container, Logo, ThemeToggle } from "../ui";
 
 // TODO: point these at real routes or section ids once they exist.
-const riderLinks = [
-  { label: 'Become a Rider', href: '#become-a-rider' },
-  { label: 'Rider Dashboard', href: '#rider-dashboard' },
-  { label: 'FAQs', href: '#faqs' },
-  { label: 'Support', href: '#support' },
-]
+const audienceLinks = [
+  { label: "Advertising Agencies", href: "#for-agencies" },
+  { label: "Brands", href: "#for-brands" },
+  { label: "SMEs", href: "#for-brands" },
+  { label: "Dispatch Riders", href: "#become-a-rider" },
+];
 
 const linkClass =
-  'font-ui text-base text-nav-link transition-colors duration-200 hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand rounded-sm'
+  "font-ui text-base text-nav-link transition-colors duration-200 hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand rounded-sm";
 
 function ChevronDown({ className }: { className?: string }) {
   return (
@@ -27,38 +27,41 @@ function ChevronDown({ className }: { className?: string }) {
     >
       <path d="m6 9 6 6 6-6" />
     </svg>
-  )
+  );
 }
 
 function RidersMenu() {
-  const [open, setOpen] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-  const panelId = useId()
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const panelId = useId();
 
   useEffect(() => {
-    if (!open) return
+    if (!open) return;
     const onPointerDown = (event: PointerEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) setOpen(false)
-    }
+      if (ref.current && !ref.current.contains(event.target as Node))
+        setOpen(false);
+    };
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false)
-    }
-    document.addEventListener('pointerdown', onPointerDown)
-    document.addEventListener('keydown', onKeyDown)
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
     return () => {
-      document.removeEventListener('pointerdown', onPointerDown)
-      document.removeEventListener('keydown', onKeyDown)
-    }
-  }, [open])
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
 
   return (
     <div
       ref={ref}
       className="relative"
-      onPointerEnter={(event) => event.pointerType === 'mouse' && setOpen(true)}
-      onPointerLeave={(event) => event.pointerType === 'mouse' && setOpen(false)}
+      onPointerEnter={(event) => event.pointerType === "mouse" && setOpen(true)}
+      onPointerLeave={(event) =>
+        event.pointerType === "mouse" && setOpen(false)
+      }
       onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false)
+        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
       }}
     >
       <button
@@ -66,44 +69,66 @@ function RidersMenu() {
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}
-        className={cn(linkClass, 'inline-flex cursor-pointer items-center gap-1.5')}
+        className={cn(
+          linkClass,
+          "inline-flex cursor-pointer items-center gap-1.5",
+        )}
       >
-        For Riders
-        <ChevronDown className={cn('size-4 transition-transform duration-200', open && 'rotate-180')} />
+        Adbox For
+        <ChevronDown
+          className={cn(
+            "size-4 transition-transform duration-200",
+            open && "rotate-180",
+          )}
+        />
       </button>
-      <div id={panelId} hidden={!open} className="absolute top-full left-1/2 -translate-x-1/2 pt-3">
+      <div
+        id={panelId}
+        hidden={!open}
+        className="absolute top-full left-1/2 -translate-x-1/2 pt-3"
+      >
         <ul className="min-w-52 rounded-xl border border-line bg-ink/95 p-2 shadow-xl backdrop-blur-md">
-          {riderLinks.map((link) => (
-            <li key={link.href}>
+          {audienceLinks.map((link) => (
+            <li key={link.label}>
               <a
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="block rounded-lg px-3 py-2 font-ui text-sm text-nav-link transition-colors hover:bg-fg/5 hover:text-fg focus-visible:bg-fg/5 focus-visible:text-fg focus-visible:outline-none"
+                className="group block rounded-lg px-3 py-2 font-ui transition-colors hover:bg-fg/5 focus-visible:bg-fg/5 focus-visible:outline-none"
               >
-                {link.label}
+                <span className="block text-xs font-semibold text-fg group-hover:text-brand">
+                  Adbox For
+                </span>
+                <span className="mt-0.5 block text-sm text-nav-link group-hover:text-fg">
+                  {link.label}
+                </span>
               </a>
             </li>
           ))}
         </ul>
       </div>
     </div>
-  )
+  );
 }
 
 export function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const menuId = useId()
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const menuId = useId();
 
   useEffect(() => {
-    if (!mobileOpen) return
+    if (!mobileOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMobileOpen(false)
-    }
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
-  }, [mobileOpen])
+      if (event.key === "Escape") setMobileOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [mobileOpen]);
 
-  const closeMobile = () => setMobileOpen(false)
+  const closeMobile = () => setMobileOpen(false);
 
   return (
     // Not sticky: this sits at the top of the page and scrolls away with the hero, it doesn't
@@ -131,10 +156,10 @@ export function Navbar() {
             <a href="#top" className={linkClass}>
               Home
             </a>
-            <RidersMenu />
             <a href="#about" className={linkClass}>
               About Us
             </a>
+            <RidersMenu />
           </div>
 
           <div className="hidden items-center gap-3 md:flex">
@@ -187,20 +212,6 @@ export function Navbar() {
                 Home
               </a>
             </li>
-            <li className="px-3 pt-3 pb-1 font-ui text-sm text-muted">
-              For Riders
-            </li>
-            {riderLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={closeMobile}
-                  className="block rounded-lg px-3 py-3 pl-6 font-ui text-base text-nav-link hover:text-fg"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
             <li>
               <a
                 href="#about"
@@ -210,6 +221,23 @@ export function Navbar() {
                 About Us
               </a>
             </li>
+            <li className="px-3 pt-3 pb-1 font-ui text-sm text-muted">
+              Adbox For
+            </li>
+            {audienceLinks.map((link) => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  onClick={closeMobile}
+                  className="block rounded-lg px-3 py-3 pl-6 font-ui text-base text-nav-link hover:text-fg"
+                >
+                  <span className="block text-xs font-semibold text-fg">
+                    Adbox For
+                  </span>
+                  <span className="mt-0.5 block">{link.label}</span>
+                </a>
+              </li>
+            ))}
             <li className="pt-4">
               <div className="flex items-center gap-3">
                 <ThemeToggle />

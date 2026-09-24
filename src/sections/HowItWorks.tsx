@@ -35,11 +35,18 @@ export function HowItWorks() {
       },
       { rootMargin: "-35% 0px -35% 0px", threshold: [0.5] },
     );
-    const targets = window.matchMedia("(max-width: 767px)").matches
-      ? stepRefs.current
-      : triggerRefs.current;
-    targets.forEach((element) => element && observer.observe(element));
-    return () => observer.disconnect();
+    const media = window.matchMedia("(max-width: 767px)");
+    const observeCurrentTargets = () => {
+      observer.disconnect();
+      const targets = media.matches ? stepRefs.current : triggerRefs.current;
+      targets.forEach((element) => element && observer.observe(element));
+    };
+    observeCurrentTargets();
+    media.addEventListener("change", observeCurrentTargets);
+    return () => {
+      media.removeEventListener("change", observeCurrentTargets);
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -72,7 +79,7 @@ export function HowItWorks() {
                   }}
                   data-step={index}
                   aria-current={isActive ? "step" : undefined}
-                  className="group flex h-20 items-center gap-[22.5px] text-left md:h-[60px]"
+                  className="group flex h-16 items-center gap-[22.5px] text-left md:h-[60px]"
                 >
                   <span
                     className={cn(
