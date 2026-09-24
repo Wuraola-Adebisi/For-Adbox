@@ -5,3 +5,4 @@ export { Logo } from './Logo'
 export { Pill } from './Pill'
 export { Section } from './Section'
 export { Accent, SectionHeading } from './SectionHeading'
+export { ThemeToggle } from "./ThemeToggle";

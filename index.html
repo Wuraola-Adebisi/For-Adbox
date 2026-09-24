@@ -8,6 +8,16 @@
       content="AdBox turns delivery riders into mobile digital advertising platforms with smart LED displays and location-aware technology."
     />
     <meta name="theme-color" content="#0F141D" />
+    <script>
+      (() => {
+        try {
+          const stored = localStorage.getItem('theme')
+          if (stored === 'light' || stored === 'dark') {
+            document.documentElement.setAttribute('data-theme', stored)
+          }
+        } catch {}
+      })()
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
