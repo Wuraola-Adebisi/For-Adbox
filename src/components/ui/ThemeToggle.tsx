@@ -7,11 +7,6 @@ export function ThemeToggle({ className }: { className?: string }) {
   const toggle = () => {
     const next = theme === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", next);
-    try {
-      localStorage.setItem("theme", next);
-    } catch {
-      // The current visit still changes when storage is unavailable.
-    }
   };
 
   return (

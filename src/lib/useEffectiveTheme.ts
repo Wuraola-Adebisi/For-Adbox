@@ -7,14 +7,18 @@ export function useEffectiveTheme(): Theme {
   useEffect(() => {
     const update = () => setTheme(getEffectiveTheme());
     const media = window.matchMedia("(prefers-color-scheme: dark)");
-    media.addEventListener("change", update);
+    const onMediaChange = () => {
+      document.documentElement.removeAttribute("data-theme");
+      update();
+    };
+    media.addEventListener("change", onMediaChange);
     const observer = new MutationObserver(update);
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["data-theme"],
     });
     return () => {
-      media.removeEventListener("change", update);
+      media.removeEventListener("change", onMediaChange);
       observer.disconnect();
     };
   }, []);

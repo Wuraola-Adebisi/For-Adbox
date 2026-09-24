@@ -1,14 +1,5 @@
 export type Theme = "light" | "dark";
 
-export function getStoredTheme(): Theme | null {
-  try {
-    const value = localStorage.getItem("theme");
-    return value === "light" || value === "dark" ? value : null;
-  } catch {
-    return null;
-  }
-}
-
 export function systemPrefersDark(): boolean {
   return (
     typeof window !== "undefined" &&
@@ -17,5 +8,10 @@ export function systemPrefersDark(): boolean {
 }
 
 export function getEffectiveTheme(): Theme {
-  return getStoredTheme() ?? (systemPrefersDark() ? "dark" : "light");
+  const override = document.documentElement.dataset.theme;
+  return override === "light" || override === "dark"
+    ? override
+    : systemPrefersDark()
+      ? "dark"
+      : "light";
 }

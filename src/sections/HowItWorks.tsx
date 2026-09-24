@@ -19,77 +19,96 @@ const pad = (n: number) => String(n).padStart(2, '0')
 export function HowItWorks() {
   const [active, setActive] = useState(0)
   const triggerRefs = useRef<(HTMLSpanElement | null)[]>([])
-  const step = steps[active]
+  const stepRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const step = steps[active];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
           .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (visible) {
-          const index = Number((visible.target as HTMLElement).dataset.step)
-          if (Number.isInteger(index)) setActive(index)
+          const index = Number((visible.target as HTMLElement).dataset.step);
+          if (Number.isInteger(index)) setActive(index);
         }
       },
-      { rootMargin: '-35% 0px -35% 0px', threshold: [0.5] },
-    )
-    triggerRefs.current.forEach((element) => element && observer.observe(element))
-    return () => observer.disconnect()
-  }, [])
+      { rootMargin: "-35% 0px -35% 0px", threshold: [0.5] },
+    );
+    const targets = window.matchMedia("(max-width: 767px)").matches
+      ? stepRefs.current
+      : triggerRefs.current;
+    targets.forEach((element) => element && observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <Section tone="surface" id="how-it-works" containerSize="wide" className="pb-[96.5px]">
+    <Section
+      tone="surface"
+      id="how-it-works"
+      containerSize="wide"
+      className="pb-[96.5px]"
+    >
       <div className="grid items-start gap-10 md:grid-cols-[533.5fr_538.5fr] md:gap-8">
-        <div className="relative min-h-[520px] md:min-h-[560px]">
+        <div className="relative min-h-0 md:min-h-[560px]">
           <Eyebrow>How it works</Eyebrow>
           <SectionHeading className="mt-[26.5px] text-fg">
-            From <Accent>campaign</Accent> brief to real-time <Accent>visibility</Accent>.
+            From <Accent>campaign</Accent> brief to real-time{" "}
+            <Accent>visibility</Accent>.
           </SectionHeading>
           <p className="mt-[16.9px] max-w-[500px] text-base leading-6 text-muted">
-            Instead of waiting for your audience to find your advertisement — take your advertisement to them.
+            Instead of waiting for your audience to find your advertisement —
+            take your advertisement to them.
           </p>
 
           <ol className="mt-[54px]">
             {steps.map((item, index) => {
-              const isActive = index === active
+              const isActive = index === active;
               return (
                 <li
                   key={item.title}
+                  ref={(element) => {
+                    stepRefs.current[index] = element;
+                  }}
                   data-step={index}
-                  aria-current={isActive ? 'step' : undefined}
-                  className="group flex h-[60px] items-center gap-[22.5px] text-left"
+                  aria-current={isActive ? "step" : undefined}
+                  className="group flex h-20 items-center gap-[22.5px] text-left md:h-[60px]"
                 >
-                    <span
-                      className={cn(
-                        'flex w-12 shrink-0 items-center justify-center font-mono text-[13px] slashed-zero',
-                        isActive
-                          ? 'h-9 rounded-lg border border-step-line bg-step text-brand'
-                          : 'text-muted',
-                      )}
-                    >
-                      {pad(index + 1)}
-                    </span>
-                    <span
-                      className={cn(
-                        'font-semibold transition-colors duration-200',
-                        isActive
-                          ? 'text-2xl tracking-[-0.025em] text-fg'
-                          : 'text-lg tracking-[-0.03em] text-inactive group-hover:text-muted',
-                      )}
-                    >
-                      {item.title}
-                    </span>
+                  <span
+                    className={cn(
+                      "flex w-12 shrink-0 items-center justify-center font-mono text-[13px] slashed-zero",
+                      isActive
+                        ? "h-9 rounded-lg border border-step-line bg-step text-brand"
+                        : "text-muted",
+                    )}
+                  >
+                    {pad(index + 1)}
+                  </span>
+                  <span
+                    className={cn(
+                      "font-semibold transition-colors duration-200",
+                      isActive
+                        ? "text-2xl tracking-[-0.025em] text-fg"
+                        : "text-lg tracking-[-0.03em] text-inactive group-hover:text-muted",
+                    )}
+                  >
+                    {item.title}
+                  </span>
                 </li>
-              )
+              );
             })}
           </ol>
 
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 bottom-0 flex flex-col">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 bottom-0 flex flex-col"
+          >
             {steps.map((item, index) => (
               <span
                 key={item.title}
-                ref={(element) => { triggerRefs.current[index] = element }}
+                ref={(element) => {
+                  triggerRefs.current[index] = element;
+                }}
                 data-step={index}
                 className="block min-h-0 flex-1"
               />
@@ -107,8 +126,8 @@ export function HowItWorks() {
                 <span
                   key={item.title}
                   className={cn(
-                    'h-1.5 rounded-full transition-all duration-300',
-                    index === active ? 'w-5 bg-brand' : 'w-1.5 bg-line',
+                    "h-1.5 rounded-full transition-all duration-300",
+                    index === active ? "w-5 bg-brand" : "w-1.5 bg-line",
                   )}
                 />
               ))}
@@ -121,11 +140,14 @@ export function HowItWorks() {
           <span className="mt-[25px] block font-mono text-[13px] leading-5 text-brand slashed-zero">
             {pad(active + 1)}
           </span>
-          <h3 className="mt-[11px] text-[27px] leading-9 font-semibold tracking-[-0.03em] text-fg">{step.title}</h3>
-          <p className="mt-[18.5px] text-base leading-6 text-muted">{step.body}</p>
-
+          <h3 className="mt-[11px] text-[27px] leading-9 font-semibold tracking-[-0.03em] text-fg">
+            {step.title}
+          </h3>
+          <p className="mt-[18.5px] text-base leading-6 text-muted">
+            {step.body}
+          </p>
         </div>
       </div>
     </Section>
-  )
+  );
 }
