@@ -68,10 +68,7 @@ export function Footer() {
 
         <div className="mt-[62.5px] flex flex-col gap-6 border-t border-line pt-[25px] pb-[41.5px] sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <Logo className="block" />
-            <p className="mt-[5.5px] text-[11px] leading-4 tracking-[0.02em] text-dim">
-              Move your brand forward.
-            </p>
+            <Logo className="block text-[48px]" />
           </div>
           <p className="text-[13px] leading-5 text-dim">
             © 2026 AdBox Technologies Ltd. All rights reserved.

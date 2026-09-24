@@ -1,32 +1,84 @@
-# React + TypeScript + Vite
+# AdBox
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A responsive marketing website for AdBox, a mobile digital advertising platform that turns delivery riders into moving advertising screens.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+AdBox brings digital advertising into the physical journeys of an audience.
 
-## React Compiler
+The platform uses purpose-built carrier boxes with three integrated LED screens mounted on delivery bikes. Brands can use the network to deliver advertising across different locations, with campaigns designed around where audiences are and where they move.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This project is the frontend marketing experience for AdBox, built to communicate the product, explain how it works, showcase its location-aware advertising model, and guide potential advertisers and riders toward taking action.
 
-## Expanding the Oxlint configuration
+## Features
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+* Responsive marketing website for desktop, tablet, and mobile
+* Light and dark themes that respond to the user's system preference
+* Temporary theme toggle for manual switching
+* Animated hero and product illustrations
+* Scroll-driven "How It Works" experience
+* Audience-specific content for:
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+  * Advertising agencies
+  * Brands
+  * SMEs
+  * Dispatch riders
+* Location-aware advertising explanation
+* Live network visualization
+* Responsive navigation with mobile menu
+* Audience preview navigation
+* Accessible semantic HTML and interactive states
+* Responsive layouts and imagery across screen sizes
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Tech Stack
+
+* React 19
+* TypeScript
+* Vite
+* Tailwind CSS 4
+* CSS
+* SVG illustrations and animations
+
+
+## Design & Interaction
+
+The website uses a responsive, editorial-style layout with a focus on large typography, high-contrast surfaces, cyan brand accents, animated illustrations, and content-led interactions.
+
+The "How It Works" section uses scroll-driven storytelling. As the user moves through the section, the active campaign step and supporting information update with the scroll position.
+
+The "AdBox For" experience presents different content for agencies, brands, SMEs, and riders, allowing the same product network to be communicated to different audiences.
+
+The site also supports light and dark themes. By default, the interface follows the user's system preference rather than permanently storing a theme selection.
+
+## Responsive Design
+
+The interface is designed across desktop and mobile breakpoints, with layouts adapting for:
+
+* Navigation
+* Hero content
+* Scrollytelling sections
+* Audience cards
+* Advertising illustrations
+* Live network visualization
+* Calls to action
+* Typography and spacing
+
+Mobile layouts use simplified interactions where necessary to keep the experience usable on smaller screens.
+
+
+## Purpose
+
+This project was built as a frontend implementation of the AdBox marketing experience, with emphasis on:
+
+* Responsive frontend development
+* Component-based React architecture
+* High-fidelity visual implementation
+* Interactive storytelling
+* Motion and animation
+* Accessibility
+* Theme handling
+* Performance-conscious image loading
+
+## License
+
+This project is for the AdBox product and is not intended for redistribution as a standalone template.
