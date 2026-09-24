@@ -6,6 +6,7 @@ export function ThemeToggle({ className }: { className?: string }) {
 
   const toggle = () => {
     const next = theme === "dark" ? "light" : "dark";
+
     document.documentElement.setAttribute("data-theme", next);
   };
 

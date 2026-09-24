@@ -1,9 +1,11 @@
 @import "tailwindcss";
 
 /*
-  Theming: every colour below reads a CSS variable, so the whole page switches together.
-  Dark is the default. Light applies when the device asks for it (prefers-color-scheme),
-  unless <html data-theme="dark"> is set. <html data-theme="light"> forces light.
+  Theming:
+  - The device preference is the default.
+  - data-theme="light" temporarily forces light mode.
+  - data-theme="dark" temporarily forces dark mode.
+  - No theme preference is persisted.
 */
 @theme inline {
   /* Fonts */
@@ -68,9 +70,159 @@
   --container-cta: 1200px;
 }
 
-:root,
-[data-theme="dark"] {
+/* =========================================================
+   DEFAULT: LIGHT
+   ========================================================= */
+
+:root {
+  color-scheme: light;
+
+  --brand: #008d9f;
+  --on-brand: #121211;
+  --ink: #f7feff;
+  --surface: #ecf8fb;
+  --raised: #ffffff;
+  --card: #ffffff;
+  --cta-card: #ebf5f6;
+  --value-bg: #fbfbfb;
+  --problem-bg: #ffffff;
+  --live-bg: #ffffff;
+  --how-bg: #fbfbfbe5;
+  --context-bg: #ffffff;
+  --why-bg: #fbfbfbe5;
+  --final-bg: #ffffff;
+  --footer-bg: #0f141d;
+  --navy: #1f2c40;
+  --tint: rgb(0 141 159 / 0.1);
+  --step: #d4f1f6;
+  --step-line: #6fcbd8;
+  --item: #f4fbfd;
+  --item-line: #d7e8ec;
+  --tile: #f4fbfd;
+  --tile-line: #d7e8ec;
+  --hero-bg: #f7feff;
+  --hero-fg: #121211;
+  --pill: #e6f6f8;
+  --pill-line: #b9ebf1;
+  --pill-fg: #004047;
+  --fg: #121211;
+  --muted: #4f6478;
+  --dim: #7f92a6;
+  --inactive: rgb(18 18 17 / 0.32);
+  --line: #d7e8ec;
+  --line-strong: #c5dde3;
+  --nav-link: #55606b;
+  --soft: #3f5165;
+  --soft-2: #2f4256;
+  --grid-line: #f1fbfd;
+  --grid-cross-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='213' height='142'%3E%3Cpath d='M65.5 71.5h12M71.5 65.5v12' stroke='%23ddf4f8' fill='none'/%3E%3C/svg%3E");
+}
+
+/* =========================================================
+   DEVICE: DARK
+   ========================================================= */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --brand: #00bdd6;
+    --on-brand: #061820;
+    --ink: #0f141d;
+    --surface: #141c28;
+    --raised: #19202b;
+    --card: #0f141d;
+    --cta-card: #141c28;
+    --value-bg: #141c28;
+    --problem-bg: #080c12;
+    --live-bg: #080c12;
+    --how-bg: #141c28;
+    --context-bg: #080c12;
+    --why-bg: #0f141d;
+    --final-bg: #0f141d;
+    --footer-bg: #0f141d;
+    --navy: #1f2c40;
+    --tint: rgb(0 189 214 / 0.12);
+    --step: #122f3d;
+    --step-line: #0d5a6b;
+    --item: #222933;
+    --item-line: #313841;
+    --tile: #0d1119;
+    --tile-line: #1e2229;
+    --hero-bg: #080c12;
+    --hero-fg: #ffffff;
+    --pill: #0f141d;
+    --pill-line: #20242d;
+    --pill-fg: #00bdd6;
+    --fg: #edf2fa;
+    --muted: #7a8fa8;
+    --dim: #3e5068;
+    --inactive: #edf2fa47;
+    --line: #20242d;
+    --line-strong: #29303a;
+    --nav-link: #777777;
+    --soft: #afbbcb;
+    --soft-2: #c1cbd7;
+    --grid-line: rgba(20, 28, 40, 0.32);
+    --grid-cross-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='213' height='142'%3E%3Cpath d='M65.5 71.5h12M71.5 65.5v12' stroke='rgba(122,143,168,0.18)' fill='none'/%3E%3C/svg%3E");
+  }
+}
+
+/* =========================================================
+   MANUAL LIGHT OVERRIDE
+   ========================================================= */
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --brand: #008d9f;
+  --on-brand: #121211;
+  --ink: #f7feff;
+  --surface: #ecf8fb;
+  --raised: #ffffff;
+  --card: #ffffff;
+  --cta-card: #ebf5f6;
+  --value-bg: #fbfbfb;
+  --problem-bg: #ffffff;
+  --live-bg: #ffffff;
+  --how-bg: #fbfbfbe5;
+  --context-bg: #ffffff;
+  --why-bg: #fbfbfbe5;
+  --final-bg: #ffffff;
+  --footer-bg: #0f141d;
+  --navy: #1f2c40;
+  --tint: rgb(0 141 159 / 0.1);
+  --step: #d4f1f6;
+  --step-line: #6fcbd8;
+  --item: #f4fbfd;
+  --item-line: #d7e8ec;
+  --tile: #f4fbfd;
+  --tile-line: #d7e8ec;
+  --hero-bg: #f7feff;
+  --hero-fg: #121211;
+  --pill: #e6f6f8;
+  --pill-line: #b9ebf1;
+  --pill-fg: #004047;
+  --fg: #121211;
+  --muted: #4f6478;
+  --dim: #7f92a6;
+  --inactive: rgb(18 18 17 / 0.32);
+  --line: #d7e8ec;
+  --line-strong: #c5dde3;
+  --nav-link: #55606b;
+  --soft: #3f5165;
+  --soft-2: #2f4256;
+  --grid-line: #f1fbfd;
+  --grid-cross-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='213' height='142'%3E%3Cpath d='M65.5 71.5h12M71.5 65.5v12' stroke='%23ddf4f8' fill='none'/%3E%3C/svg%3E");
+}
+
+/* =========================================================
+   MANUAL DARK OVERRIDE
+   ========================================================= */
+
+:root[data-theme="dark"] {
   color-scheme: dark;
+
   --brand: #00bdd6;
   --on-brand: #061820;
   --ink: #0f141d;
@@ -110,93 +262,6 @@
   --soft-2: #c1cbd7;
   --grid-line: rgba(20, 28, 40, 0.32);
   --grid-cross-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='213' height='142'%3E%3Cpath d='M65.5 71.5h12M71.5 65.5v12' stroke='rgba(122,143,168,0.18)' fill='none'/%3E%3C/svg%3E");
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    color-scheme: light;
-    --brand: #008d9f;
-    --on-brand: #121211;
-    --ink: #f7feff;
-    --surface: #ecf8fb;
-    --raised: #ffffff;
-    --card: #ffffff;
-    --cta-card: #ebf5f6;
-    --value-bg: #fbfbfb;
-    --problem-bg: #ffffff;
-    --live-bg: #ffffff;
-    --how-bg: #fbfbfbe5;
-    --context-bg: #ffffff;
-    --why-bg: #fbfbfbe5;
-    --final-bg: #ffffff;
-    --footer-bg: #0f141d;
-    --tint: rgb(0 141 159 / 0.1);
-    --step: #d4f1f6;
-    --step-line: #6fcbd8;
-    --item: #f4fbfd;
-    --item-line: #d7e8ec;
-    --tile: #f4fbfd;
-    --tile-line: #d7e8ec;
-    --hero-bg: #f7feff;
-    --hero-fg: #121211;
-    --pill: #e6f6f8;
-    --pill-line: #b9ebf1;
-    --pill-fg: #004047;
-    --fg: #121211;
-    --muted: #4f6478;
-    --dim: #7f92a6;
-    --inactive: rgb(18 18 17 / 0.32);
-    --line: #d7e8ec;
-    --line-strong: #c5dde3;
-    --nav-link: #55606b;
-    --soft: #3f5165;
-    --soft-2: #2f4256;
-    --grid-line: #f1fbfd;
-    --grid-cross-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='213' height='142'%3E%3Cpath d='M65.5 71.5h12M71.5 65.5v12' stroke='%23ddf4f8' fill='none'/%3E%3C/svg%3E");
-  }
-}
-
-:root[data-theme="light"],
-[data-theme="light"] {
-  color-scheme: light;
-  --brand: #008d9f;
-  --on-brand: #121211;
-  --ink: #f7feff;
-  --surface: #ecf8fb;
-  --raised: #ffffff;
-  --card: #ffffff;
-  --cta-card: #ebf5f6;
-  --value-bg: #fbfbfb;
-  --problem-bg: #ffffff;
-  --live-bg: #ffffff;
-  --how-bg: #fbfbfbe5;
-  --context-bg: #ffffff;
-  --why-bg: #fbfbfbe5;
-  --final-bg: #ffffff;
-  --footer-bg: #0f141d;
-  --tint: rgb(0 141 159 / 0.1);
-  --step: #d4f1f6;
-  --step-line: #6fcbd8;
-  --item: #f4fbfd;
-  --item-line: #d7e8ec;
-  --tile: #f4fbfd;
-  --tile-line: #d7e8ec;
-  --hero-bg: #f7feff;
-  --hero-fg: #121211;
-  --pill: #e6f6f8;
-  --pill-line: #b9ebf1;
-  --pill-fg: #004047;
-  --fg: #121211;
-  --muted: #4f6478;
-  --dim: #7f92a6;
-  --inactive: rgb(18 18 17 / 0.32);
-  --line: #d7e8ec;
-  --line-strong: #c5dde3;
-  --nav-link: #55606b;
-  --soft: #3f5165;
-  --soft-2: #2f4256;
-  --grid-line: #f1fbfd;
-  --grid-cross-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='213' height='142'%3E%3Cpath d='M65.5 71.5h12M71.5 65.5v12' stroke='%23ddf4f8' fill='none'/%3E%3C/svg%3E");
 }
 
 html {
@@ -258,30 +323,54 @@ body {
   html {
     scroll-behavior: auto;
   }
+
   .pill-ring {
     animation: none !important;
     opacity: 0 !important;
   }
+
   [class*="animate-[hero-pill-marquee"] {
     animation: none !important;
   }
 }
 
-/* Show an image only in one colour mode (follows the device setting unless data-theme is set). */
+/* Show an image only in one colour mode. */
 .only-light {
   display: none;
 }
+
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) .only-light {
     display: block;
   }
+
   :root:not([data-theme="dark"]) .only-dark {
     display: none;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .only-light {
+    display: none;
+  }
+
+  :root:not([data-theme="light"]) .only-dark {
+    display: block;
+  }
+}
+
 :root[data-theme="light"] .only-light {
   display: block;
 }
+
 :root[data-theme="light"] .only-dark {
   display: none;
+}
+
+:root[data-theme="dark"] .only-light {
+  display: none;
+}
+
+:root[data-theme="dark"] .only-dark {
+  display: block;
 }

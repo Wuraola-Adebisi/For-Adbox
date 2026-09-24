@@ -7,11 +7,20 @@ export function systemPrefersDark(): boolean {
   );
 }
 
+export function getSystemTheme(): Theme {
+  return systemPrefersDark() ? "dark" : "light";
+}
+
 export function getEffectiveTheme(): Theme {
+  if (typeof document === "undefined") {
+    return "dark";
+  }
+
   const override = document.documentElement.dataset.theme;
-  return override === "light" || override === "dark"
-    ? override
-    : systemPrefersDark()
-      ? "dark"
-      : "light";
+
+  if (override === "light" || override === "dark") {
+    return override;
+  }
+
+  return getSystemTheme();
 }
