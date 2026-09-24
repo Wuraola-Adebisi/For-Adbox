@@ -407,6 +407,7 @@
     }
 
     .floor {
+      display: none;
       position: absolute;
       width: 1400px;
       height: 1400px;
@@ -1374,7 +1375,11 @@
   
     /* Added for the AdBox site */
     html, body { background: transparent }
+    :root { --s: 1.15 }
     .world { scale: var(--s, 1) var(--s, 1) var(--s, 1) }
+    @media (max-width: 650px) {
+      :root { --s: 1.05 }
+    }
     @media (prefers-color-scheme: light) {
       .shadow { background: radial-gradient(circle, rgba(15, 20, 29, .42) 0, rgba(15, 20, 29, .22) 32%, rgba(15, 20, 29, 0) 62%) }
       .glowpool { opacity: .5 }

@@ -3,11 +3,14 @@ import { Accent, Button, Container } from "../components/ui";
 
 export function FinalCta() {
   return (
-    <section id="start" className="bg-ink pb-24">
+    <section
+      id="start"
+      className="border-t border-[#FFFFFF12] bg-final-bg pb-24"
+    >
       <Container size="cta">
         <div className="relative flex flex-col overflow-hidden rounded-[30px] bg-cta-card text-fg md:h-[464.5px] md:flex-row md:items-center">
           <div className="px-8 py-12 md:max-w-[560px] md:px-0 md:pt-[3px] md:pb-0 md:pl-16">
-            <h2 className="text-[length:clamp(2rem,3.33vw,3rem)] leading-none font-medium tracking-[-0.03em]">
+            <h2 className="font-sans text-[length:clamp(2rem,4vw,3rem)] leading-[1.16] font-semibold tracking-[-1.68px] text-fg md:text-[48px] md:leading-[56px]">
               Your <Accent>audience</Accent> is already on the{" "}
               <Accent>move</Accent>.
             </h2>

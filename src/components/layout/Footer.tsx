@@ -3,46 +3,46 @@ import { Container, Logo } from '../ui'
 // TODO: point these at real routes or section ids once they exist.
 const columns = [
   {
-    title: 'Platform',
+    title: "Platform",
     links: [
-      { label: 'How It Works', href: '#how-it-works' },
-      { label: 'Live Network', href: '#live-network' },
-      { label: 'Campaign Codes', href: '#' },
-      { label: 'Pricing', href: '#' },
+      { label: "How It Works", href: "#how-it-works" },
+      { label: "Live Network", href: "#live-network" },
+      { label: "Campaign Codes", href: "#" },
+      { label: "Pricing", href: "#" },
     ],
   },
   {
-    title: 'For Brands',
+    title: "For Brands",
     links: [
-      { label: 'Advertise', href: '#for-brands' },
-      { label: 'Contextual Targeting', href: '#contextual-targeting' },
-      { label: 'Case Studies', href: '#' },
-      { label: 'Request a Demo', href: '#' },
+      { label: "Advertise", href: "#for-who-brands" },
+      { label: "Contextual Targeting", href: "#contextual-targeting" },
+      { label: "Case Studies", href: "#" },
+      { label: "Request a Demo", href: "#" },
     ],
   },
   {
-    title: 'For Riders',
+    title: "For Riders",
     links: [
-      { label: 'Become a Rider', href: '#become-a-rider' },
-      { label: 'Rider Dashboard', href: '#' },
-      { label: 'FAQs', href: '#' },
-      { label: 'Support', href: '#' },
+      { label: "Become a Rider", href: "#for-who-riders" },
+      { label: "Rider Dashboard", href: "#" },
+      { label: "FAQs", href: "#" },
+      { label: "Support", href: "#" },
     ],
   },
   {
-    title: 'Company',
+    title: "Company",
     links: [
-      { label: 'About AdBox', href: '#about' },
-      { label: 'Investors', href: '#' },
-      { label: 'Partners', href: '#' },
-      { label: 'Contact', href: '#contact' },
+      { label: "About AdBox", href: "#about" },
+      { label: "Investors", href: "#" },
+      { label: "Partners", href: "#" },
+      { label: "Contact", href: "#contact" },
     ],
   },
-]
+];
 
 export function Footer() {
   return (
-    <footer id="contact" className="border-t border-line bg-ink">
+    <footer id="contact" className="border-t border-line bg-footer-bg">
       <Container size="nav">
         <div className="grid gap-x-10 gap-y-10 pt-[57px] sm:grid-cols-2 lg:grid-cols-4">
           {columns.map((column) => (
@@ -69,11 +69,15 @@ export function Footer() {
         <div className="mt-[62.5px] flex flex-col gap-6 border-t border-line pt-[25px] pb-[41.5px] sm:flex-row sm:items-center sm:justify-between">
           <div>
             <Logo className="block" />
-            <p className="mt-[5.5px] text-[11px] leading-4 tracking-[0.02em] text-dim">Move your brand forward.</p>
+            <p className="mt-[5.5px] text-[11px] leading-4 tracking-[0.02em] text-dim">
+              Move your brand forward.
+            </p>
           </div>
-          <p className="text-[13px] leading-5 text-dim">© 2026 AdBox Technologies Ltd. All rights reserved.</p>
+          <p className="text-[13px] leading-5 text-dim">
+            © 2026 AdBox Technologies Ltd. All rights reserved.
+          </p>
         </div>
       </Container>
     </footer>
-  )
+  );
 }

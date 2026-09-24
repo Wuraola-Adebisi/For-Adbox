@@ -54,12 +54,12 @@ export function Button({
   ...rest
 }: ButtonProps) {
   const classes = cn(
-    'inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl font-semibold',
-    'transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
+    "inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl font-semibold",
+    "transition duration-200 motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
     variants[variant],
     sizes[size],
     className,
-  )
+  );
   const content = (
     <>
       {children}

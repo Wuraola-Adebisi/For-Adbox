@@ -17,7 +17,13 @@ export function Logo({ variant = 'light', className }: LogoProps) {
       <img
         src="/adbox-logo-dark.png"
         alt="AdBox Technologies"
-        className="h-auto w-full"
+        className="only-dark h-auto w-full"
+      />
+      <img
+        src="/adbox-logo-light.png"
+        alt=""
+        aria-hidden="true"
+        className="only-light h-auto w-full"
       />
     </span>
   );

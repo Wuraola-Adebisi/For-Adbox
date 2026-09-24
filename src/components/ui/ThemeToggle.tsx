@@ -18,7 +18,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       }
       title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
       className={cn(
-        "inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full border border-line text-fg transition-colors hover:bg-fg/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
+        "inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full border border-line text-fg transition duration-200 motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.96] hover:bg-fg/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
         className,
       )}
     >

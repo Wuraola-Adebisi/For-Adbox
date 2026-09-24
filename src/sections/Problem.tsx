@@ -1,4 +1,4 @@
-import carrierScene from "../assets/carrier/adbox_delivery_box_animated.svg";
+import carrierScene from "../assets/illustrations/Animated box for problem section.svg";
 import rider from "../assets/illustrations/rider-bike.svg";
 import { Eyebrow, Section, SectionHeading } from "../components/ui";
 
@@ -8,7 +8,7 @@ export function Problem() {
       tone="ink"
       id="problem"
       containerSize="problem"
-      className="pb-[180px]"
+      className="bg-problem-bg pb-[180px]"
     >
       <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
         <SectionHeading className="text-fg">
@@ -27,10 +27,10 @@ export function Problem() {
 
       <div className="mt-[98px] flex flex-col items-center text-center md:pl-[14px]">
         <Eyebrow>The solution</Eyebrow>
-        <p className="mt-[25.2px] text-[length:clamp(1.75rem,2.78vw,2.5rem)] leading-[1.1] font-medium text-fg">
+        <p className="mt-[25.2px] font-sans text-[length:clamp(2rem,4vw,3rem)] leading-[1.16] font-semibold tracking-[0.5px] text-fg md:text-[48px] md:leading-[56px]">
           Meet AdBox.
         </p>
-        <h2 className="mt-1 text-[length:clamp(1.75rem,2.85vw,2.5625rem)] leading-[1.1] font-medium text-brand">
+        <h2 className="mt-1 font-sans text-[length:clamp(2rem,4vw,3rem)] leading-[1.16] font-semibold tracking-[0.5px] text-brand md:text-[48px] md:leading-[56px]">
           A smarter way to advertise on the move.
         </h2>
         <p className="mt-[18.5px] max-w-[860px] text-base leading-6 text-muted">
