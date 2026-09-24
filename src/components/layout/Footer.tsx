@@ -42,7 +42,7 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer id="contact" className="border-t border-line bg-footer-bg">
+    <footer id="contact" className="border-t border-line bg-transparent">
       <Container size="nav">
         <div className="grid gap-x-10 gap-y-10 pt-[57px] sm:grid-cols-2 lg:grid-cols-4">
           {columns.map((column) => (
