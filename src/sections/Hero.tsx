@@ -26,7 +26,7 @@ export function Hero() {
           </SectionHeading>
 
           <p className="mt-5 max-w-[900px] text-base leading-6 text-hero-fg">
-            AdBox transforms delivery riders into mobile digital advertising
+            adbox transforms delivery riders into mobile digital advertising
             platforms, using smart LED displays and location-aware technology to
             deliver relevant brand messages in the places that matter most.
           </p>

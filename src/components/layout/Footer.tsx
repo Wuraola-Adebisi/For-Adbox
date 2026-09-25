@@ -32,7 +32,7 @@ const columns = [
   {
     title: "Company",
     links: [
-      { label: "About AdBox", href: "#about" },
+      { label: "About adbox", href: "#about" },
       { label: "Investors", href: "#" },
       { label: "Partners", href: "#" },
       { label: "Contact", href: "#contact" },
@@ -71,7 +71,7 @@ export function Footer() {
             <Logo className="block text-[48px]" />
           </div>
           <p className="text-[13px] leading-5 text-dim">
-            © 2026 AdBox Technologies Ltd. All rights reserved.
+            © 2026 adbox Technologies Ltd. All rights reserved.
           </p>
         </div>
       </Container>

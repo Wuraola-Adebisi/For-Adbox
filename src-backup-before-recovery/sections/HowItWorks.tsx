@@ -4,15 +4,27 @@ import { Accent, Eyebrow, Section, SectionHeading } from '../components/ui'
 
 // TODO: the copy for steps 2 to 5 is placeholder text. Replace it with the client's copy.
 const steps = [
-  { title: 'Create Your Campaign', body: 'Upload your creative and define your campaign objectives.' },
-  { title: 'Choose Your Reach', body: 'Pick the locations and audiences your campaign should reach.' },
-  { title: 'AdBox Gets Moving', body: 'Riders carry your campaign across the city on their everyday routes.' },
   {
-    title: 'Reach People Where They Are',
-    body: 'Your ads play on the LED screens in the places your audience spends time.',
+    title: "Create Your Campaign",
+    body: "Upload your creative and define your campaign objectives.",
   },
-  { title: 'Monitor Performance', body: 'Follow impressions and campaign activity as it happens.' },
-]
+  {
+    title: "Choose Your Reach",
+    body: "Pick the locations and audiences your campaign should reach.",
+  },
+  {
+    title: "adbox Gets Moving",
+    body: "Riders carry your campaign across the city on their everyday routes.",
+  },
+  {
+    title: "Reach People Where They Are",
+    body: "Your ads play on the LED screens in the places your audience spends time.",
+  },
+  {
+    title: "Monitor Performance",
+    body: "Follow impressions and campaign activity as it happens.",
+  },
+];
 
 function Arrow({ direction }: { direction: 'left' | 'right' }) {
   return (

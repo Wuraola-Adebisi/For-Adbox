@@ -19,7 +19,10 @@ export function ForBrandsAndRiders() {
   return (
     <Section tone="surface" id="brands-riders" className="pt-0 pb-[97px]">
       <div className="flex flex-col gap-[64px]">
-        <div id="for-brands" className="rounded-[20px] border border-line-strong bg-raised px-6 py-10 md:px-12 md:py-[52px]">
+        <div
+          id="for-brands"
+          className="rounded-[20px] border border-line-strong bg-raised px-6 py-10 md:px-12 md:py-[52px]"
+        >
           <div className="grid gap-10 md:grid-cols-[449fr_481fr] md:gap-8">
             <div>
               <Pill className="relative -top-px">For brands</Pill>
@@ -27,11 +30,16 @@ export function ForBrandsAndRiders() {
                 Make every impression count.
               </SectionHeading>
               <p className="mt-5 text-base leading-8 text-muted">
-                Whether you're launching a product, driving foot traffic, building awareness or owning a
-                location — AdBox puts your brand directly into the physical journeys of your audience.
+                Whether you're launching a product, driving foot traffic,
+                building awareness or owning a location — adbox puts your brand
+                directly into the physical journeys of your audience.
               </p>
-              <Button href="#contact" arrow className="mt-[31px] text-[15px] font-bold">
-                Advertise with AdBox
+              <Button
+                href="#contact"
+                arrow
+                className="mt-[31px] text-[15px] font-bold"
+              >
+                Advertise with adbox
               </Button>
             </div>
 
@@ -41,10 +49,17 @@ export function ForBrandsAndRiders() {
                   key={item.title}
                   className="flex gap-4 rounded-[14px] border border-item-line bg-item px-[18px] py-[16.5px]"
                 >
-                  <span aria-hidden="true" className="mt-[7px] size-1.5 shrink-0 rounded-full bg-brand" />
+                  <span
+                    aria-hidden="true"
+                    className="mt-[7px] size-1.5 shrink-0 rounded-full bg-brand"
+                  />
                   <div>
-                    <h3 className="text-sm leading-5 font-bold text-fg">{item.title}</h3>
-                    <p className="mt-1 text-sm leading-5 text-muted">{item.body}</p>
+                    <h3 className="text-sm leading-5 font-bold text-fg">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1 text-sm leading-5 text-muted">
+                      {item.body}
+                    </p>
                   </div>
                 </li>
               ))}
@@ -52,7 +67,10 @@ export function ForBrandsAndRiders() {
           </div>
         </div>
 
-        <div id="become-a-rider" className="rounded-[20px] border border-line bg-card px-6 py-10 md:px-12 md:pt-[64px] md:pb-[64.5px]">
+        <div
+          id="become-a-rider"
+          className="rounded-[20px] border border-line bg-card px-6 py-10 md:px-12 md:pt-[64px] md:pb-[64.5px]"
+        >
           <div className="grid gap-10 md:grid-cols-[449fr_481fr] md:items-center md:gap-8">
             <div>
               <Pill tone="brand">For riders</Pill>
@@ -60,16 +78,22 @@ export function ForBrandsAndRiders() {
                 Your route can do more.
               </SectionHeading>
               <p className="mt-[22.5px] text-base leading-8 text-muted">
-                AdBox gives riders the opportunity to turn the journeys they already make into an additional
-                source of value.
+                adbox gives riders the opportunity to turn the journeys they
+                already make into an additional source of value.
               </p>
               <p className="mt-4 text-base leading-8 text-muted">
-                Equip your carrier box with AdBox technology, stay on the move and participate in a growing
-                network of mobile advertising.
+                Equip your carrier box with adbox technology, stay on the move
+                and participate in a growing network of mobile advertising.
               </p>
-              <p className="mt-7 text-xl leading-7 font-bold tracking-[-0.01em] text-fg">Ride. Display. Earn.</p>
-              <Button href="#contact" arrow className="mt-[33px] text-[15px] font-bold">
-                Become an AdBox Rider
+              <p className="mt-7 text-xl leading-7 font-bold tracking-[-0.01em] text-fg">
+                Ride. Display. Earn.
+              </p>
+              <Button
+                href="#contact"
+                arrow
+                className="mt-[33px] text-[15px] font-bold"
+              >
+                Become an adbox Rider
               </Button>
             </div>
 
@@ -79,8 +103,12 @@ export function ForBrandsAndRiders() {
                   key={perk.title}
                   className="rounded-[14px] border border-tile-line bg-tile px-2 pt-[20.5px] pb-[19px] text-center"
                 >
-                  <h3 className="text-sm leading-6 font-semibold text-brand">{perk.title}</h3>
-                  <p className="mt-[5.5px] text-sm leading-5 text-muted">{perk.body}</p>
+                  <h3 className="text-sm leading-6 font-semibold text-brand">
+                    {perk.title}
+                  </h3>
+                  <p className="mt-[5.5px] text-sm leading-5 text-muted">
+                    {perk.body}
+                  </p>
                 </li>
               ))}
             </ul>
@@ -88,5 +116,5 @@ export function ForBrandsAndRiders() {
         </div>
       </div>
     </Section>
-  )
+  );
 }

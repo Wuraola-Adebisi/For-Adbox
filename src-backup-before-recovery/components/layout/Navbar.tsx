@@ -110,15 +110,18 @@ export function Navbar() {
     // stay pinned while scrolling (matches the Figma prototype).
     <header
       className={cn(
-        'absolute inset-x-0 top-0 z-50 border-b transition-colors duration-300',
-        mobileOpen ? 'border-line bg-ink' : 'border-transparent bg-transparent',
+        "absolute inset-x-0 top-0 z-50 border-b transition-colors duration-300",
+        mobileOpen ? "border-line bg-ink" : "border-transparent bg-transparent",
       )}
     >
       <Container size="nav">
-        <nav aria-label="Primary" className="flex h-22 items-center justify-between">
+        <nav
+          aria-label="Primary"
+          className="flex h-22 items-center justify-between"
+        >
           <a
             href="#top"
-            aria-label="AdBox home"
+            aria-label="adbox home"
             className="flex rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
           >
             <Logo className="text-[34px] md:text-[42px]" />
@@ -134,13 +137,16 @@ export function Navbar() {
             </a>
           </div>
 
-          <Button href="#contact" className="hidden font-ui text-sm leading-6 md:inline-flex">
+          <Button
+            href="#contact"
+            className="hidden font-ui text-sm leading-6 md:inline-flex"
+          >
             Contact us
           </Button>
 
           <button
             type="button"
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             aria-controls={menuId}
             onClick={() => setMobileOpen((value) => !value)}
@@ -155,21 +161,35 @@ export function Navbar() {
               strokeWidth="2"
               strokeLinecap="round"
             >
-              {mobileOpen ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+              {mobileOpen ? (
+                <path d="M6 6l12 12M18 6L6 18" />
+              ) : (
+                <path d="M4 7h16M4 12h16M4 17h16" />
+              )}
             </svg>
           </button>
         </nav>
       </Container>
 
-      <div id={menuId} hidden={!mobileOpen} className="border-t border-line md:hidden">
+      <div
+        id={menuId}
+        hidden={!mobileOpen}
+        className="border-t border-line md:hidden"
+      >
         <Container size="nav">
           <ul className="flex flex-col py-4">
             <li>
-              <a href="#top" onClick={closeMobile} className="block rounded-lg px-3 py-3 font-ui text-base text-fg">
+              <a
+                href="#top"
+                onClick={closeMobile}
+                className="block rounded-lg px-3 py-3 font-ui text-base text-fg"
+              >
                 Home
               </a>
             </li>
-            <li className="px-3 pt-3 pb-1 font-ui text-sm text-muted">For Riders</li>
+            <li className="px-3 pt-3 pb-1 font-ui text-sm text-muted">
+              For Riders
+            </li>
             {riderLinks.map((link) => (
               <li key={link.href}>
                 <a
@@ -182,12 +202,20 @@ export function Navbar() {
               </li>
             ))}
             <li>
-              <a href="#about" onClick={closeMobile} className="block rounded-lg px-3 py-3 font-ui text-base text-fg">
+              <a
+                href="#about"
+                onClick={closeMobile}
+                className="block rounded-lg px-3 py-3 font-ui text-base text-fg"
+              >
                 About Us
               </a>
             </li>
             <li className="pt-4">
-              <Button href="#contact" onClick={closeMobile} className="w-full font-ui text-sm leading-6">
+              <Button
+                href="#contact"
+                onClick={closeMobile}
+                className="w-full font-ui text-sm leading-6"
+              >
                 Contact us
               </Button>
             </li>
@@ -195,5 +223,5 @@ export function Navbar() {
         </Container>
       </div>
     </header>
-  )
+  );
 }

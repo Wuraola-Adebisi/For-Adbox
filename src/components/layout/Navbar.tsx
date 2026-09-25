@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from "react";
 import agenciesPhoto from "../../assets/photos/agencies.png";
 import brandsPhoto from "../../assets/photos/Images.png";
 import smePhoto from "../../assets/photos/Images (1).png";
@@ -18,7 +18,7 @@ const audienceLinks = [
     label: "Brands",
     href: "#for-who-brands",
     image: brandsPhoto,
-    alt: "AdBox brand campaign",
+    alt: "adbox brand campaign",
   },
   {
     label: "SMEs",
@@ -30,7 +30,7 @@ const audienceLinks = [
     label: "Dispatch Riders",
     href: "#for-who-riders",
     image: riderPhoto,
-    alt: "AdBox dispatch rider",
+    alt: "adbox dispatch rider",
   },
 ];
 
@@ -110,7 +110,7 @@ function RidersMenu() {
           "inline-flex cursor-pointer items-center gap-1.5",
         )}
       >
-        Adbox For
+        adbox For
         <ChevronDown
           className={cn(
             "size-4 transition-transform duration-200",
@@ -135,7 +135,7 @@ function RidersMenu() {
                   className="group block rounded-lg px-3 py-2 font-ui transition-colors hover:bg-fg/5 focus-visible:bg-fg/5 focus-visible:outline-none"
                 >
                   <span className="block text-xs font-semibold text-fg group-hover:text-brand">
-                    Adbox For
+                    adbox For
                   </span>
                   <span className="mt-0.5 block text-sm text-nav-link group-hover:text-fg">
                     {link.label}
@@ -164,7 +164,15 @@ function RidersMenu() {
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const menuId = useId();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -183,12 +191,12 @@ export function Navbar() {
   const closeMobile = () => setMobileOpen(false);
 
   return (
-    // Not sticky: this sits at the top of the page and scrolls away with the hero, it doesn't
-    // stay pinned while scrolling (matches the Figma prototype).
     <header
       className={cn(
-        "absolute inset-x-0 top-0 z-50 border-b transition-colors duration-300",
-        mobileOpen ? "border-line bg-ink" : "border-transparent bg-transparent",
+        "fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300",
+        mobileOpen || scrolled
+          ? "border-line bg-ink/95 backdrop-blur-md"
+          : "border-transparent bg-transparent",
       )}
     >
       <Container size="nav">
@@ -198,7 +206,7 @@ export function Navbar() {
         >
           <a
             href="#top"
-            aria-label="AdBox home"
+            aria-label="adbox home"
             className="flex rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
           >
             <Logo className="text-[34px] md:text-[42px]" />
@@ -274,7 +282,7 @@ export function Navbar() {
               </a>
             </li>
             <li className="px-3 pt-3 pb-1 font-ui text-sm text-muted">
-              Adbox For
+              adbox For
             </li>
             {audienceLinks.map((link) => (
               <li key={link.label}>
@@ -284,7 +292,7 @@ export function Navbar() {
                   className="block rounded-lg px-3 py-3 pl-6 font-ui text-base text-nav-link hover:text-fg"
                 >
                   <span className="block text-xs font-semibold text-fg">
-                    Adbox For
+                    adbox For
                   </span>
                   <span className="mt-0.5 block">{link.label}</span>
                 </a>

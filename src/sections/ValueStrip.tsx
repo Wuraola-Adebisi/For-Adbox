@@ -11,10 +11,7 @@ const items = [
 
 export function ValueStrip() {
   return (
-    <section
-      aria-label="Why AdBox at a glance"
-      className="border-b border-line bg-value-bg"
-    >
+    <section aria-label="Why adbox at a glance" className="bg-value-bg">
       <Container size="nav">
         <ul className="grid sm:grid-cols-2 lg:grid-cols-4">
           {items.map(({ Icon, title, body }, index) => (

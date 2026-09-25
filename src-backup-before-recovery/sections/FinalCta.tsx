@@ -12,7 +12,8 @@ export function FinalCta() {
         >
           <div className="px-8 py-12 md:max-w-[560px] md:px-0 md:pt-[3px] md:pb-0 md:pl-16">
             <h2 className="text-[length:clamp(2rem,3.33vw,3rem)] leading-none font-medium tracking-[-0.03em]">
-              Your <Accent>audience</Accent> is already on the <Accent>move</Accent>.
+              Your <Accent>audience</Accent> is already on the{" "}
+              <Accent>move</Accent>.
             </h2>
             <p className="mt-[25.7px] text-[22px] leading-7 font-semibold tracking-[-0.02em] text-brand">
               Now your advertising can be too.
@@ -27,8 +28,12 @@ export function FinalCta() {
               >
                 Start Advertising
               </Button>
-              <Button href="#contact" variant="outline" className="h-14 rounded-[14px] px-7 text-[17px]">
-                Talk to AdBox
+              <Button
+                href="#contact"
+                variant="outline"
+                className="h-14 rounded-[14px] px-7 text-[17px]"
+              >
+                Talk to adbox
               </Button>
             </div>
           </div>
@@ -42,5 +47,5 @@ export function FinalCta() {
         </div>
       </Container>
     </section>
-  )
+  );
 }

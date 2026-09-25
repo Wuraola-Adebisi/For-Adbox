@@ -24,18 +24,18 @@ export function LiveNetwork() {
         most likely to see them.
       </p>
 
-      <div className="relative mt-[47px] aspect-[1060/615.5] w-full overflow-hidden">
+      <div className="relative mt-[47px] aspect-[1060/615.5] w-full overflow-hidden rounded-[20px]">
         <img
           src={cityDark}
           alt="Isometric night view of Lagos with live panels showing active boxes, impressions and riders on the move"
           loading="lazy"
-          className="only-dark absolute inset-0 h-full w-full object-cover object-top"
+          className="only-dark absolute inset-0 h-full w-full rounded-[20px] object-cover object-top"
         />
         <img
           src={cityLight}
           alt="Isometric daytime view of Lagos with live panels showing active boxes, impressions and riders on the move"
           loading="lazy"
-          className="only-light absolute inset-0 h-full w-full object-cover object-top"
+          className="only-light absolute inset-0 h-full w-full rounded-[20px] object-cover object-top"
         />
       </div>
     </Section>

@@ -6,7 +6,7 @@ type LogoProps = {
 }
 
 /**
- * The real AdBox mark: lowercase "adb" + the icon (colours traced from the client's exported
+ * The real adbox mark: lowercase "adb" + the icon (colours traced from the client's exported
  * PNG) + "x". The wordmark stays live text (not a raster image) so it follows the site's
  * light/dark theme automatically instead of needing a separate logo file per mode.
  * The size follows the font size, so use text-[..px] to scale it.

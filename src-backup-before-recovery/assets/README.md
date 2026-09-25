@@ -1,7 +1,7 @@
 # Assets
 
 carrier/        3D carrier box: static and animated SVG, the assembly and exploded views, the rotating SVG,
-                the delivery box SVGs, and Adbox_carrier_360_full_box.html (the original hero 3D file,
+                the delivery box SVGs, and adbox_carrier_360_full_box.html (the original hero 3D file,
                 restored from a working copy, so the Google Fonts links are back as in the original)
 bike/           Rider and bike scenes: night (bike_3d) and day (bike_rider_day), static and animated SVG
 city/           Container_city*: isometric city, static/animated, plain/live, night/day

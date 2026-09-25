@@ -11,25 +11,32 @@ const items = [
 
 export function ValueStrip() {
   return (
-    <section aria-label="Why AdBox at a glance" className="border-b border-line bg-surface">
+    <section
+      aria-label="Why adbox at a glance"
+      className="border-b border-line bg-surface"
+    >
       <Container size="nav">
         <ul className="grid sm:grid-cols-2 lg:grid-cols-4">
           {items.map(({ Icon, title, body }, index) => (
             <li
               key={title}
               className={cn(
-                'px-6 pt-8 pb-[27.5px]',
-                index > 0 && 'lg:border-l lg:border-line-strong',
-                index % 2 === 1 && 'sm:border-l sm:border-line-strong',
+                "px-6 pt-8 pb-[27.5px]",
+                index > 0 && "lg:border-l lg:border-line-strong",
+                index % 2 === 1 && "sm:border-l sm:border-line-strong",
               )}
             >
               <Icon className="size-6 text-brand" />
-              <h3 className="mt-[9.5px] text-[13px] leading-5 font-semibold text-fg">{title}</h3>
-              <p className="mt-[6.5px] max-w-[190px] text-[13px] leading-[1.6] text-muted">{body}</p>
+              <h3 className="mt-[9.5px] text-[13px] leading-5 font-semibold text-fg">
+                {title}
+              </h3>
+              <p className="mt-[6.5px] max-w-[190px] text-[13px] leading-[1.6] text-muted">
+                {body}
+              </p>
             </li>
           ))}
         </ul>
       </Container>
     </section>
-  )
+  );
 }

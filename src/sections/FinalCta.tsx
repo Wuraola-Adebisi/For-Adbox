@@ -1,4 +1,4 @@
-import scene from "../assets/illustrations/Adbox_bike_rider_day_animated .svg.svg";
+import scene from "../assets/illustrations/adbox_bike_rider_day_animated .svg.svg";
 import { Accent, Button, Container } from "../components/ui";
 
 export function FinalCta() {
@@ -32,7 +32,7 @@ export function FinalCta() {
                 variant="outline"
                 className="h-14 rounded-[14px] px-7 text-[17px]"
               >
-                Talk to AdBox
+                Talk to adbox
               </Button>
             </div>
           </div>

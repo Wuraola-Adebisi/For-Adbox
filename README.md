@@ -1,14 +1,14 @@
-# AdBox
+# adbox
 
-A responsive marketing website for AdBox, a mobile digital advertising platform that turns delivery riders into moving advertising screens.
+A responsive marketing website for adbox, a mobile digital advertising platform that turns delivery riders into moving advertising screens.
 
 ## Overview
 
-AdBox brings digital advertising into the physical journeys of an audience.
+adbox brings digital advertising into the physical journeys of an audience.
 
 The platform uses purpose-built carrier boxes with three integrated LED screens mounted on delivery bikes. Brands can use the network to deliver advertising across different locations, with campaigns designed around where audiences are and where they move.
 
-This project is the frontend marketing experience for AdBox, built to communicate the product, explain how it works, showcase its location-aware advertising model, and guide potential advertisers and riders toward taking action.
+This project is the frontend marketing experience for adbox, built to communicate the product, explain how it works, showcase its location-aware advertising model, and guide potential advertisers and riders toward taking action.
 
 ## Features
 
@@ -46,7 +46,7 @@ The website uses a responsive, editorial-style layout with a focus on large typo
 
 The "How It Works" section uses scroll-driven storytelling. As the user moves through the section, the active campaign step and supporting information update with the scroll position.
 
-The "AdBox For" experience presents different content for agencies, brands, SMEs, and riders, allowing the same product network to be communicated to different audiences.
+The "adbox For" experience presents different content for agencies, brands, SMEs, and riders, allowing the same product network to be communicated to different audiences.
 
 The site also supports light and dark themes. By default, the interface follows the user's system preference rather than permanently storing a theme selection.
 
@@ -68,7 +68,7 @@ Mobile layouts use simplified interactions where necessary to keep the experienc
 
 ## Purpose
 
-This project was built as a frontend implementation of the AdBox marketing experience, with emphasis on:
+This project was built as a frontend implementation of the adbox marketing experience, with emphasis on:
 
 * Responsive frontend development
 * Component-based React architecture
@@ -81,4 +81,4 @@ This project was built as a frontend implementation of the AdBox marketing exper
 
 ## License
 
-This project is for the AdBox product and is not intended for redistribution as a standalone template.
+This project is for the adbox product and is not intended for redistribution as a standalone template.

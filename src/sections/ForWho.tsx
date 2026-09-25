@@ -16,8 +16,8 @@ const slides = [
     id: "agencies",
     audience: "For ad agencies",
     title: "Scale campaigns. Extend your reach.",
-    body: "Give your clients a new way to reach audiences beyond traditional media. AdBox helps agencies deploy dynamic, location-aware campaigns across a growing network of mobile digital screens.",
-    action: "Advertise with AdBox",
+    body: "Give your clients a new way to reach audiences beyond traditional media. adbox helps agencies deploy dynamic, location-aware campaigns across a growing network of mobile digital screens.",
+    action: "Advertise with adbox",
     image: agenciesPhoto,
     alt: "Three colleagues at an ad agency reviewing a campaign on a laptop",
   },
@@ -25,17 +25,17 @@ const slides = [
     id: "brands",
     audience: "For brands",
     title: "Make every impression count.",
-    body: "Whether you're launching a product, driving foot traffic, building awareness or owning a location - AdBox puts your brand directly into the physical journeys of your audience.",
-    action: "Advertise with AdBox",
+    body: "Whether you're launching a product, driving foot traffic, building awareness or owning a location - adbox puts your brand directly into the physical journeys of your audience.",
+    action: "Advertise with adbox",
     image: brandsPhoto,
-    alt: "AdBox brand message displayed in a bright outdoor setting",
+    alt: "adbox brand message displayed in a bright outdoor setting",
   },
   {
     id: "smes",
     audience: "For SMEs",
     title: "Get seen where your customers are.",
-    body: "AdBox gives growing businesses an affordable way to put their brand in front of people across the locations that matter most.",
-    action: "Grow with AdBox",
+    body: "adbox gives growing businesses an affordable way to put their brand in front of people across the locations that matter most.",
+    action: "Grow with adbox",
     image: smePhoto,
     alt: "Small business owner holding a jar of products in a shop",
   },
@@ -43,8 +43,8 @@ const slides = [
     id: "riders",
     audience: "For riders",
     title: "Your route can do more.",
-    body: "Equip your bike with AdBox technology carrier box. Turn the kilometres you already ride into an additional source of income. Join the AdBox network, keep moving and earn as you go.",
-    action: "Become an AdBox Rider",
+    body: "Equip your bike with adbox technology carrier box. Turn the kilometres you already ride into an additional source of income. Join the adbox network, keep moving and earn as you go.",
+    action: "Become an adbox Rider",
     image: riderPhoto,
     alt: "Delivery rider on a motorcycle with a bright yellow carrier box",
     extra: "Ride. Display. Earn.",
@@ -120,7 +120,7 @@ export function ForWho() {
           <Accent>Advertising</Accent> that works for everyone.
         </SectionHeading>
         <p className="max-w-[540px] text-base leading-7 text-soft md:mt-[16px] md:text-right">
-          From brands and agencies to SMEs and riders, AdBox connects people,
+          From brands and agencies to SMEs and riders, adbox connects people,
           businesses and opportunities through{" "}
           <span className="font-semibold text-brand">
             advertising that moves.

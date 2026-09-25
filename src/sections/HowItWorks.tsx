@@ -5,7 +5,7 @@ import { Accent, Eyebrow, Section, SectionHeading } from '../components/ui'
 const steps = [
   { title: 'Create Your Campaign', body: 'Upload your creative and define your campaign objectives.' },
   { title: 'Choose Your Reach', body: 'Pick the locations and audiences your campaign should reach.' },
-  { title: 'AdBox Gets Moving', body: 'Riders carry your campaign across the city on their everyday routes.' },
+  { title: 'adbox Gets Moving', body: 'Riders carry your campaign across the city on their everyday routes.' },
   {
     title: 'Reach People Where They Are',
     body: 'Your ads play on the LED screens in the places your audience spends time.',
