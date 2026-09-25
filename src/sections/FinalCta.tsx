@@ -1,4 +1,4 @@
-import scene from "../assets/illustrations/adbox_bike_rider_day_animated .svg.svg";
+import scene from "../assets/illustrations/Adbox_bike_rider_day_animated .svg.svg";
 import { Accent, Button, Container } from "../components/ui";
 
 export function FinalCta() {
