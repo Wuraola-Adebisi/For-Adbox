@@ -1,8 +1,0 @@
-export { Button } from './Button'
-export { Container } from './Container'
-export { Eyebrow } from './Eyebrow'
-export { Logo } from './Logo'
-export { Pill } from './Pill'
-export { Section } from './Section'
-export { ThemeToggle } from './ThemeToggle'
-export { Accent, SectionHeading } from './SectionHeading'
