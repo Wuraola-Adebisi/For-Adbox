@@ -8,7 +8,7 @@ import { HowItWorks } from './sections/HowItWorks'
 import { LiveNetwork } from './sections/LiveNetwork'
 import { Problem } from './sections/Problem'
 import { ValueStrip } from './sections/ValueStrip'
-import { Whyadbox } from "./sections/Whyadbox";
+import { WhyAdbox } from './sections/WhyAdbox'
 
 // ForBrandsAndRiders is retired: the new design has no For Brands / For Riders sections.
 // Live Network now follows For who (ad agencies) directly.
@@ -24,7 +24,7 @@ export default function App() {
         <LiveNetwork />
         <HowItWorks />
         <ContextualTargeting />
-        <Whyadbox />
+        <WhyAdbox />
         <FinalCta />
       </main>
       <Footer />

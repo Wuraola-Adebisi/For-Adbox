@@ -10,7 +10,7 @@ const features = [
   { title: 'Built for Data', body: 'Turn physical advertising activity into measurable campaign intelligence.' },
 ]
 
-export function Whyadbox() {
+export function WhyAdbox() {
   return (
     // id="about" is temporary: the About Us nav link needs a real destination.
     <Section tone="ink" id="about" className="bg-why-bg pb-[96.5px]">
