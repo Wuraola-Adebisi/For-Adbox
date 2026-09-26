@@ -53,53 +53,32 @@ const slides = [
 
 type Slide = (typeof slides)[number];
 
-const SLIDE_DURATION = 650;
+const CHANGE_DURATION = 140;
 const SLIDE_COUNT = slides.length;
 
 export function ForWho() {
-  const [position, setPosition] = useState(SLIDE_COUNT);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [transitionEnabled, setTransitionEnabled] = useState(true);
+  const [position, setPosition] = useState(0);
+  const [isChanging, setIsChanging] = useState(false);
 
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
-  const rafRef = useRef<number | null>(null);
-
-  const carouselSlides = [...slides, ...slides, ...slides];
 
   const goTo = (nextPosition: number) => {
-    if (isAnimating) return;
+    if (isChanging) return;
 
-    window.clearTimeout(timeoutRef.current);
+    const normalizedPosition =
+      (nextPosition + SLIDE_COUNT) % SLIDE_COUNT;
 
-    setIsAnimating(true);
-    setPosition(nextPosition);
+    setIsChanging(true);
 
     timeoutRef.current = setTimeout(() => {
-      const isPastRightCopy = nextPosition >= SLIDE_COUNT * 2;
-      const isBeforeLeftCopy = nextPosition < SLIDE_COUNT;
+      setPosition(normalizedPosition);
 
-      if (isPastRightCopy || isBeforeLeftCopy) {
-        const resetPosition = isPastRightCopy
-          ? nextPosition - SLIDE_COUNT
-          : nextPosition + SLIDE_COUNT;
-
-        setTransitionEnabled(false);
-        setPosition(resetPosition);
-
-        rafRef.current = requestAnimationFrame(() => {
-          rafRef.current = requestAnimationFrame(() => {
-            setTransitionEnabled(true);
-            setIsAnimating(false);
-          });
-        });
-
-        return;
-      }
-
-      setIsAnimating(false);
-    }, SLIDE_DURATION);
+      requestAnimationFrame(() => {
+        setIsChanging(false);
+      });
+    }, CHANGE_DURATION);
   };
 
   const goNext = () => {
@@ -113,14 +92,10 @@ export function ForWho() {
   useEffect(() => {
     return () => {
       window.clearTimeout(timeoutRef.current);
-
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current);
-      }
     };
   }, []);
 
-  const activeIndex = position % SLIDE_COUNT;
+  const activeSlide = slides[position];
 
   return (
     <Section
@@ -147,7 +122,7 @@ export function ForWho() {
               type="button"
               onClick={goPrev}
               aria-label="Previous audience"
-              disabled={isAnimating}
+              disabled={isChanging}
               className="flex h-6 w-6 items-center justify-center text-soft transition-colors duration-200 hover:text-fg disabled:pointer-events-none"
             >
               <ChevronIcon direction="left" />
@@ -159,7 +134,7 @@ export function ForWho() {
               type="button"
               onClick={goNext}
               aria-label="Next audience"
-              disabled={isAnimating}
+              disabled={isChanging}
               className="flex h-6 w-6 items-center justify-center text-soft transition-colors duration-200 hover:text-fg disabled:pointer-events-none"
             >
               <ChevronIcon direction="right" />
@@ -168,34 +143,17 @@ export function ForWho() {
         </div>
       </div>
 
-      {/* Carousel viewport */}
-      <div className="relative mt-8 w-full overflow-hidden sm:mt-10 md:mt-12">
+      {/* Card */}
+      <div className="relative mt-8 w-full sm:mt-10 md:mt-12">
         <div
-          className="relative"
+          className={`for-who-card rounded-[20px] p-5 transition-opacity ease-out sm:p-6 md:p-10 ${
+            isChanging ? "opacity-0" : "opacity-100"
+          }`}
           style={{
-            paddingRight: "80px",
+            transitionDuration: `${CHANGE_DURATION}ms`,
           }}
         >
-          <div
-            className="flex gap-6"
-            style={{
-              transform: `translate3d(calc(-${position} * (100% + 24px)), 0, 0)`,
-              transition: transitionEnabled
-                ? `transform ${SLIDE_DURATION}ms cubic-bezier(0.65, 0, 0.35, 1)`
-                : "none",
-              willChange: "transform",
-            }}
-          >
-            {carouselSlides.map((slide, index) => (
-              <div
-                key={`${slide.id}-${index}`}
-                className="for-who-card w-full shrink-0 rounded-[20px] p-5 sm:p-6 md:p-10"
-                aria-hidden={index % SLIDE_COUNT !== activeIndex}
-              >
-                <SlideCard slide={slide} />
-              </div>
-            ))}
-          </div>
+          <SlideCard slide={activeSlide} />
         </div>
       </div>
 
