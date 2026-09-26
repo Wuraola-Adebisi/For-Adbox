@@ -51,148 +51,232 @@ const slides = [
   },
 ];
 
+type Slide = (typeof slides)[number];
+type Direction = 1 | -1;
+
+const SLIDE_DURATION = 650;
+const SLIDE_COUNT = slides.length;
+
 export function ForWho() {
-  const storyRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
-  const previousActive = useRef(0);
+  const [position, setPosition] = useState(SLIDE_COUNT);
+  const [direction, setDirection] = useState<Direction>(1);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [transitionEnabled, setTransitionEnabled] = useState(true);
+
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const rafRef = useRef<number>();
+
+  const carouselSlides = [...slides, ...slides, ...slides];
+
+  const goTo = (nextPosition: number, dir: Direction) => {
+    if (isAnimating) return;
+
+    window.clearTimeout(timeoutRef.current);
+
+    setDirection(dir);
+    setIsAnimating(true);
+    setPosition(nextPosition);
+
+    timeoutRef.current = setTimeout(() => {
+      const isPastRightCopy = nextPosition >= SLIDE_COUNT * 2;
+      const isBeforeLeftCopy = nextPosition < SLIDE_COUNT;
+
+      if (isPastRightCopy || isBeforeLeftCopy) {
+        const resetPosition = isPastRightCopy
+          ? nextPosition - SLIDE_COUNT
+          : nextPosition + SLIDE_COUNT;
+
+        setTransitionEnabled(false);
+        setPosition(resetPosition);
+
+        rafRef.current = requestAnimationFrame(() => {
+          rafRef.current = requestAnimationFrame(() => {
+            setTransitionEnabled(true);
+            setIsAnimating(false);
+          });
+        });
+
+        return;
+      }
+
+      setIsAnimating(false);
+    }, SLIDE_DURATION);
+  };
+
+  const goNext = () => {
+    goTo(position + 1, 1);
+  };
+
+  const goPrev = () => {
+    goTo(position - 1, -1);
+  };
 
   useEffect(() => {
-    let frame = 0;
-    const scrollToHashSlide = () => {
-      const story = storyRef.current;
-      const index = slides.findIndex(
-        (slide) => `#for-who-${slide.id}` === window.location.hash,
-      );
-      if (!story || index < 0) return;
-      const travel = Math.max(1, story.offsetHeight - window.innerHeight);
-      const position =
-        window.scrollY +
-        story.getBoundingClientRect().top +
-        travel * (index / (slides.length - 1));
-      window.scrollTo({ top: position, behavior: "smooth" });
-    };
-    const updateFromScroll = () => {
-      frame = 0;
-      const story = storyRef.current;
-      if (!story) return;
-
-      const rect = story.getBoundingClientRect();
-      const travel = Math.max(1, rect.height - window.innerHeight);
-      const progress = Math.min(1, Math.max(0, -rect.top / travel));
-      const next = Math.min(
-        slides.length - 1,
-        Math.floor(progress * slides.length),
-      );
-
-      if (next !== previousActive.current) {
-        previousActive.current = next;
-        setActive(next);
-      }
-    };
-
-    const onScroll = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateFromScroll);
-    };
-
-    updateFromScroll();
-    scrollToHashSlide();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    window.addEventListener("hashchange", scrollToHashSlide);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      window.removeEventListener("hashchange", scrollToHashSlide);
-      if (frame) window.cancelAnimationFrame(frame);
+      window.clearTimeout(timeoutRef.current);
+
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
   }, []);
 
-  const current = slides[active];
+  const activeIndex = position % SLIDE_COUNT;
 
   return (
     <Section
       tone="surface"
       id="for-who"
-      className="bg-value-bg pt-16 pb-16 md:pt-20 md:pb-16"
+      className="for-who-section pt-12 pb-12 sm:pt-16 sm:pb-16 md:pt-[180px] md:pb-16"
     >
-      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+      <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
         <SectionHeading className="max-w-[520px] text-fg">
           <Accent>Advertising</Accent> that works for everyone.
         </SectionHeading>
-        <p className="max-w-[540px] text-base leading-7 text-soft md:mt-[16px] md:text-right">
-          From brands and agencies to SMEs and riders, adbox connects people,
-          businesses and opportunities through{" "}
-          <span className="font-semibold text-brand">
-            advertising that moves.
-          </span>
-        </p>
-      </div>
 
-      <div ref={storyRef} className="relative mt-10 min-h-[320vh] md:mt-12">
-        <div className="sticky top-4 flex min-h-[calc(100svh-1rem)] items-center md:top-24 md:min-h-[560px]">
-          <div className="grid w-full items-center gap-8 md:grid-cols-[1fr_460px] md:gap-11">
-            <div className="max-w-[480px]">
-              <div
-                key={current.audience}
-                className="animate-[for-who-copy_500ms_ease-out]"
-              >
-                <Pill tone="brand" className="border-line-strong">
-                  {current.audience}
-                </Pill>
-                <SectionHeading
-                  size="panel"
-                  className="mt-4 leading-[1.1] text-fg"
-                >
-                  {current.title}
-                </SectionHeading>
-                <p className="mt-4 text-base leading-6 text-soft-2">
-                  {current.body}
-                </p>
-                {current.extra && (
-                  <p className="mt-6 text-lg font-bold text-fg">
-                    {current.extra}
-                  </p>
-                )}
-                <Button
-                  href="#contact"
-                  arrow
-                  className="mt-6 text-[15px] font-bold"
-                >
-                  {current.action}
-                </Button>
-              </div>
-            </div>
+        <div className="flex flex-col gap-4 md:max-w-[620px] md:flex-row md:items-start md:justify-between md:gap-6">
+          <p className="max-w-[540px] text-base leading-7 text-soft md:text-right">
+            From brands and agencies to SMEs and riders, adbox connects
+            people, businesses and opportunities through{" "}
+            <span className="font-semibold text-brand">
+              advertising that moves.
+            </span>
+          </p>
 
-            <div className="relative h-[300px] w-full overflow-hidden rounded-[20px] md:h-[340px]">
-              {slides.map((slide, index) => {
-                const offset = index - active;
-                const isCurrent = index === active;
-                return (
-                  <img
-                    key={slide.audience}
-                    src={slide.image}
-                    alt={isCurrent ? slide.alt : ""}
-                    aria-hidden={!isCurrent}
-                    width={460}
-                    height={340}
-                    loading={index === 0 ? "eager" : "lazy"}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)]"
-                    style={{
-                      transform: `translateY(${offset * 100}%)`,
-                      zIndex: isCurrent
-                        ? slides.length + 1
-                        : slides.length - Math.abs(offset),
-                    }}
-                  />
-                );
-              })}
-              <span className="sr-only" aria-live="polite">
-                {current.audience}
-              </span>
-            </div>
+          <div className="flex w-fit shrink-0 items-center gap-3 rounded-full border border-line-strong px-3 py-2">
+            <button
+              type="button"
+              onClick={goPrev}
+              aria-label="Previous audience"
+              disabled={isAnimating}
+              className="flex h-6 w-6 items-center justify-center text-soft transition-colors duration-200 hover:text-fg disabled:pointer-events-none"
+            >
+              <ChevronIcon direction="left" />
+            </button>
+
+            <span
+              className="h-4 w-px bg-line-strong"
+              aria-hidden="true"
+            />
+
+            <button
+              type="button"
+              onClick={goNext}
+              aria-label="Next audience"
+              disabled={isAnimating}
+              className="flex h-6 w-6 items-center justify-center text-soft transition-colors duration-200 hover:text-fg disabled:pointer-events-none"
+            >
+              <ChevronIcon direction="right" />
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Carousel viewport */}
+      <div className="relative mt-8 w-full overflow-hidden sm:mt-10 md:mt-12">
+        <div
+          className="relative"
+          style={{
+            paddingRight: "80px",
+          }}
+        >
+          <div
+            className="flex gap-6"
+            style={{
+              transform: `translate3d(calc(-${position} * (100% + 24px)), 0, 0)`,
+              transition: transitionEnabled
+                ? `transform ${SLIDE_DURATION}ms cubic-bezier(0.65, 0, 0.35, 1)`
+                : "none",
+              willChange: "transform",
+            }}
+          >
+            {carouselSlides.map((slide, index) => (
+              <div
+                key={`${slide.id}-${index}`}
+                className="for-who-card w-full shrink-0 rounded-[20px] p-5 sm:p-6 md:p-10"
+                aria-hidden={index % SLIDE_COUNT !== activeIndex}
+              >
+                <SlideCard slide={slide} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @media (prefers-reduced-motion: reduce) {
+          * {
+            scroll-behavior: auto !important;
+          }
+        }
+      `}</style>
     </Section>
+  );
+}
+
+function SlideCard({ slide }: { slide: Slide }) {
+  return (
+    <div className="relative grid items-center gap-7 sm:gap-8 md:min-h-[433px] md:grid-cols-[1fr_460px] md:gap-12">
+      <div className="max-w-[480px]">
+        <SlideCopy slide={slide} />
+      </div>
+
+      <div className="relative h-[240px] w-full overflow-hidden rounded-[16px] sm:h-[280px] sm:rounded-[20px] md:h-[340px]">
+        <img
+          src={slide.image}
+          alt={slide.alt}
+          width={460}
+          height={340}
+          className="h-full w-full object-cover"
+        />
+      </div>
+    </div>
+  );
+}
+
+function SlideCopy({ slide }: { slide: Slide }) {
+  return (
+    <>
+      <Pill tone="brand" className="border-line-strong">
+        {slide.audience}
+      </Pill>
+
+      <SectionHeading size="panel" className="mt-4 leading-[1.1] text-fg">
+        {slide.title}
+      </SectionHeading>
+
+      <p className="mt-4 text-base leading-6 text-soft-2">
+        {slide.body}
+      </p>
+
+      {slide.extra && (
+        <p className="mt-6 text-lg font-bold text-fg">{slide.extra}</p>
+      )}
+
+      <Button href="#contact" arrow className="mt-6 text-[15px] font-bold">
+        {slide.action}
+      </Button>
+    </>
+  );
+}
+
+function ChevronIcon({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={direction === "right" ? "rotate-180" : undefined}
+    >
+      <path
+        d="M11.25 3.75L6 9l5.25 5.25"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
