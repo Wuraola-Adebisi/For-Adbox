@@ -52,28 +52,27 @@ const slides = [
 ];
 
 type Slide = (typeof slides)[number];
-type Direction = 1 | -1;
 
 const SLIDE_DURATION = 650;
 const SLIDE_COUNT = slides.length;
 
 export function ForWho() {
   const [position, setPosition] = useState(SLIDE_COUNT);
-  const [direction, setDirection] = useState<Direction>(1);
   const [isAnimating, setIsAnimating] = useState(false);
   const [transitionEnabled, setTransitionEnabled] = useState(true);
 
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
-  const rafRef = useRef<number>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
+  const rafRef = useRef<number | null>(null);
 
   const carouselSlides = [...slides, ...slides, ...slides];
 
-  const goTo = (nextPosition: number, dir: Direction) => {
+  const goTo = (nextPosition: number) => {
     if (isAnimating) return;
 
     window.clearTimeout(timeoutRef.current);
 
-    setDirection(dir);
     setIsAnimating(true);
     setPosition(nextPosition);
 
@@ -104,18 +103,18 @@ export function ForWho() {
   };
 
   const goNext = () => {
-    goTo(position + 1, 1);
+    goTo(position + 1);
   };
 
   const goPrev = () => {
-    goTo(position - 1, -1);
+    goTo(position - 1);
   };
 
   useEffect(() => {
     return () => {
       window.clearTimeout(timeoutRef.current);
 
-      if (rafRef.current) {
+      if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
       }
     };
@@ -136,8 +135,8 @@ export function ForWho() {
 
         <div className="flex flex-col gap-4 md:max-w-[620px] md:flex-row md:items-start md:justify-between md:gap-6">
           <p className="max-w-[540px] text-base leading-7 text-soft md:text-right">
-            From brands and agencies to SMEs and riders, adbox connects
-            people, businesses and opportunities through{" "}
+            From brands and agencies to SMEs and riders, adbox connects people,
+            businesses and opportunities through{" "}
             <span className="font-semibold text-brand">
               advertising that moves.
             </span>
@@ -154,10 +153,7 @@ export function ForWho() {
               <ChevronIcon direction="left" />
             </button>
 
-            <span
-              className="h-4 w-px bg-line-strong"
-              aria-hidden="true"
-            />
+            <span className="h-4 w-px bg-line-strong" aria-hidden="true" />
 
             <button
               type="button"
@@ -245,9 +241,7 @@ function SlideCopy({ slide }: { slide: Slide }) {
         {slide.title}
       </SectionHeading>
 
-      <p className="mt-4 text-base leading-6 text-soft-2">
-        {slide.body}
-      </p>
+      <p className="mt-4 text-base leading-6 text-soft-2">{slide.body}</p>
 
       {slide.extra && (
         <p className="mt-6 text-lg font-bold text-fg">{slide.extra}</p>
