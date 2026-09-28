@@ -374,6 +374,20 @@ body {
   background: #222832;
 }
 
+/* ForWho button text: #edf2fa in dark mode. Light mode keeps the theme's
+   own text colour (--on-brand, near black). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .for-who-button,
+  :root:not([data-theme="light"]) .for-who-button * {
+    color: #edf2fa;
+  }
+}
+
+:root[data-theme="dark"] .for-who-button,
+:root[data-theme="dark"] .for-who-button * {
+  color: #edf2fa;
+}
+
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) .for-who-section {
     background: #f6f6f6;

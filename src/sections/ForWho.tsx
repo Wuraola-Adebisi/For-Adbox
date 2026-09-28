@@ -174,7 +174,11 @@ function SlideCopy({ slide }: { slide: Slide }) {
         <p className="mt-6 text-lg font-bold text-fg">{slide.extra}</p>
       )}
 
-      <Button href="#contact" arrow className="mt-6 text-[15px] font-bold">
+      <Button
+        href="#contact"
+        arrow
+        className="for-who-button mt-6 text-[15px] font-bold"
+      >
         {slide.action}
       </Button>
     </>
