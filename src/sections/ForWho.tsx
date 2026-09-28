@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import agenciesPhoto from "../assets/photos/agencies.png";
 import brandsPhoto from "../assets/photos/Images.png";
 import smePhoto from "../assets/photos/Images (1).png";
@@ -53,134 +53,103 @@ const slides = [
 
 type Slide = (typeof slides)[number];
 
-const CHANGE_DURATION = 140;
-const SLIDE_COUNT = slides.length;
+const LAST = slides.length - 1;
 
 export function ForWho() {
   const [position, setPosition] = useState(0);
-  const [isChanging, setIsChanging] = useState(false);
 
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
-    undefined,
-  );
+  const isFirst = position === 0;
+  const isLast = position === LAST;
 
-  const goTo = (nextPosition: number) => {
-    if (isChanging) return;
-
-    const normalizedPosition =
-      (nextPosition + SLIDE_COUNT) % SLIDE_COUNT;
-
-    setIsChanging(true);
-
-    timeoutRef.current = setTimeout(() => {
-      setPosition(normalizedPosition);
-
-      requestAnimationFrame(() => {
-        setIsChanging(false);
-      });
-    }, CHANGE_DURATION);
-  };
-
-  const goNext = () => {
-    goTo(position + 1);
-  };
-
-  const goPrev = () => {
-    goTo(position - 1);
-  };
-
-  useEffect(() => {
-    return () => {
-      window.clearTimeout(timeoutRef.current);
-    };
-  }, []);
-
-  const activeSlide = slides[position];
+  // No looping: prev is disabled on the first card, next on the last.
+  const goNext = () => setPosition((p) => Math.min(p + 1, LAST));
+  const goPrev = () => setPosition((p) => Math.max(p - 1, 0));
 
   return (
     <Section
       tone="surface"
       id="for-who"
-      className="for-who-section pt-12 pb-12 sm:pt-16 sm:pb-16 md:pt-[180px] md:pb-16"
+      className="for-who-section overflow-x-clip pt-12 pb-12 sm:pt-16 sm:pb-16 md:pt-[180px] md:pb-16"
     >
-      <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-        <SectionHeading className="max-w-[520px] text-fg">
-          <Accent>Advertising</Accent> that works for everyone.
-        </SectionHeading>
+      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div>
+          <SectionHeading className="max-w-[520px] text-fg">
+            <Accent>Advertising</Accent> that works for everyone.
+          </SectionHeading>
 
-        <div className="flex flex-col gap-4 md:max-w-[620px] md:flex-row md:items-start md:justify-between md:gap-6">
-          <p className="max-w-[540px] text-base leading-7 text-soft md:text-right">
+          <p className="mt-5 max-w-[560px] text-base leading-8 text-soft">
             From brands and agencies to SMEs and riders, adbox connects people,
-            businesses and opportunities through{" "}
-            <span className="font-semibold text-brand">
-              advertising that moves.
-            </span>
+            businesses and opportunities through advertising that moves.
           </p>
+        </div>
 
-          <div className="flex w-fit shrink-0 items-center gap-3 rounded-full border border-line-strong px-3 py-2">
-            <button
-              type="button"
-              onClick={goPrev}
-              aria-label="Previous audience"
-              disabled={isChanging}
-              className="flex h-6 w-6 items-center justify-center text-soft transition-colors duration-200 hover:text-fg disabled:pointer-events-none"
-            >
-              <ChevronIcon direction="left" />
-            </button>
+        <div className="flex h-[52px] w-[120px] shrink-0 items-center gap-3 rounded-[71px] bg-[#222832] px-3 py-2">
+          <button
+            type="button"
+            onClick={goPrev}
+            aria-label="Previous audience"
+            disabled={isFirst}
+            className="flex h-full flex-1 items-center justify-center rounded-full text-fg transition-[background-color,opacity] duration-200 enabled:cursor-pointer enabled:hover:bg-fg/20 disabled:cursor-default disabled:opacity-40"
+          >
+            <ChevronIcon direction="left" />
+          </button>
 
-            <span className="h-4 w-px bg-line-strong" aria-hidden="true" />
+          <span className="h-6 w-px shrink-0 bg-fg/60" aria-hidden="true" />
 
-            <button
-              type="button"
-              onClick={goNext}
-              aria-label="Next audience"
-              disabled={isChanging}
-              className="flex h-6 w-6 items-center justify-center text-soft transition-colors duration-200 hover:text-fg disabled:pointer-events-none"
-            >
-              <ChevronIcon direction="right" />
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={goNext}
+            aria-label="Next audience"
+            disabled={isLast}
+            className="flex h-full flex-1 items-center justify-center rounded-full text-fg transition-[background-color,opacity] duration-200 enabled:cursor-pointer enabled:hover:bg-fg/20 disabled:cursor-default disabled:opacity-40"
+          >
+            <ChevronIcon direction="right" />
+          </button>
         </div>
       </div>
 
-      {/* Card */}
-      <div className="relative mt-8 w-full sm:mt-10 md:mt-12">
-        <div
-          className={`for-who-card rounded-[20px] p-5 transition-opacity ease-out sm:p-6 md:p-10 ${
-            isChanging ? "opacity-0" : "opacity-100"
-          }`}
-          style={{
-            transitionDuration: `${CHANGE_DURATION}ms`,
-          }}
-        >
-          <SlideCard slide={activeSlide} />
+      {/* Stage. All cards share one grid cell and only opacity changes, so
+          there is no layout work and no image decode during a change. */}
+      <div className="relative mt-8 sm:mt-10 md:mt-12">
+        <div className="grid md:w-[calc(100%-3rem)]">
+          {slides.map((slide, i) => {
+            const active = i === position;
+            return (
+              <div
+                key={slide.id}
+                aria-hidden={!active}
+                inert={!active}
+                className={`for-who-card col-start-1 row-start-1 rounded-[20px] p-5 motion-reduce:transition-none sm:p-6 md:p-10 ${
+                  active
+                    ? "z-10 opacity-100 transition-opacity duration-300 ease-out"
+                    : "opacity-0 transition-opacity delay-300 duration-0"
+                }`}
+              >
+                <SlideCard slide={slide} />
+              </div>
+            );
+          })}
         </div>
       </div>
-
-      <style>{`
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            scroll-behavior: auto !important;
-          }
-        }
-      `}</style>
     </Section>
   );
 }
 
 function SlideCard({ slide }: { slide: Slide }) {
   return (
-    <div className="relative grid items-center gap-7 sm:gap-8 md:min-h-[433px] md:grid-cols-[1fr_460px] md:gap-12">
+    <div className="grid items-center gap-7 sm:gap-8 md:grid-cols-[1fr_481px] md:gap-12">
       <div className="max-w-[480px]">
         <SlideCopy slide={slide} />
       </div>
 
-      <div className="relative h-[240px] w-full overflow-hidden rounded-[16px] sm:h-[280px] sm:rounded-[20px] md:h-[340px]">
+      <div className="h-[240px] w-full overflow-hidden rounded-[16px] sm:h-[280px] sm:rounded-[20px] md:h-[433px]">
         <img
           src={slide.image}
           alt={slide.alt}
-          width={460}
-          height={340}
+          width={481}
+          height={433}
+          loading="eager"
+          decoding="async"
           className="h-full w-full object-cover"
         />
       </div>
@@ -191,7 +160,7 @@ function SlideCard({ slide }: { slide: Slide }) {
 function SlideCopy({ slide }: { slide: Slide }) {
   return (
     <>
-      <Pill tone="brand" className="border-line-strong">
+      <Pill tone="brand" className="border-line-strong text-soft">
         {slide.audience}
       </Pill>
 
@@ -215,8 +184,8 @@ function SlideCopy({ slide }: { slide: Slide }) {
 function ChevronIcon({ direction }: { direction: "left" | "right" }) {
   return (
     <svg
-      width="18"
-      height="18"
+      width="24"
+      height="24"
       viewBox="0 0 18 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -225,7 +194,7 @@ function ChevronIcon({ direction }: { direction: "left" | "right" }) {
       <path
         d="M11.25 3.75L6 9l5.25 5.25"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="2.25"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
