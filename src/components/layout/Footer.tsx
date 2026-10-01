@@ -44,7 +44,10 @@ export function Footer() {
   return (
     <footer id="contact" className="border-t border-line bg-transparent">
       <Container size="nav">
-        <div className="grid gap-x-10 gap-y-10 pt-[57px] sm:grid-cols-2 lg:grid-cols-4">
+        <div className="pt-10 sm:hidden">
+          <Logo className="block text-[41px]" />
+        </div>
+        <div className="grid grid-cols-2 gap-x-5 gap-y-8 pt-[41px] sm:gap-x-10 sm:gap-y-10 sm:pt-[57px] lg:grid-cols-4">
           {columns.map((column) => (
             <nav key={column.title} aria-label={column.title}>
               <h2 className="text-[11px] leading-4 font-semibold uppercase tracking-[0.08em] text-fg">
@@ -66,11 +69,11 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-[62.5px] flex flex-col gap-6 border-t border-line pt-[25px] pb-[41.5px] sm:flex-row sm:items-center sm:justify-between">
-          <div>
+        <div className="mx-[18px] mt-[51px] flex flex-col gap-6 border-t border-line pt-5 pb-[38px] sm:mx-0 sm:mt-[62.5px] sm:pt-[25px] sm:pb-[41.5px] sm:flex-row sm:items-center sm:justify-between">
+          <div className="hidden sm:block">
             <Logo className="block text-[48px]" />
           </div>
-          <p className="text-[13px] leading-5 text-dim">
+          <p className="-mx-2 text-center text-[13px] leading-5 text-dim sm:mx-0 sm:text-left">
             © 2026 adbox Technologies Ltd. All rights reserved.
           </p>
         </div>

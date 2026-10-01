@@ -405,3 +405,23 @@ body {
 :root[data-theme="light"] .for-who-card {
   background: #fbfbfb;
 }
+
+/* ForWho slider: below md the cards slide one stride (card + gap) per step,
+   from md up they cross-fade in place, so no transform is applied. */
+.for-who-track {
+  transform: translateX(calc(var(--slide, 0) * -1 * (100% + 4px)));
+  transition: transform 300ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .for-who-track {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .for-who-track {
+    transition: none;
+  }
+}

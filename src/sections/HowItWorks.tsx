@@ -128,20 +128,20 @@ export function HowItWorks() {
       tone="surface"
       id="how-it-works"
       containerSize="wide"
-      className="bg-how-bg pt-[180px] pb-[96px]"
+      className="bg-how-bg pt-[92px] pb-[96px] md:pt-[180px]"
     >
       <div ref={storyRef} className="relative min-h-[500vh]">
-        <div className="sticky top-0 flex min-h-[calc(100svh-276px)] items-center">
-          <div className="grid w-full items-start gap-x-8 gap-y-10 md:grid-cols-[533.5fr_538.5fr] md:gap-y-[54px]">
+        <div className="sticky top-[112px] flex items-start md:top-0 md:min-h-[calc(100svh-276px)] md:items-center">
+          <div className="grid w-full items-start gap-x-8 gap-y-8 md:grid-cols-[533.5fr_538.5fr] md:gap-y-[54px]">
             <div className="md:col-start-1 md:row-start-1">
               <Eyebrow>How it works</Eyebrow>
 
-              <SectionHeading className="mt-[26.5px] text-fg">
+              <SectionHeading className="mt-6 leading-10 text-fg md:mt-[26.5px] md:leading-[56px]">
                 From <Accent>campaign</Accent> brief to real-time{" "}
                 <Accent>visibility</Accent>.
               </SectionHeading>
 
-              <p className="mt-[16.9px] max-w-[500px] text-base leading-6 text-muted">
+              <p className="mt-[17px] max-w-[500px] text-base leading-6 text-muted md:mt-[16.9px]">
                 Instead of waiting for your audience to find your advertisement
                 — take your advertisement to them.
               </p>
@@ -155,7 +155,10 @@ export function HowItWorks() {
                   <li
                     key={item.title}
                     aria-current={isActive ? "step" : undefined}
-                    className="group flex h-[60px] items-center gap-[22.5px] text-left"
+                    className={cn(
+                      "group h-9 items-center gap-[22.5px] text-left md:flex md:h-[60px]",
+                      isActive ? "flex" : "hidden",
+                    )}
                   >
                     <span
                       className={cn(
@@ -173,7 +176,7 @@ export function HowItWorks() {
 
                     <span
                       className={cn(
-                        "font-semibold text-[18px] leading-7 tracking-[-0.03em]",
+                        "text-2xl leading-8 font-semibold tracking-[-0.03em] md:text-[18px] md:leading-7",
                         "transition-[color,opacity,transform]",
                         "duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
                         isActive
@@ -190,7 +193,7 @@ export function HowItWorks() {
 
             <div
               aria-live="polite"
-              className="rounded-2xl border border-line bg-card px-8 pt-[34.5px] pb-8 md:col-start-2 md:row-start-2"
+              className="mt-0.5 rounded-2xl border border-line bg-card px-5 pt-[19px] pb-5 md:col-start-2 md:row-start-2 md:px-8 md:pt-[34.5px] md:pb-8"
             >
               <div className="flex h-4 items-center justify-between">
                 <div aria-hidden="true" className="flex items-center gap-1.5">
@@ -198,16 +201,18 @@ export function HowItWorks() {
                     <span
                       key={item.title}
                       className={cn(
-                        "h-1.5 rounded-full",
+                        "h-[3px] rounded-full md:h-1.5",
                         "transition-[width,background-color]",
                         "duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                        index === active ? "w-5 bg-brand" : "w-1.5 bg-line",
+                        index === active
+                          ? "w-3.5 bg-brand md:w-5"
+                          : "w-[3px] bg-fg md:w-1.5 md:bg-line",
                       )}
                     />
                   ))}
                 </div>
 
-                <span className="font-mono text-xs text-dim">
+                <span className="font-mono text-[8px] text-brand md:text-xs md:text-dim">
                   {active + 1} / {steps.length}
                 </span>
               </div>
@@ -221,25 +226,25 @@ export function HowItWorks() {
                     : "translate-y-0 opacity-100",
                 )}
               >
-                <span className="mt-[25px] block font-mono text-[13px] leading-5 text-brand slashed-zero">
+                <span className="mt-[14px] block font-mono text-[11px] leading-5 text-brand slashed-zero md:mt-[25px] md:text-[13px]">
                   {pad(active + 1)}
                 </span>
 
-                <h3 className="mt-[11px] text-[27px] leading-9 font-semibold tracking-[-0.03em] text-fg">
+                <h3 className="mt-0.5 text-[18.5px] leading-7 font-bold md:font-semibold tracking-[-0.03em] text-fg md:text-[27px] md:leading-9">
                   {step.title}
                 </h3>
 
-                <p className="mt-[18.5px] text-base leading-6 text-muted">
+                <p className="mt-2 text-[11px] leading-4 text-brand md:mt-[18.5px] md:text-base md:leading-6 md:text-muted">
                   {step.body}
                 </p>
               </div>
 
-              <div className="mt-[29px] flex gap-2 border-t border-line pt-5">
+              <div className="mt-4 flex gap-1.5 border-t border-line pt-3 md:mt-[29px] md:gap-2 md:pt-5">
                 <button
                   type="button"
                   onClick={() => goToStep(active - 1)}
                   disabled={active === 0}
-                  className="inline-flex h-[38px] cursor-pointer items-center gap-1.5 rounded-lg border border-line px-3 text-sm text-muted transition-colors hover:text-fg disabled:cursor-default disabled:text-dim disabled:hover:text-dim"
+                  className="inline-flex h-6 cursor-pointer items-center gap-1.5 rounded-md border border-line px-2 text-[10px] text-muted transition-colors hover:text-fg disabled:cursor-default disabled:text-dim disabled:hover:text-dim md:h-[38px] md:rounded-lg md:px-3 md:text-sm"
                 >
                   <span aria-hidden="true">←</span>
                   Prev
@@ -249,7 +254,7 @@ export function HowItWorks() {
                   type="button"
                   onClick={() => goToStep(active + 1)}
                   disabled={active === steps.length - 1}
-                  className="inline-flex h-[38px] cursor-pointer items-center gap-1.5 rounded-lg bg-brand px-[13px] text-sm font-semibold text-on-brand transition duration-200 hover:brightness-110 disabled:cursor-default disabled:opacity-50 disabled:hover:brightness-100"
+                  className="inline-flex h-6 cursor-pointer items-center gap-1.5 rounded-md bg-brand px-2 text-[10px] font-semibold text-on-brand transition duration-200 hover:brightness-110 disabled:cursor-default disabled:opacity-50 disabled:hover:brightness-100 md:h-[38px] md:rounded-lg md:px-[13px] md:text-sm"
                 >
                   Next
                   <span aria-hidden="true">→</span>

@@ -13,12 +13,14 @@ const sizes = {
 type ContainerProps = {
   size?: keyof typeof sizes
   className?: string
+  /** Drop the mobile side gutter so children can run edge to edge. */
+  bleed?: boolean
   children: ReactNode
 }
 
-export function Container({ size = 'page', className, children }: ContainerProps) {
+export function Container({ size = 'page', className, bleed = false, children }: ContainerProps) {
   return (
-    <div className="w-full px-6 md:px-10">
+    <div className={cn('w-full md:px-10', bleed ? 'px-0' : 'px-5')}>
       <div className={cn('mx-auto w-full', sizes[size], className)}>{children}</div>
     </div>
   )

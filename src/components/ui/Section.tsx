@@ -25,7 +25,7 @@ export function Section({
   children,
 }: SectionProps) {
   return (
-    <section id={id} className={cn(tones[tone], 'pt-[182px] pb-24', className)}>
+    <section id={id} className={cn(tones[tone], 'pt-[90px] pb-[90px] md:pt-[182px] md:pb-24', className)}>
       <Container size={containerSize} className={containerClassName}>
         {children}
       </Container>

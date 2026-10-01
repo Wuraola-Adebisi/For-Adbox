@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import agenciesPhoto from "../assets/photos/agencies.png";
 import brandsPhoto from "../assets/photos/Images.png";
 import smePhoto from "../assets/photos/Images (1).png";
@@ -69,21 +69,51 @@ export function ForWho() {
     <Section
       tone="surface"
       id="for-who"
-      className="for-who-section overflow-x-clip pt-12 pb-12 sm:pt-16 sm:pb-16 md:pt-[180px] md:pb-16"
+      className="for-who-section overflow-x-clip pt-[90px] pb-[90px] md:pt-[180px] md:pb-16"
     >
-      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <div>
-          <SectionHeading className="max-w-[520px] text-fg">
-            <Accent>Advertising</Accent> that works for everyone.
-          </SectionHeading>
+      <div>
+        <SectionHeading className="max-w-[520px] leading-12 text-fg md:leading-[56px]">
+          <Accent>Advertising</Accent> that works for everyone.
+        </SectionHeading>
 
-          <p className="mt-5 max-w-[560px] text-base leading-8 text-soft">
-            From brands and agencies to SMEs and riders, adbox connects people,
-            businesses and opportunities through advertising that moves.
-          </p>
+        <p className="mt-[17px] max-w-[560px] text-base leading-6 text-soft md:mt-5 md:leading-8">
+          From brands and agencies to SMEs and riders, adbox connects people,
+          businesses and opportunities through{" "}
+          <span className="font-semibold text-brand md:font-normal md:text-soft">
+            advertising that <br className="md:hidden" />
+            moves.
+          </span>
+        </p>
+      </div>
+
+      {/* Stage. Below md the cards sit in a row and slide, with the next card
+          peeking in. From md up all cards share one grid cell and only opacity
+          changes, so there is no layout work and no image decode during a change. */}
+      <div className="relative mt-10 md:mt-12">
+        <div
+          className="for-who-track grid auto-cols-[calc(100%-16px)] grid-flow-col gap-5 md:w-[calc(100%-3rem)] md:auto-cols-auto md:grid-flow-row md:gap-0"
+          style={{ "--slide": position } as CSSProperties}
+        >
+          {slides.map((slide, i) => {
+            const active = i === position;
+            return (
+              <div
+                key={slide.id}
+                aria-hidden={!active}
+                inert={!active}
+                className={`for-who-card rounded-[20px] p-4 motion-reduce:transition-none sm:p-6 md:col-start-1 md:row-start-1 md:p-10 ${
+                  active
+                    ? "z-10 opacity-100 md:transition-opacity md:duration-300 md:ease-out"
+                    : "opacity-100 md:opacity-0 md:transition-opacity md:delay-300 md:duration-0"
+                }`}
+              >
+                <SlideCard slide={slide} />
+              </div>
+            );
+          })}
         </div>
 
-        <div className="flex h-[52px] w-[120px] shrink-0 items-center gap-3 rounded-[71px] bg-[#222832] px-3 py-2">
+        <div className="mx-auto mt-6 flex h-[52px] w-[120px] shrink-0 items-center gap-3 rounded-[71px] bg-[#222832] px-3 py-2 md:absolute md:-top-[100px] md:right-0 md:mx-0 md:mt-0">
           <button
             type="button"
             onClick={goPrev}
@@ -107,30 +137,6 @@ export function ForWho() {
           </button>
         </div>
       </div>
-
-      {/* Stage. All cards share one grid cell and only opacity changes, so
-          there is no layout work and no image decode during a change. */}
-      <div className="relative mt-8 sm:mt-10 md:mt-12">
-        <div className="grid md:w-[calc(100%-3rem)]">
-          {slides.map((slide, i) => {
-            const active = i === position;
-            return (
-              <div
-                key={slide.id}
-                aria-hidden={!active}
-                inert={!active}
-                className={`for-who-card col-start-1 row-start-1 rounded-[20px] p-5 motion-reduce:transition-none sm:p-6 md:p-10 ${
-                  active
-                    ? "z-10 opacity-100 transition-opacity duration-300 ease-out"
-                    : "opacity-0 transition-opacity delay-300 duration-0"
-                }`}
-              >
-                <SlideCard slide={slide} />
-              </div>
-            );
-          })}
-        </div>
-      </div>
     </Section>
   );
 }
@@ -142,7 +148,7 @@ function SlideCard({ slide }: { slide: Slide }) {
         <SlideCopy slide={slide} />
       </div>
 
-      <div className="h-[240px] w-full overflow-hidden rounded-[16px] sm:h-[280px] sm:rounded-[20px] md:h-[433px]">
+      <div className="h-[260px] w-full overflow-hidden rounded-[16px] sm:h-[280px] sm:rounded-[20px] md:h-[433px]">
         <img
           src={slide.image}
           alt={slide.alt}
@@ -160,15 +166,18 @@ function SlideCard({ slide }: { slide: Slide }) {
 function SlideCopy({ slide }: { slide: Slide }) {
   return (
     <>
-      <Pill tone="brand" className="border-line-strong text-soft">
+      <Pill tone="brand" className="h-7 border-line-strong text-soft md:h-6">
         {slide.audience}
       </Pill>
 
-      <SectionHeading size="panel" className="mt-4 leading-[1.1] text-fg">
+      <SectionHeading
+        size="panel"
+        className="mt-4 text-2xl leading-[30px] text-fg md:text-[length:clamp(1.75rem,2.8vw,2.5rem)] md:leading-[1.1]"
+      >
         {slide.title}
       </SectionHeading>
 
-      <p className="mt-4 text-base leading-6 text-soft-2">{slide.body}</p>
+      <p className="mt-4 text-sm leading-5 text-soft-2 md:text-base md:leading-6">{slide.body}</p>
 
       {slide.extra && (
         <p className="mt-6 text-lg font-bold text-fg">{slide.extra}</p>
@@ -177,7 +186,7 @@ function SlideCopy({ slide }: { slide: Slide }) {
       <Button
         href="#contact"
         arrow
-        className="for-who-button mt-6 text-[15px] font-bold"
+        className="for-who-button mt-6 h-11 w-full text-[15px] font-bold md:h-auto md:w-auto"
       >
         {slide.action}
       </Button>

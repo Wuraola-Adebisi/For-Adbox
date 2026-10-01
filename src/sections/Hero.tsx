@@ -9,7 +9,7 @@ export function Hero() {
       className="hero-grid relative isolate overflow-hidden bg-hero-bg text-hero-fg"
     >
       <Container size="wide">
-        <div className="flex flex-col items-center pt-24 pb-[59px] text-center md:pt-[100px]">
+        <div className="flex flex-col items-center pt-10 pb-6 text-center md:pt-[100px] md:pb-[59px]">
           <HeroCarrier />
 
           <div className="mt-2.5 flex justify-center">
@@ -19,29 +19,29 @@ export function Hero() {
           <SectionHeading
             as="h1"
             size="hero"
-            className="mt-[30px] max-w-[1100px] text-center font-sans font-bold tracking-normal text-hero-fg md:text-[96px] md:leading-[104px]"
+            className="mt-2.5 max-w-[1100px] text-center font-sans leading-[50px] font-bold tracking-normal text-hero-fg md:mt-[30px] md:text-[96px] md:leading-[104px]"
           >
             <Accent>Advertising</Accent> That Moves With Your{" "}
             <Accent>Audience</Accent>
           </SectionHeading>
 
-          <p className="mt-5 max-w-[900px] text-base leading-6 text-hero-fg">
+          <p className="mt-3 max-w-[900px] text-base leading-5 text-hero-fg md:mt-5 md:leading-6">
             adbox transforms delivery riders into mobile digital advertising
             platforms, using smart LED displays and location-aware technology to
             deliver relevant brand messages in the places that matter most.
           </p>
 
-          <div className="mt-9 flex flex-wrap justify-center gap-6">
+          <div className="mt-6 flex w-full flex-col gap-4 md:mt-9 md:w-auto md:flex-row md:flex-wrap md:justify-center md:gap-6">
             <Button
               href="#contact"
-              className="min-w-[182px] font-ui text-sm leading-6"
+              className="h-14 w-full rounded-2xl font-ui text-base leading-6 md:h-auto md:w-auto md:min-w-[182px] md:rounded-xl md:text-sm"
             >
               Launch A Campaign
             </Button>
             <Button
               href="#for-who-riders"
               variant="secondary"
-              className="min-w-[182px] font-ui text-sm leading-6"
+              className="h-14 w-full rounded-2xl font-ui text-base leading-6 md:h-auto md:w-auto md:min-w-[182px] md:rounded-xl md:text-sm"
             >
               Partner With Us
             </Button>
