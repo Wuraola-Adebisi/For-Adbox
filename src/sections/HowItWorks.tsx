@@ -29,6 +29,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
 export function HowItWorks() {
   const storyRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
   const previousActive = useRef(0);
   const fadeTimeout = useRef<number | null>(null);
 
@@ -58,7 +59,9 @@ export function HowItWorks() {
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
 
     if (isMobile) {
-      return story.offsetHeight;
+      const stickyHeight = stickyRef.current?.offsetHeight ?? 700;
+
+      return Math.max(1, story.offsetHeight - stickyHeight);
     }
 
     return Math.max(1, story.offsetHeight - window.innerHeight);
@@ -73,8 +76,10 @@ export function HowItWorks() {
     const travel = getTravel(story);
     const progress = next / (steps.length - 1);
 
-    const position =
-      window.scrollY + story.getBoundingClientRect().top + travel * progress;
+    const storyTop =
+      window.scrollY + story.getBoundingClientRect().top;
+
+    const position = storyTop + travel * progress;
 
     changeStep(next);
 
@@ -93,14 +98,13 @@ export function HowItWorks() {
       const story = storyRef.current;
       if (!story) return;
 
-      const isMobile = window.matchMedia("(max-width: 767px)").matches;
       const travel = getTravel(story);
-
       const rect = story.getBoundingClientRect();
 
-      const progress = isMobile
-        ? Math.min(1, Math.max(0, -rect.top / travel))
-        : Math.min(1, Math.max(0, -rect.top / travel));
+      const progress = Math.min(
+        1,
+        Math.max(0, -rect.top / travel),
+      );
 
       const next = Math.min(
         steps.length - 1,
@@ -142,13 +146,17 @@ export function HowItWorks() {
       tone="surface"
       id="how-it-works"
       containerSize="wide"
-      className="bg-how-bg h-[700px] p-0 md:h-auto md:pt-[180px] md:pb-[96px]"
+      className="bg-how-bg p-0 md:pt-[180px] md:pb-[96px]"
     >
       <div
         ref={storyRef}
-        className="relative box-border h-[700px] px-5 pt-[90px] pb-[64px] md:h-auto md:min-h-[500vh] md:px-0 md:pt-0 md:pb-0"
+        className="relative h-[calc(700px+400vh)] md:min-h-[500vh] md:h-auto"
       >
-        <div className="sticky top-0 z-10 flex h-full min-h-0 items-start pt-0 md:min-h-screen md:pt-[88px]">
+        <div
+          ref={stickyRef}
+          data-how-it-works-sticky
+          className="sticky top-0 z-10 box-border flex h-[700px] items-start px-5 pt-[90px] pb-[64px] md:min-h-screen md:h-auto md:px-0 md:pt-[88px]"
+        >
           <div className="grid w-full items-start gap-x-8 gap-y-8 md:grid-cols-[533.5fr_538.5fr] md:gap-y-[54px]">
             <div className="md:col-start-1 md:row-start-1">
               <Eyebrow>How it works</Eyebrow>
