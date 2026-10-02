@@ -293,6 +293,7 @@ body {
     transform: scaleX(1);
     opacity: 0.45;
   }
+
   100% {
     transform: scaleX(1.35);
     opacity: 0;
@@ -303,6 +304,7 @@ body {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-50%);
   }
@@ -323,7 +325,10 @@ body {
   }
 }
 
-/* Show an image only in one colour mode. */
+/* =========================================================
+   THEME-SPECIFIC IMAGE VISIBILITY
+   ========================================================= */
+
 .only-light {
   display: none;
 }
@@ -364,50 +369,92 @@ body {
   display: block;
 }
 
-/* ForWho section */
+/* =========================================================
+   FOR WHO
+   ========================================================= */
+
 .for-who-section {
-  background: #141c28;
+  background: var(--surface);
 }
 
-/* ForWho carousel cards */
 .for-who-card {
-  background: #222832;
+  background: var(--card);
 }
 
-/* ForWho button text: #edf2fa in dark mode. Light mode keeps the theme's
-   own text colour (--on-brand, near black). */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .for-who-button,
-  :root:not([data-theme="light"]) .for-who-button * {
-    color: #edf2fa;
-  }
+/*
+  The controls use the same theme tokens as the rest of the
+  interface instead of hard-coded dark colours.
+
+  Light:
+    --card = #ffffff
+    --line = #d7e8ec
+    --fg   = #121211
+
+  Dark:
+    --card = #0f141d
+    --line = #20242d
+    --fg   = #edf2fa
+*/
+.for-who-controls {
+  background: var(--card);
+  border: 1px solid var(--line);
 }
 
-:root[data-theme="dark"] .for-who-button,
-:root[data-theme="dark"] .for-who-button * {
-  color: #edf2fa;
+.for-who-chevron {
+  color: var(--fg);
+}
+
+/* =========================================================
+   FOR WHO CTA
+   ========================================================= */
+
+/*
+  The CTA is intentionally white in light mode.
+  Dark mode continues to use the Button component's existing
+  dark-theme styling.
+*/
+:root[data-theme="light"] .for-who-button {
+  background: #ffffff;
+  color: var(--fg);
+}
+
+:root[data-theme="light"] .for-who-button:hover {
+  background: #ffffff;
+  color: var(--fg);
+}
+
+:root[data-theme="light"] .for-who-button svg {
+  color: var(--fg);
 }
 
 @media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) .for-who-section {
-    background: #f6f6f6;
+  :root:not([data-theme="dark"]) .for-who-button {
+    background: #ffffff;
+    color: var(--fg);
   }
 
-  :root:not([data-theme="dark"]) .for-who-card {
-    background: #fbfbfb;
+  :root:not([data-theme="dark"]) .for-who-button:hover {
+    background: #ffffff;
+    color: var(--fg);
+  }
+
+  :root:not([data-theme="dark"]) .for-who-button svg {
+    color: var(--fg);
   }
 }
 
-:root[data-theme="light"] .for-who-section {
-  background: #f6f6f6;
-}
+/* =========================================================
+   FOR WHO CAROUSEL
+   ========================================================= */
 
-:root[data-theme="light"] .for-who-card {
-  background: #fbfbfb;
-}
+/*
+  Mobile:
+  cards move horizontally one card + gap at a time.
 
-/* ForWho slider: below md the cards slide one stride (card + gap) per step,
-   from md up they cross-fade in place, so no transform is applied. */
+  Desktop:
+  cards occupy the same grid position and cross-fade,
+  so no horizontal transform is applied.
+*/
 .for-who-track {
   transform: translateX(calc(var(--slide, 0) * -1 * (100% + 4px)));
   transition: transform 300ms ease-out;
@@ -420,8 +467,30 @@ body {
   }
 }
 
+@media (max-width: 767px) {
+  .for-who-track {
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .for-who-card {
+    scroll-margin-top: 7rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .for-who-track {
     transition: none;
   }
+}
+
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+
+.how-it-works-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }

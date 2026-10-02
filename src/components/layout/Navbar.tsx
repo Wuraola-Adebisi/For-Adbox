@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type MouseEvent } from "react";
 import agenciesPhoto from "../../assets/photos/agencies.png";
 import brandsPhoto from "../../assets/photos/Images.png";
 import smePhoto from "../../assets/photos/Images (1).png";
@@ -6,29 +6,24 @@ import riderPhoto from "../../assets/photos/Images (2).png";
 import { cn } from "../../lib/cn";
 import { Button, Container, Logo, ThemeToggle } from "../ui";
 
-// TODO: point these at real routes or section ids once they exist.
 const audienceLinks = [
   {
     label: "Advertising Agencies",
-    href: "#for-who-agencies",
     image: agenciesPhoto,
     alt: "Advertising agency team",
   },
   {
     label: "Brands",
-    href: "#for-who-brands",
     image: brandsPhoto,
     alt: "adbox brand campaign",
   },
   {
     label: "SMEs",
-    href: "#for-who-smes",
     image: smePhoto,
     alt: "Small business owner",
   },
   {
     label: "Dispatch Riders",
-    href: "#for-who-riders",
     image: riderPhoto,
     alt: "adbox dispatch rider",
   },
@@ -54,7 +49,11 @@ function ChevronDown({ className }: { className?: string }) {
   );
 }
 
-function RidersMenu() {
+function RidersMenu({
+  onAudienceSelect,
+}: {
+  onAudienceSelect: (index: number) => void;
+}) {
   const [open, setOpen] = useState(false);
   const [preview, setPreview] = useState<number | null>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -62,28 +61,49 @@ function RidersMenu() {
 
   useEffect(() => {
     if (!open) return;
+
     const onPointerDown = (event: PointerEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
         setOpen(false);
         setPreview(null);
       }
     };
+
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        setOpen(false);
+        setPreview(null);
+      }
     };
+
     document.addEventListener("pointerdown", onPointerDown);
     document.addEventListener("keydown", onKeyDown);
+
     return () => {
       document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [open]);
 
+  const handleAudienceClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    index: number,
+  ) => {
+    event.preventDefault();
+    onAudienceSelect(index);
+    setOpen(false);
+    setPreview(null);
+  };
+
   return (
     <div
       ref={ref}
       className="relative"
-      onPointerEnter={(event) => event.pointerType === "mouse" && setOpen(true)}
+      onPointerEnter={(event) => {
+        if (event.pointerType === "mouse") {
+          setOpen(true);
+        }
+      }}
       onPointerLeave={(event) => {
         if (event.pointerType === "mouse") {
           setOpen(false);
@@ -118,6 +138,7 @@ function RidersMenu() {
           )}
         />
       </button>
+
       <div
         id={panelId}
         hidden={!open}
@@ -125,18 +146,19 @@ function RidersMenu() {
       >
         <div className="flex w-[360px] rounded-xl border border-line bg-ink/95 p-2 shadow-xl backdrop-blur-md">
           <ul className="w-[190px] shrink-0">
-            {audienceLinks.map((link) => (
+            {audienceLinks.map((link, index) => (
               <li key={link.label}>
                 <a
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  onPointerEnter={() => setPreview(audienceLinks.indexOf(link))}
-                  onFocus={() => setPreview(audienceLinks.indexOf(link))}
+                  href="#for-who"
+                  onClick={(event) => handleAudienceClick(event, index)}
+                  onPointerEnter={() => setPreview(index)}
+                  onFocus={() => setPreview(index)}
                   className="group block rounded-lg px-3 py-2 font-ui transition-colors hover:bg-fg/5 focus-visible:bg-fg/5 focus-visible:outline-none"
                 >
                   <span className="block text-xs font-semibold text-fg group-hover:text-brand">
                     adbox For
                   </span>
+
                   <span className="mt-0.5 block text-sm text-nav-link group-hover:text-fg">
                     {link.label}
                   </span>
@@ -144,6 +166,7 @@ function RidersMenu() {
               </li>
             ))}
           </ul>
+
           <div
             className="flex min-h-[180px] flex-1 items-center justify-center p-3"
             aria-hidden="true"
@@ -168,27 +191,62 @@ export function Navbar() {
   const menuId = useId();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+    };
+
     onScroll();
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   useEffect(() => {
     if (!mobileOpen) return;
+
     const previousOverflow = document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
+
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMobileOpen(false);
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+      }
     };
+
     document.addEventListener("keydown", onKeyDown);
+
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [mobileOpen]);
 
-  const closeMobile = () => setMobileOpen(false);
+  const closeMobile = () => {
+    setMobileOpen(false);
+  };
+
+  const navigateToAudience = (index: number) => {
+    window.dispatchEvent(
+      new CustomEvent("adbox:for-who-navigate", {
+        detail: { index },
+      }),
+    );
+
+    setMobileOpen(false);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.getElementById("for-who")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
+    });
+  };
 
   return (
     <header
@@ -216,43 +274,50 @@ export function Navbar() {
             <a href="#top" className={linkClass}>
               Home
             </a>
+
             <a href="#about" className={linkClass}>
               About Us
             </a>
-            <RidersMenu />
+
+            <RidersMenu onAudienceSelect={navigateToAudience} />
           </div>
 
           <div className="ml-auto hidden items-center gap-10 md:ml-0 md:flex md:justify-self-end">
             <Button href="#contact" className="font-ui text-sm leading-6">
               Contact us
             </Button>
+
             <ThemeToggle className="ml-2" />
           </div>
 
-          <button
-            type="button"
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            aria-controls={menuId}
-            onClick={() => setMobileOpen((value) => !value)}
-            className="inline-flex size-11 cursor-pointer items-center justify-center rounded-lg text-fg focus-visible:outline-2 focus-visible:outline-brand md:hidden"
-          >
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              className="size-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
+          <div className="ml-auto flex items-center gap-1 md:hidden">
+            <ThemeToggle />
+
+            <button
+              type="button"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              aria-controls={menuId}
+              onClick={() => setMobileOpen((value) => !value)}
+              className="inline-flex size-11 cursor-pointer items-center justify-center rounded-lg text-fg focus-visible:outline-2 focus-visible:outline-brand"
             >
-              {mobileOpen ? (
-                <path d="M6 6l12 12M18 6L6 18" />
-              ) : (
-                <path d="M4 7h16M4 12h16M4 17h16" />
-              )}
-            </svg>
-          </button>
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="size-6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
+                {mobileOpen ? (
+                  <path d="M6 6l12 12M18 6L6 18" />
+                ) : (
+                  <path d="M4 7h16M4 12h16M4 17h16" />
+                )}
+              </svg>
+            </button>
+          </div>
         </nav>
       </Container>
 
@@ -272,6 +337,7 @@ export function Navbar() {
                 Home
               </a>
             </li>
+
             <li>
               <a
                 href="#about"
@@ -281,34 +347,38 @@ export function Navbar() {
                 About Us
               </a>
             </li>
+
             <li className="px-3 pt-3 pb-1 font-ui text-sm text-muted">
               adbox For
             </li>
-            {audienceLinks.map((link) => (
+
+            {audienceLinks.map((link, index) => (
               <li key={link.label}>
                 <a
-                  href={link.href}
-                  onClick={closeMobile}
+                  href="#for-who"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    navigateToAudience(index);
+                  }}
                   className="block rounded-lg px-3 py-3 pl-6 font-ui text-base text-nav-link hover:text-fg"
                 >
                   <span className="block text-xs font-semibold text-fg">
                     adbox For
                   </span>
+
                   <span className="mt-0.5 block">{link.label}</span>
                 </a>
               </li>
             ))}
+
             <li className="pt-4">
-              <div className="flex items-center gap-3">
-                <Button
-                  href="#contact"
-                  onClick={closeMobile}
-                  className="flex-1 font-ui text-sm leading-6"
-                >
-                  Contact us
-                </Button>
-                <ThemeToggle />
-              </div>
+              <Button
+                href="#contact"
+                onClick={closeMobile}
+                className="w-full font-ui text-sm leading-6"
+              >
+                Contact us
+              </Button>
             </li>
           </ul>
         </Container>

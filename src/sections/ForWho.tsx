@@ -1,4 +1,4 @@
-import { useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import agenciesPhoto from "../assets/photos/agencies.png";
 import brandsPhoto from "../assets/photos/Images.png";
 import smePhoto from "../assets/photos/Images (1).png";
@@ -55,15 +55,85 @@ type Slide = (typeof slides)[number];
 
 const LAST = slides.length - 1;
 
+type ForWhoNavigateEvent = CustomEvent<{
+  index: number;
+}>;
+
 export function ForWho() {
   const [position, setPosition] = useState(0);
+  const swipeStartX = useRef<number | null>(null);
+  const swipeStartY = useRef<number | null>(null);
+
+  useEffect(() => {
+    const handleNavigate = (event: Event) => {
+      const customEvent = event as ForWhoNavigateEvent;
+      const index = customEvent.detail?.index;
+
+      if (typeof index !== "number") return;
+
+      setPosition(Math.max(0, Math.min(index, LAST)));
+    };
+
+    window.addEventListener(
+      "adbox:for-who-navigate",
+      handleNavigate as EventListener,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "adbox:for-who-navigate",
+        handleNavigate as EventListener,
+      );
+    };
+  }, []);
 
   const isFirst = position === 0;
   const isLast = position === LAST;
 
-  // No looping: prev is disabled on the first card, next on the last.
-  const goNext = () => setPosition((p) => Math.min(p + 1, LAST));
-  const goPrev = () => setPosition((p) => Math.max(p - 1, 0));
+  const goNext = () => {
+    setPosition((p) => Math.min(p + 1, LAST));
+  };
+
+  const goPrev = () => {
+    setPosition((p) => Math.max(p - 1, 0));
+  };
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "touch") return;
+
+    swipeStartX.current = event.clientX;
+    swipeStartY.current = event.clientY;
+  };
+
+  const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (
+      event.pointerType !== "touch" ||
+      swipeStartX.current === null ||
+      swipeStartY.current === null
+    ) {
+      return;
+    }
+
+    const deltaX = event.clientX - swipeStartX.current;
+    const deltaY = event.clientY - swipeStartY.current;
+
+    swipeStartX.current = null;
+    swipeStartY.current = null;
+
+    if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
+    if (Math.abs(deltaX) < 50) return;
+
+    if (deltaX < 0) {
+      goNext();
+    } else {
+      goPrev();
+    }
+  };
+
+  const handlePointerCancel = () => {
+    swipeStartX.current = null;
+    swipeStartY.current = null;
+  };
 
   return (
     <Section
@@ -86,22 +156,24 @@ export function ForWho() {
         </p>
       </div>
 
-      {/* Stage. Below md the cards sit in a row and slide, with the next card
-          peeking in. From md up all cards share one grid cell and only opacity
-          changes, so there is no layout work and no image decode during a change. */}
       <div className="relative mt-10 md:mt-12">
         <div
-          className="for-who-track grid auto-cols-[calc(100%-16px)] grid-flow-col gap-5 md:w-[calc(100%-3rem)] md:auto-cols-auto md:grid-flow-row md:gap-0"
+          className="for-who-track grid auto-cols-[calc(100%-16px)] grid-flow-col gap-5 touch-pan-y md:w-[calc(100%-3rem)] md:auto-cols-auto md:grid-flow-row md:gap-0"
           style={{ "--slide": position } as CSSProperties}
+          onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerCancel}
         >
           {slides.map((slide, i) => {
             const active = i === position;
+
             return (
               <div
                 key={slide.id}
+                id={`for-who-${slide.id}`}
                 aria-hidden={!active}
                 inert={!active}
-                className={`for-who-card rounded-[20px] p-4 motion-reduce:transition-none sm:p-6 md:col-start-1 md:row-start-1 md:p-10 ${
+                className={`for-who-card scroll-mt-28 rounded-[20px] p-4 motion-reduce:transition-none sm:p-6 md:col-start-1 md:row-start-1 md:p-10 ${
                   active
                     ? "z-10 opacity-100 md:transition-opacity md:duration-300 md:ease-out"
                     : "opacity-100 md:opacity-0 md:transition-opacity md:delay-300 md:duration-0"
@@ -113,25 +185,25 @@ export function ForWho() {
           })}
         </div>
 
-        <div className="mx-auto mt-6 flex h-[52px] w-[120px] shrink-0 items-center gap-3 rounded-[71px] bg-[#222832] px-3 py-2 md:absolute md:-top-[100px] md:right-0 md:mx-0 md:mt-0">
+        <div className="for-who-controls mx-auto mt-6 flex h-[52px] w-[120px] shrink-0 items-center gap-3 rounded-[71px] px-3 py-2 md:absolute md:-top-[100px] md:right-0 md:mx-0 md:mt-0">
           <button
             type="button"
             onClick={goPrev}
             aria-label="Previous audience"
             disabled={isFirst}
-            className="flex h-full flex-1 items-center justify-center rounded-full text-fg transition-[background-color,opacity] duration-200 enabled:cursor-pointer enabled:hover:bg-fg/20 disabled:cursor-default disabled:opacity-40"
+            className="for-who-chevron flex h-full flex-1 items-center justify-center rounded-full text-fg transition-[background-color,opacity] duration-200 enabled:cursor-pointer enabled:hover:bg-fg/10 disabled:cursor-default disabled:opacity-40"
           >
             <ChevronIcon direction="left" />
           </button>
 
-          <span className="h-6 w-px shrink-0 bg-fg/60" aria-hidden="true" />
+          <span className="h-6 w-px shrink-0 bg-fg/20" aria-hidden="true" />
 
           <button
             type="button"
             onClick={goNext}
             aria-label="Next audience"
             disabled={isLast}
-            className="flex h-full flex-1 items-center justify-center rounded-full text-fg transition-[background-color,opacity] duration-200 enabled:cursor-pointer enabled:hover:bg-fg/20 disabled:cursor-default disabled:opacity-40"
+            className="for-who-chevron flex h-full flex-1 items-center justify-center rounded-full text-fg transition-[background-color,opacity] duration-200 enabled:cursor-pointer enabled:hover:bg-fg/10 disabled:cursor-default disabled:opacity-40"
           >
             <ChevronIcon direction="right" />
           </button>
@@ -156,6 +228,7 @@ function SlideCard({ slide }: { slide: Slide }) {
           height={433}
           loading="eager"
           decoding="async"
+          draggable={false}
           className="h-full w-full object-cover"
         />
       </div>
@@ -177,7 +250,9 @@ function SlideCopy({ slide }: { slide: Slide }) {
         {slide.title}
       </SectionHeading>
 
-      <p className="mt-4 text-sm leading-5 text-soft-2 md:text-base md:leading-6">{slide.body}</p>
+      <p className="mt-4 text-sm leading-5 text-soft-2 md:text-base md:leading-6">
+        {slide.body}
+      </p>
 
       {slide.extra && (
         <p className="mt-6 text-lg font-bold text-fg">{slide.extra}</p>

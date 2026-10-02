@@ -84,7 +84,7 @@ export function HowItWorks() {
       if (!story) return;
 
       const rect = story.getBoundingClientRect();
-      const travel = Math.max(1, rect.height - window.innerHeight);
+      const travel = Math.max(1, story.offsetHeight - window.innerHeight);
 
       const progress = Math.min(1, Math.max(0, -rect.top / travel));
 
@@ -131,7 +131,7 @@ export function HowItWorks() {
       className="bg-how-bg pt-[92px] pb-[96px] md:pt-[180px]"
     >
       <div ref={storyRef} className="relative min-h-[500vh]">
-        <div className="sticky top-[112px] flex items-start md:top-0 md:min-h-[calc(100svh-276px)] md:items-center">
+        <div className="sticky top-0 z-10 flex min-h-screen items-start pt-[88px]">
           <div className="grid w-full items-start gap-x-8 gap-y-8 md:grid-cols-[533.5fr_538.5fr] md:gap-y-[54px]">
             <div className="md:col-start-1 md:row-start-1">
               <Eyebrow>How it works</Eyebrow>
@@ -230,7 +230,7 @@ export function HowItWorks() {
                   {pad(active + 1)}
                 </span>
 
-                <h3 className="mt-0.5 text-[18.5px] leading-7 font-bold md:font-semibold tracking-[-0.03em] text-fg md:text-[27px] md:leading-9">
+                <h3 className="mt-0.5 text-[18.5px] leading-7 font-bold tracking-[-0.03em] text-fg md:text-[27px] md:leading-9 md:font-semibold">
                   {step.title}
                 </h3>
 

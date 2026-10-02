@@ -3,10 +3,7 @@ import { Accent, Button, Container } from "../components/ui";
 
 export function FinalCta() {
   return (
-    <section
-      id="start"
-      className="bg-final-bg pb-16 md:border-t md:border-[#FFFFFF12] md:pb-24"
-    >
+    <section id="start" className="bg-final-bg pb-16 md:pb-24">
       <Container size="cta">
         <div className="relative flex flex-col overflow-hidden rounded-[30px] bg-cta-card text-fg md:h-[464.5px] md:flex-row md:items-center">
           <div className="px-5 pt-[44.5px] pb-8 text-center md:max-w-[560px] md:px-0 md:pt-[3px] md:pb-0 md:pl-16 md:text-left">
@@ -14,12 +11,15 @@ export function FinalCta() {
               Your <Accent>audience</Accent> is already on the{" "}
               <Accent>move</Accent>.
             </h2>
+
             <p className="mt-[25.7px] text-lg leading-7 font-semibold tracking-[-0.02em] text-brand md:text-[22px]">
               Now your advertising can be too.
             </p>
+
             <p className="mt-[15px] text-base leading-8 text-muted md:mt-[23.5px] md:leading-6">
               Put your brand where people are — not just where screens are.
             </p>
+
             <div className="mt-10 flex flex-col gap-3 md:mt-12 md:flex-row md:flex-wrap">
               <Button
                 href="#contact"
@@ -27,6 +27,7 @@ export function FinalCta() {
               >
                 Start Advertising
               </Button>
+
               <Button
                 href="#contact"
                 variant="outline"
@@ -36,6 +37,7 @@ export function FinalCta() {
               </Button>
             </div>
           </div>
+
           <img
             src={scene}
             alt=""
