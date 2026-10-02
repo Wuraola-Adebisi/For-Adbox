@@ -54,13 +54,23 @@ export function HowItWorks() {
     }, 220);
   };
 
+  const getTravel = (story: HTMLDivElement) => {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
+    if (isMobile) {
+      return story.offsetHeight;
+    }
+
+    return Math.max(1, story.offsetHeight - window.innerHeight);
+  };
+
   const goToStep = (index: number) => {
     const story = storyRef.current;
     if (!story) return;
 
     const next = Math.min(steps.length - 1, Math.max(0, index));
 
-    const travel = Math.max(1, story.offsetHeight - window.innerHeight);
+    const travel = getTravel(story);
     const progress = next / (steps.length - 1);
 
     const position =
@@ -83,10 +93,14 @@ export function HowItWorks() {
       const story = storyRef.current;
       if (!story) return;
 
-      const rect = story.getBoundingClientRect();
-      const travel = Math.max(1, story.offsetHeight - window.innerHeight);
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
+      const travel = getTravel(story);
 
-      const progress = Math.min(1, Math.max(0, -rect.top / travel));
+      const rect = story.getBoundingClientRect();
+
+      const progress = isMobile
+        ? Math.min(1, Math.max(0, -rect.top / travel))
+        : Math.min(1, Math.max(0, -rect.top / travel));
 
       const next = Math.min(
         steps.length - 1,
@@ -128,10 +142,13 @@ export function HowItWorks() {
       tone="surface"
       id="how-it-works"
       containerSize="wide"
-      className="bg-how-bg pt-[92px] pb-[96px] md:pt-[180px]"
+      className="bg-how-bg h-[700px] p-0 md:h-auto md:pt-[180px] md:pb-[96px]"
     >
-      <div ref={storyRef} className="relative min-h-[500vh]">
-        <div className="sticky top-0 z-10 flex min-h-screen items-start pt-[88px]">
+      <div
+        ref={storyRef}
+        className="relative box-border h-[700px] px-5 pt-[90px] pb-[64px] md:h-auto md:min-h-[500vh] md:px-0 md:pt-0 md:pb-0"
+      >
+        <div className="sticky top-0 z-10 flex h-full min-h-0 items-start pt-0 md:min-h-screen md:pt-[88px]">
           <div className="grid w-full items-start gap-x-8 gap-y-8 md:grid-cols-[533.5fr_538.5fr] md:gap-y-[54px]">
             <div className="md:col-start-1 md:row-start-1">
               <Eyebrow>How it works</Eyebrow>
