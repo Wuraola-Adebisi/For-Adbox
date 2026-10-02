@@ -27,11 +27,22 @@ const steps = [
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
+// The numbered list must never slide under the navbar (navbar height + breathing room)
+const NAV_OFFSET = 112;
+
+// Space kept below the card while pinned.
+// Must match the section's bottom padding (md:pb-[96px]).
+const BOTTOM_GAP = 96;
+
 export function HowItWorks() {
   const storyRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLOListElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const previousActive = useRef(0);
   const fadeTimeout = useRef<number | null>(null);
+  const lastContentHeight = useRef(0);
 
   const [active, setActive] = useState(0);
   const [isChanging, setIsChanging] = useState(false);
@@ -55,16 +66,64 @@ export function HowItWorks() {
     }, 220);
   };
 
+  const isMobileViewport = () =>
+    window.matchMedia("(max-width: 767px)").matches;
+
+  // Measures how tall the content block is on the LAST step, whatever step is
+  // showing right now. Uses a hidden copy of the body text, so nothing visible changes.
+  const measureAnchor = () => {
+    const grid = gridRef.current;
+    const list = listRef.current;
+    const card = cardRef.current;
+    const body = card?.querySelector("p");
+
+    if (!grid || !list || !card || !body) return;
+
+    const probe = body.cloneNode(true) as HTMLElement;
+    probe.textContent = steps[steps.length - 1].body;
+    probe.style.cssText = `position:absolute;visibility:hidden;pointer-events:none;width:${body.offsetWidth}px`;
+    body.parentElement?.appendChild(probe);
+    const lastBodyHeight = probe.offsetHeight;
+    probe.remove();
+
+    const cardMarginTop = parseFloat(getComputedStyle(card).marginTop) || 0;
+    const cardNow = card.offsetHeight + cardMarginTop;
+    const cardLast = cardNow + (lastBodyHeight - body.offsetHeight);
+
+    const rowNow = Math.max(list.offsetHeight, cardNow);
+    const rowLast = Math.max(list.offsetHeight, cardLast);
+
+    lastContentHeight.current =
+      grid.offsetTop + grid.offsetHeight - rowNow + rowLast;
+  };
+
+  // Desktop: pin so the card bottom sits BOTTOM_GAP above the viewport bottom.
+  // The heading scrolls up behind the navbar, the list stays below it.
+  // Mobile: unchanged (0).
+  const getStickyTop = () => {
+    if (isMobileViewport()) return 0;
+
+    const list = listRef.current;
+    if (!list) return 0;
+
+    const bottomAnchored =
+      window.innerHeight - BOTTOM_GAP - lastContentHeight.current;
+    const listBelowNav = NAV_OFFSET - list.offsetTop;
+
+    return Math.min(0, Math.max(bottomAnchored, listBelowNav));
+  };
+
+  const syncStickyTop = () => {
+    const sticky = stickyRef.current;
+    if (!sticky) return;
+
+    sticky.style.top = isMobileViewport() ? "" : `${getStickyTop()}px`;
+  };
+
   const getTravel = (story: HTMLDivElement) => {
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    const stickyHeight = stickyRef.current?.offsetHeight ?? 700;
 
-    if (isMobile) {
-      const stickyHeight = stickyRef.current?.offsetHeight ?? 700;
-
-      return Math.max(1, story.offsetHeight - stickyHeight);
-    }
-
-    return Math.max(1, story.offsetHeight - window.innerHeight);
+    return Math.max(1, story.offsetHeight - stickyHeight);
   };
 
   const goToStep = (index: number) => {
@@ -79,7 +138,8 @@ export function HowItWorks() {
     const storyTop =
       window.scrollY + story.getBoundingClientRect().top;
 
-    const position = storyTop + travel * progress;
+    // Pinning begins when the story top reaches the sticky top
+    const position = storyTop - getStickyTop() + travel * progress;
 
     changeStep(next);
 
@@ -98,12 +158,14 @@ export function HowItWorks() {
       const story = storyRef.current;
       if (!story) return;
 
+      syncStickyTop();
+
       const travel = getTravel(story);
       const rect = story.getBoundingClientRect();
 
       const progress = Math.min(
         1,
-        Math.max(0, -rect.top / travel),
+        Math.max(0, (getStickyTop() - rect.top) / travel),
       );
 
       const next = Math.min(
@@ -122,14 +184,23 @@ export function HowItWorks() {
       }
     };
 
+    const onResize = () => {
+      measureAnchor();
+      onScroll();
+    };
+
+    measureAnchor();
     updateFromScroll();
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onResize);
+
+    // Text wrapping can change once the web font loads
+    document.fonts?.ready.then(onResize);
 
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
 
       if (frame) {
         window.cancelAnimationFrame(frame);
@@ -155,9 +226,12 @@ export function HowItWorks() {
         <div
           ref={stickyRef}
           data-how-it-works-sticky
-          className="sticky top-0 z-10 box-border flex h-[700px] items-start px-5 pt-[90px] pb-[64px] md:min-h-screen md:h-auto md:px-0 md:pt-[88px]"
+          className="sticky top-0 z-10 box-border flex h-[700px] items-start px-5 pt-[90px] pb-[64px] md:min-h-[calc(100vh-96px)] md:h-auto md:px-0 md:pt-[88px]"
         >
-          <div className="grid w-full items-start gap-x-8 gap-y-8 md:grid-cols-[533.5fr_538.5fr] md:gap-y-[54px]">
+          <div
+            ref={gridRef}
+            className="grid w-full items-start gap-x-8 gap-y-8 md:grid-cols-[533.5fr_538.5fr] md:gap-y-[54px]"
+          >
             <div className="md:col-start-1 md:row-start-1">
               <Eyebrow>How it works</Eyebrow>
 
@@ -172,7 +246,7 @@ export function HowItWorks() {
               </p>
             </div>
 
-            <ol className="md:col-start-1 md:row-start-2">
+            <ol ref={listRef} className="md:col-start-1 md:row-start-2">
               {steps.map((item, index) => {
                 const isActive = index === active;
 
@@ -217,6 +291,7 @@ export function HowItWorks() {
             </ol>
 
             <div
+              ref={cardRef}
               aria-live="polite"
               className="mt-0.5 rounded-2xl border border-line bg-card px-5 pt-[19px] pb-5 md:col-start-2 md:row-start-2 md:px-8 md:pt-[34.5px] md:pb-8"
             >
